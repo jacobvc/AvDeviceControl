@@ -252,7 +252,7 @@
     <None Include="Resources\slider_knob1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ViscaLibrary-main\ViscaLibrary\ViscaLibrary.csproj">
+    <ProjectReference Include="..\ViscaLibrary\ViscaLibrary\ViscaLibrary.csproj">
       <Project>{81fcbc49-46d4-48be-bd77-65a0cf2fb72f}</Project>
       <Name>ViscaLibrary</Name>
     </ProjectReference>
