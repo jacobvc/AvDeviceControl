@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="AVDeviceControl.UcWpfPtControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:h="http://helix-toolkit.org/wpf"
+             xmlns:local="clr-namespace:AVDeviceControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="450" Loaded="Form_Load">
+
+    <h:HelixViewport3D x:Name="view1" Grid.Row="0" ShowViewCube="False"
+           RotationSensitivity="0.3" InfiniteSpin="True" 
+           ZoomExtentsWhenLoaded="False">
+        <h:HelixViewport3D.Camera>
+            <PerspectiveCamera Position="1800, 1900, 400"
+               LookDirection="-60, -70, -10" />
+        </h:HelixViewport3D.Camera>
+        <h:DefaultLights/>
+        <h:MeshGeometryVisual3D>
+            <h:MeshGeometryVisual3D.Transform>
+                <Transform3DGroup>
+                    <TranslateTransform3D OffsetX="300"
+                                    OffsetY="100" OffsetZ="100" />
+                </Transform3DGroup>
+            </h:MeshGeometryVisual3D.Transform>
+            <h:LinesVisual3D Points="0,0,-1000 00,00,1000" Thickness="1" />
+            <h:LinesVisual3D Points="0,-1000,00 00,1000,00" Thickness="1" />
+            <h:LinesVisual3D Points="-1000,0,00 1000,00,00" Thickness="1" />
+        </h:MeshGeometryVisual3D>
+        <h:MeshGeometryVisual3D>
+            <h:MeshGeometryVisual3D.Children>
+                <h:TruncatedConeVisual3D x:Name="zoomCone" BaseRadius="40"
+                       TopRadius="200" Height="800" Normal="-1, 0, 0" >
+                    <h:TruncatedConeVisual3D.Material>
+                        <MaterialGroup>
+                            <MaterialGroup.Children>
+                                <DiffuseMaterial Brush="#ccffffcd" />
+
+                                <SpecularMaterial Brush="#FFFFFFFF" SpecularPower="40" />
+                            </MaterialGroup.Children>
+                        </MaterialGroup>
+                    </h:TruncatedConeVisual3D.Material>
+                    <h:TruncatedConeVisual3D.Transform>
+                        <Transform3DGroup>
+                            <TranslateTransform3D OffsetX="30"
+                                    OffsetY="100" OffsetZ="120" />
+                        </Transform3DGroup>
+
+                    </h:TruncatedConeVisual3D.Transform>
+                </h:TruncatedConeVisual3D>
+                <h:FileModelVisual3D x:Name="camera" Source="videoCam.stl">
+                    <h:FileModelVisual3D.DefaultMaterial>
+                        <MaterialGroup>
+                            <MaterialGroup.Children>
+                                <DiffuseMaterial AmbientColor="#FFFFFFFF" Brush="DarkGray" />
+                                <SpecularMaterial Brush="#FFFFFFFF" SpecularPower="100" />
+                            </MaterialGroup.Children>
+                        </MaterialGroup>
+                    </h:FileModelVisual3D.DefaultMaterial>
+                    <h:FileModelVisual3D.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D CenterX="200" CenterY="100" CenterZ="100">
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="1,0,0" Angle="0"/>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>
+                    </h:FileModelVisual3D.Transform>
+                </h:FileModelVisual3D>
+            </h:MeshGeometryVisual3D.Children>
+            <h:MeshGeometryVisual3D.Transform>
+                <Transform3DGroup>
+                    <RotateTransform3D  CenterX="300" CenterY="100" CenterZ="100">
+                        <RotateTransform3D.Rotation>
+                            <AxisAngleRotation3D x:Name="tiltRotate" Axis="0,0,-1" Angle="00" />
+                        </RotateTransform3D.Rotation>
+                    </RotateTransform3D>
+                    <RotateTransform3D CenterX="300" CenterY="100" CenterZ="100">
+                        <RotateTransform3D.Rotation>
+                            <AxisAngleRotation3D x:Name="panRotate" Axis="0,-1,0" Angle="0" />
+                        </RotateTransform3D.Rotation>
+                    </RotateTransform3D>
+                </Transform3DGroup>
+
+            </h:MeshGeometryVisual3D.Transform>
+        </h:MeshGeometryVisual3D>
+    </h:HelixViewport3D>
+</UserControl>
