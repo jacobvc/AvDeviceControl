@@ -1,0 +1,3 @@
+[submodule "ViscaLibrary"]
+	path = ViscaLibrary
+	url = https://github.com/jacobvc/ViscaLibrary
