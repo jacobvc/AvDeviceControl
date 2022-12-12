@@ -231,6 +231,7 @@ namespace AVDeviceControl
                         cam.Camera?.PositionRelative(pan, 0);
                         break;
                 }
+                cam.Camera?.UpdatePosition();
                 return true;
             }
             else
