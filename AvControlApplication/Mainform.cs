@@ -186,7 +186,7 @@ namespace AVDeviceControl
 
         private void Camera_RqDelete(object sender, EventArgs e)
         {
-
+            RemoveCamera(sender as ucViscaCamera, spltMain.Panel1);
         }
 
         #endregion
@@ -214,7 +214,7 @@ namespace AVDeviceControl
 
         private void Mixer_RqDelete(object sender, EventArgs e)
         {
-
+            RemoveMixer(sender as ucMixer, spltMain.Panel1);
         }
         #endregion
 

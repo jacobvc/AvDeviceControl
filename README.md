@@ -2,6 +2,8 @@
 A/V - VISCA Camera and MIDI Audio Interface Application
 
 # Features
+<img src="assets/screenshot.jpg" />
+
 - Pan, Tilt, and Zoom support for VISCA cameras
 - MIDI Audio Mixer Support
 - Websocket Server serving OBS Studio Websocket v5 compatible protocol
