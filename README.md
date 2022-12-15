@@ -6,7 +6,7 @@ A/V - VISCA Camera and MIDI Audio Interface Application
 
 - Pan, Tilt, and Zoom support for VISCA cameras
 - MIDI Audio Mixer Support
-- Websocket Server serving OBS Studio Websocket v5 compatible protocol
+- Websocket Server, serving OBS Studio Websocket v5 compatible protocol
 
 
 # Design
@@ -24,11 +24,12 @@ A/V - VISCA Camera and MIDI Audio Interface Application
   - Uses ViscaTransport
 
 - ucMixer(Midi, MixerConfig) UserControl
-    - Connects to Midi and gets a MidiConnection
+    - Connects to Midi and establishes a MidiConnection
     - ucVolumeSlider UserControl for each channel
     - Uses Midi
+
 - Transport
-    - ViscaTransport VISCA (port) interface for camera
+    - ViscaTransport VISCA (serial port) interface for camera
     - Midi - Midi interface for mixer
     - DeviceControlWebsocket - Protocol interface for websocket
         - uses Webserver - The websocket server
