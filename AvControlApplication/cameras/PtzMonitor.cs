@@ -78,7 +78,7 @@ namespace AVDeviceControl
                 if (!mon.ignoreTimeout && !mon.timeoutMsgbusy)
                 {
                     mon.timeoutMsgbusy = true;
-                    if (MessageBox.Show("Camera doesn't appear to be responding.\r\nIgnore future warnings?", "Request timeout",
+                    if (MessageBox.Show("Device doesn't appear to be responding.\r\nIgnore future warnings?", "Request timeout",
                         MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         mon.ignoreTimeout = true;

@@ -90,7 +90,7 @@ namespace AVDeviceControl
             this.grpCamera.Size = new System.Drawing.Size(110, 150);
             this.grpCamera.TabIndex = 9;
             this.grpCamera.TabStop = false;
-            this.grpCamera.Text = "Camera";
+            this.grpCamera.Text = "Device";
             // 
             // cameraInfo
             // 

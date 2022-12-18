@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace AVDeviceControl
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class MixerConfig : IBindableComponent
+    public class MixerConfig : AvDeviceConfig, IBindableComponent
     {
         #region Local variables
         public event EventHandler Disposed;
@@ -22,8 +22,6 @@ namespace AVDeviceControl
         #endregion
 
         #region Bindable properties
-        [JsonProperty]
-        public string Name { get; set; } = "unnamed";
         [JsonProperty]
         public String Device { get; set; } = "";
         /// <summary>

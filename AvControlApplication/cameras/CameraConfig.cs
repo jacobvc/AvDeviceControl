@@ -9,10 +9,16 @@ using Newtonsoft.Json;
 
 namespace AVDeviceControl
 {
+    public class AvDeviceConfig
+    {
+        [JsonProperty]
+        public string Name { get; set; } = "unnamed";
+    }
+
     /// <summary>
-    /// Camera configuration class
+    /// Device configuration class
     /// 
-    /// This camera configuration supports both USB and IP cameras, and:
+    /// This camera configuration supports both USB and IP devices, and:
     /// 
     /// It is bindable so the object can be bound to windows form controls.
     /// 
@@ -20,7 +26,7 @@ namespace AVDeviceControl
     /// an XML file.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class CameraConfig : IBindableComponent
+    public class CameraConfig : AvDeviceConfig, IBindableComponent
     {
         #region Local variables
         public event EventHandler Disposed;
@@ -31,7 +37,6 @@ namespace AVDeviceControl
 
         #region Bindable properties
         [JsonProperty]
-        public string Name { get; set; } = "unnamed";
         public string Port { get; set; } = "";
         public bool IsIp { get; set; } = false;
         public string Baud { get; set; } = "9600";
@@ -205,13 +210,14 @@ namespace AVDeviceControl
     /// <summary>
     /// XML Serializable collection of CameraConfig
     /// </summary>
+    [XmlInclude(typeof(CameraConfig))]
+    [XmlInclude(typeof(MixerConfig))]
     public class DeviceConfigCollection
     {
         /// <summary>
         /// THE camera collection
         /// </summary>
-        public List<CameraConfig> cameras = new List<CameraConfig>();
-        public List<MixerConfig> mixers = new List<MixerConfig>();
+        public List<AvDeviceConfig> devices = new List<AvDeviceConfig>();
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -222,7 +228,7 @@ namespace AVDeviceControl
         /// <param name="cam"></param>
         public void AddCamera(CameraConfig cam)
         {
-            cameras.Add(cam);
+            devices.Add(cam);
         }
         /// <summary>
         /// Remove camera from the collection
@@ -230,12 +236,12 @@ namespace AVDeviceControl
         /// <param name="cam"></param>
         public void RemoveCamera(CameraConfig cam)
         {
-            cameras.Remove(cam);
+            devices.Remove(cam);
         }
         /// <summary>
-        /// Report number of cameras in collection
+        /// Report number of devices in collection
         /// </summary>
-        public int CameraCount { get { return cameras.Count; } }
+        public int DeviceCount { get { return devices.Count; } }
 
         /// <summary>
         /// Add camera to the collection
@@ -243,7 +249,7 @@ namespace AVDeviceControl
         /// <param name="cam"></param>
         public void AddMixer(MixerConfig mixer)
         {
-            mixers.Add(mixer);
+            devices.Add(mixer);
         }
         /// <summary>
         /// Remove camera from the collection
@@ -251,12 +257,12 @@ namespace AVDeviceControl
         /// <param name="cam"></param>
         public void RemoveMixer(MixerConfig mixer)
         {
-            mixers.Remove(mixer);
+            devices.Remove(mixer);
         }
         /// <summary>
-        /// Report number of cameras in collection
+        /// Report number of devices in collection
         /// </summary>
-        public int MixerCount { get { return mixers.Count; } }
+        //public int MixerCount { get { return mixers.Count; } }
 
 
         #region Serialization
@@ -306,12 +312,16 @@ namespace AVDeviceControl
                 tmp = (DeviceConfigCollection)ser.Deserialize(reader);
                 if (tmp != null)
                 {
-                    foreach (CameraConfig cam in tmp.cameras)
+                    foreach (AvDeviceConfig dev in tmp.devices)
                     {
-                        cam.presets.Sort((e1, e2) =>
+                        CameraConfig cam = dev as CameraConfig;
+                        if (cam != null)
                         {
-                            return e1.Name.CompareTo(e2.Name);
-                        });
+                            cam.presets.Sort((e1, e2) =>
+                            {
+                                return e1.Name.CompareTo(e2.Name);
+                            });
+                        }
                     }
                 }
                 return tmp;

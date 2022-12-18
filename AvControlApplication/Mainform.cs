@@ -100,7 +100,7 @@ namespace AVDeviceControl
             if (ask)
             {
                 FileDialog dlg = new OpenFileDialog();
-                dlg.Filter = "Camera configuration files (*.cfg)|*.cfg";
+                dlg.Filter = "Device configuration files (*.cfg)|*.cfg";
                 dlg.Title = "Select camera configuration (.cfg) file to load";
                 dlg.FileName = Properties.Settings.Default.cameraSettings;
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -125,19 +125,27 @@ namespace AVDeviceControl
             else { 
                 collection = new DeviceConfigCollection();
             }
-            if (collection.CameraCount == 0)
+            if (collection.DeviceCount == 0)
             {
                 collection.AddCamera(new CameraConfig());
             }
-            foreach (CameraConfig cfg in collection.cameras)
+            foreach (AvDeviceConfig dev in collection.devices)
             {
-                AddCamera(cfg, spltMain.Panel1);
+                CameraConfig cam = dev as CameraConfig;
+                if (cam != null)
+                {
+                    AddCamera(cam, spltMain.Panel1);
+                }
+                else
+                {
+                    MixerConfig mixer = dev as MixerConfig;
+                    if (mixer != null)
+                    {
+                        AddMixer(mixer, spltMain.Panel1);
+                    }
+                }
             }
-            foreach (MixerConfig cfg in collection.mixers)
-            {
-                AddMixer(cfg, spltMain.Panel1);
-            }
-        }
+         }
         private void SaveSettings(bool ask)
         {
             string filename = null;
@@ -148,7 +156,7 @@ namespace AVDeviceControl
             if (!File.Exists(filename))
             {
                 FileDialog dlg = new SaveFileDialog();
-                dlg.Filter = "Camera configuration files (*.cfg)|*.cfg";
+                dlg.Filter = "Device configuration files (*.cfg)|*.cfg";
                 dlg.Title = "Save camera configuration to (.cfg) file";
                 dlg.FileName = Properties.Settings.Default.cameraSettings;
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -168,6 +176,7 @@ namespace AVDeviceControl
             ucViscaCamera cam = new ucViscaCamera(cfg);
             cam.Click += Device_click;
             cam.RqDelete += Camera_RqDelete;
+            cam.RqMove += Cam_RqMove;
             deviceControls.AddCamera(cam);
             panel.Controls.Add(cam);
 
@@ -177,7 +186,7 @@ namespace AVDeviceControl
 
         private void RemoveCamera(ucViscaCamera ctl, Control panel)
         {
-            collection.cameras.Remove(ctl.Config);
+            collection.devices.Remove(ctl.Config);
             deviceControls.RemoveCamera(ctl);
             panel.Controls.Remove(ctl);
 
@@ -189,6 +198,11 @@ namespace AVDeviceControl
             RemoveCamera(sender as ucViscaCamera, spltMain.Panel1);
         }
 
+        private void Cam_RqMove(object sender, bool left)
+        {
+            MoveAvDevice((sender as ucViscaCamera).Config, left);
+        }
+
         #endregion
 
         #region Mixer Devices
@@ -197,6 +211,7 @@ namespace AVDeviceControl
             ucMixer brd = new ucMixer(midi, cfg);
             brd.Click += Device_click;
             brd.RqDelete += Mixer_RqDelete;
+            brd.RqMove += Mixer_RqMove;
             deviceControls.AddMixer(brd);
             panel.Controls.Add(brd);
 
@@ -205,7 +220,7 @@ namespace AVDeviceControl
 
         private void RemoveMixer(ucMixer ctl, Control panel)
         {
-            collection.mixers.Remove(ctl.Config);
+            collection.devices.Remove(ctl.Config);
             deviceControls.RemoveMixer(ctl);
             panel.Controls.Remove(ctl);
 
@@ -216,20 +231,48 @@ namespace AVDeviceControl
         {
             RemoveMixer(sender as ucMixer, spltMain.Panel1);
         }
+
+        private void Mixer_RqMove(object sender, bool left)
+        {
+            MoveAvDevice((sender as ucMixer).Config, left);
+        }
+
+        private void MoveAvDevice(AvDeviceConfig config, bool left)
+        {
+            for (int i = 0; i < collection.devices.Count; ++i)
+            {
+                if (config == collection.devices[i])
+                {
+                    if (left && i > 0)
+                    {
+                        AvDeviceConfig tmp = collection.devices[i - 1];
+                        collection.devices[i - 1] = config;
+                        collection.devices[i] = tmp;
+                        deviceControls.MoveUcDevice(i, left);
+                        break;
+                    }
+                    else if (!left && i < collection.devices.Count - 1)
+                    {
+                        AvDeviceConfig tmp = collection.devices[i + 1];
+                        collection.devices[i + 1] = config;
+                        collection.devices[i] = tmp;
+                        deviceControls.MoveUcDevice(i, left);
+                        break;
+                    }
+                }
+            }
+            PositionDevices(spltMain.Panel1);
+        }
         #endregion
 
         #region All Devices
         private void RemoveAllDevices(Control panel)
         {
-            for (int i = 0; i < deviceControls.CameraCount; ++i)
+            for (int i = 0; i < deviceControls.DeviceCount; ++i)
             {
-                panel.Controls.Remove(deviceControls.Camera(i));
+                panel.Controls.Remove(deviceControls.Device(i));
             }
-            for (int i = 0; i < deviceControls.MixerCount; ++i)
-            {
-                panel.Controls.Remove(deviceControls.Mixer(i));
-            }
-            collection.cameras.Clear();
+            collection.devices.Clear();
             deviceControls.Clear();
         }
 
@@ -237,19 +280,12 @@ namespace AVDeviceControl
         {
             int clientHeight = panel.ClientRectangle.Height - 8; // space for scrollbar
             int left = 0;
-            for (int i = 0; i < deviceControls.CameraCount; ++i)
+            for (int i = 0; i < deviceControls.DeviceCount; ++i)
             {
-                ucViscaCamera cam = deviceControls.Camera(i);
+                UserControl cam = deviceControls.Device(i);
                 cam.Size = new Size(clientHeight * cam.Width / cam.Height, clientHeight);
                 cam.Location = new Point(left, 0);
                 left += cam.Width;
-            }
-            for (int i = 0; i < deviceControls.MixerCount; ++i)
-            {
-                ucMixer mixer = deviceControls.Mixer(i);
-                mixer.Size = new Size(clientHeight * mixer.Width / mixer.Height, clientHeight);
-                mixer.Location = new Point(left, 0);
-                left += mixer.Width;
             }
         }
         #endregion
@@ -264,7 +300,7 @@ namespace AVDeviceControl
 
         private void Device_click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Camera clicked");
+            //MessageBox.Show("Device clicked");
         }
 
         private void mnuAddCamera_Click(object sender, EventArgs e)
@@ -301,7 +337,6 @@ namespace AVDeviceControl
         {
             MnuLogLevel = mnuCmbLog.Text;
         }
-        #endregion
 
         private void mnuWebsocketPort_TextChanged(object sender, EventArgs e)
         {
@@ -339,5 +374,6 @@ namespace AVDeviceControl
             pnlPending.Visible = false;
             mnuWebsocketPort.Text = Properties.Settings.Default.webSocketPort;
         }
+        #endregion
     }
 }

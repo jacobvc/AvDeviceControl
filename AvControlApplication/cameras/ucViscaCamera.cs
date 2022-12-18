@@ -37,6 +37,9 @@ namespace AVDeviceControl
         public delegate void DeleteRequest(object sender, EventArgs e);
         public event DeleteRequest RqDelete = null;
 
+        public delegate void MoveRequest(object sender, bool left);
+        public event MoveRequest RqMove = null;
+
         public event ConfigurationChanged configurationChangedEvent = null;
         public event ValueChanged valueChangedEvent = null;
         #endregion
@@ -207,6 +210,8 @@ namespace AVDeviceControl
                         configurationChangedEvent?.Invoke(this);
                     }
                 }
+                btnLeft.Visible = !value;
+                btnRight.Visible = !value;
                 tabControl1.Visible = true;
                 pnlConnected.Visible = isConnected;
             }
@@ -242,7 +247,7 @@ namespace AVDeviceControl
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to remove this camera?",
-                "Deleting Camera", MessageBoxButtons.YesNo)
+                "Deleting Device", MessageBoxButtons.YesNo)
                 == DialogResult.Yes)
             {
                 RqDelete?.Invoke(this, new EventArgs());
@@ -403,6 +408,16 @@ namespace AVDeviceControl
         private void cameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             configurationChangedEvent?.Invoke(this);
+        }
+
+        private void btnLeft_Click(object sender, EventArgs e)
+        {
+            RqMove?.Invoke(this, true);
+        }
+
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            RqMove?.Invoke(this, false);
         }
     }
 }

@@ -98,7 +98,7 @@ namespace AVDeviceControl
 
         public override string ToString()
         {
-            return String.Format("Camera{0} Bright.Value 0x{1:X2} ({1})", this.Destination, Position);
+            return String.Format("Device{0} Bright.Value 0x{1:X2} ({1})", this.Destination, Position);
         }
     }
 
@@ -134,7 +134,7 @@ namespace AVDeviceControl
 
         public override string ToString()
         {
-            return String.Format("Camera{0} Bright.Inquiry", this.Destination);
+            return String.Format("Device{0} Bright.Inquiry", this.Destination);
         }
     }
 }

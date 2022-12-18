@@ -31,6 +31,9 @@ namespace AVDeviceControl
         public delegate void DeleteRequest(object sender, EventArgs e);
         public event DeleteRequest RqDelete = null;
 
+        public delegate void MoveRequest(object sender, bool left);
+        public event MoveRequest RqMove = null;
+
         public event ConfigurationChanged configurationChangedEvent = null;
         public event ValueChanged valueChangedEvent = null;
         #endregion
@@ -219,6 +222,8 @@ namespace AVDeviceControl
                 }
                 btnDisconnect.Visible = isConnected;
                 tabControl1.Visible = true;
+                btnLeft.Visible = !value;
+                btnRight.Visible = !value;
                 // pnlConnected.Visible = isConnected;
             }
         }
@@ -617,6 +622,16 @@ namespace AVDeviceControl
         private void mixerConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             configurationChangedEvent?.Invoke(this);
+        }
+
+        private void btnLeft_Click(object sender, EventArgs e)
+        {
+            RqMove?.Invoke(this, true);
+        }
+
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            RqMove?.Invoke(this, false);
         }
     }
 }

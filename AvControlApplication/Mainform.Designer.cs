@@ -134,7 +134,7 @@ namespace AVDeviceControl
             // 
             this.mnuAddCamera.Name = "mnuAddCamera";
             this.mnuAddCamera.Size = new System.Drawing.Size(140, 22);
-            this.mnuAddCamera.Text = "Add Camera";
+            this.mnuAddCamera.Text = "Add Device";
             this.mnuAddCamera.Click += new System.EventHandler(this.mnuAddCamera_Click);
             // 
             // mnuAddMixer

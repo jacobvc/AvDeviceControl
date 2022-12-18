@@ -234,9 +234,8 @@ namespace AVDeviceControl
                         jStatus.Add("result", true);
                         jStatus.Add("code", 0);
                         break;
-                    case "GetCameras":
-                        jData.Add("cameras",devices.GetCameras());
-                        jData.Add("mixers",devices.GetMixers());
+                    case "GetAvDevices":
+                        jData.Add("devices",devices.GetAvDevices());
                         jStatus.Add("result", true);
                         jStatus.Add("code", 0);
                         break;

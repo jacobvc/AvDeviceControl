@@ -34,6 +34,8 @@ namespace AVDeviceControl
             this.txtName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnDisconnect = new System.Windows.Forms.Button();
+            this.btnRight = new System.Windows.Forms.Button();
+            this.btnLeft = new System.Windows.Forms.Button();
             this.mixerConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.channelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -54,7 +56,7 @@ namespace AVDeviceControl
             this.tabControl1.Location = new System.Drawing.Point(4, 29);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(230, 172);
+            this.tabControl1.Size = new System.Drawing.Size(269, 172);
             this.tabControl1.TabIndex = 0;
             // 
             // tpConfigure
@@ -70,7 +72,7 @@ namespace AVDeviceControl
             this.tpConfigure.Location = new System.Drawing.Point(4, 22);
             this.tpConfigure.Name = "tpConfigure";
             this.tpConfigure.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConfigure.Size = new System.Drawing.Size(222, 146);
+            this.tpConfigure.Size = new System.Drawing.Size(261, 146);
             this.tpConfigure.TabIndex = 0;
             this.tpConfigure.Text = "Configure";
             this.tpConfigure.UseVisualStyleBackColor = true;
@@ -132,7 +134,7 @@ namespace AVDeviceControl
             this.dgChannels.DataSource = this.channelsBindingSource;
             this.dgChannels.Location = new System.Drawing.Point(0, 52);
             this.dgChannels.Name = "dgChannels";
-            this.dgChannels.Size = new System.Drawing.Size(219, 91);
+            this.dgChannels.Size = new System.Drawing.Size(258, 91);
             this.dgChannels.TabIndex = 16;
             this.dgChannels.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgChannels_CellValidating);
             this.dgChannels.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgChannels_EditingControlShowing);
@@ -161,7 +163,7 @@ namespace AVDeviceControl
             // btnRefreshDevices
             // 
             this.btnRefreshDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshDevices.Location = new System.Drawing.Point(196, 5);
+            this.btnRefreshDevices.Location = new System.Drawing.Point(235, 5);
             this.btnRefreshDevices.Name = "btnRefreshDevices";
             this.btnRefreshDevices.Size = new System.Drawing.Size(25, 23);
             this.btnRefreshDevices.TabIndex = 15;
@@ -189,7 +191,7 @@ namespace AVDeviceControl
             this.cmbDevices.FormattingEnabled = true;
             this.cmbDevices.Location = new System.Drawing.Point(73, 6);
             this.cmbDevices.Name = "cmbDevices";
-            this.cmbDevices.Size = new System.Drawing.Size(117, 21);
+            this.cmbDevices.Size = new System.Drawing.Size(156, 21);
             this.cmbDevices.TabIndex = 13;
             this.cmbDevices.ValueMember = "name";
             // 
@@ -198,7 +200,7 @@ namespace AVDeviceControl
             this.tpControl.Location = new System.Drawing.Point(4, 22);
             this.tpControl.Name = "tpControl";
             this.tpControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tpControl.Size = new System.Drawing.Size(222, 146);
+            this.tpControl.Size = new System.Drawing.Size(261, 146);
             this.tpControl.TabIndex = 1;
             this.tpControl.Text = "Control";
             this.tpControl.UseVisualStyleBackColor = true;
@@ -209,15 +211,15 @@ namespace AVDeviceControl
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mixerConfigBindingSource, "Name", true));
-            this.txtName.Location = new System.Drawing.Point(38, 3);
+            this.txtName.Location = new System.Drawing.Point(62, 3);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(123, 20);
+            this.txtName.Size = new System.Drawing.Size(138, 20);
             this.txtName.TabIndex = 15;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1, 5);
+            this.label6.Location = new System.Drawing.Point(25, 5);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 14;
@@ -226,7 +228,7 @@ namespace AVDeviceControl
             // btnDisconnect
             // 
             this.btnDisconnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDisconnect.Location = new System.Drawing.Point(164, 4);
+            this.btnDisconnect.Location = new System.Drawing.Point(203, 4);
             this.btnDisconnect.Margin = new System.Windows.Forms.Padding(0);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(70, 20);
@@ -234,6 +236,27 @@ namespace AVDeviceControl
             this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
+            // btnRight
+            // 
+            this.btnRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRight.Location = new System.Drawing.Point(253, 2);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(21, 21);
+            this.btnRight.TabIndex = 21;
+            this.btnRight.Text = ">";
+            this.btnRight.UseVisualStyleBackColor = true;
+            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
+            // 
+            // btnLeft
+            // 
+            this.btnLeft.Location = new System.Drawing.Point(2, 2);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(21, 21);
+            this.btnLeft.TabIndex = 20;
+            this.btnLeft.Text = "<";
+            this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
             // mixerConfigBindingSource
             // 
@@ -257,12 +280,14 @@ namespace AVDeviceControl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.btnRight);
+            this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tabControl1);
             this.Name = "ucMixer";
-            this.Size = new System.Drawing.Size(237, 200);
+            this.Size = new System.Drawing.Size(276, 200);
             this.tabControl1.ResumeLayout(false);
             this.tpConfigure.ResumeLayout(false);
             this.tpConfigure.PerformLayout();
@@ -296,5 +321,7 @@ namespace AVDeviceControl
         private System.Windows.Forms.Button btnDisconnect;
         private System.Windows.Forms.CheckBox chk01v96;
         private System.Windows.Forms.CheckBox chkTest;
+        private System.Windows.Forms.Button btnRight;
+        private System.Windows.Forms.Button btnLeft;
     }
 }

@@ -157,7 +157,6 @@ namespace AVDeviceControl
             0,
             -2147483648});
             this.slidPan.Name = "slidPan";
-            this.slidPan.Radius = 145;
             this.slidPan.ScaleDivisions = new decimal(new int[] {
             10,
             0,
