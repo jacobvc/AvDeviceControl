@@ -211,7 +211,7 @@ namespace AVDeviceControl
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mixerConfigBindingSource, "Name", true));
-            this.txtName.Location = new System.Drawing.Point(62, 3);
+            this.txtName.Location = new System.Drawing.Point(62, 2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(138, 20);
             this.txtName.TabIndex = 15;
@@ -219,7 +219,7 @@ namespace AVDeviceControl
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(25, 5);
+            this.label6.Location = new System.Drawing.Point(25, 4);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 14;
@@ -228,7 +228,7 @@ namespace AVDeviceControl
             // btnDisconnect
             // 
             this.btnDisconnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDisconnect.Location = new System.Drawing.Point(203, 4);
+            this.btnDisconnect.Location = new System.Drawing.Point(203, 1);
             this.btnDisconnect.Margin = new System.Windows.Forms.Padding(0);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(70, 20);
@@ -240,7 +240,7 @@ namespace AVDeviceControl
             // btnRight
             // 
             this.btnRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRight.Location = new System.Drawing.Point(253, 2);
+            this.btnRight.Location = new System.Drawing.Point(253, 0);
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(21, 21);
             this.btnRight.TabIndex = 21;
@@ -250,7 +250,7 @@ namespace AVDeviceControl
             // 
             // btnLeft
             // 
-            this.btnLeft.Location = new System.Drawing.Point(2, 2);
+            this.btnLeft.Location = new System.Drawing.Point(0, 0);
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(21, 21);
             this.btnLeft.TabIndex = 20;

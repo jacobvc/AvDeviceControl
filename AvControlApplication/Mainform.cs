@@ -236,6 +236,18 @@ namespace AVDeviceControl
         {
             MoveAvDevice((sender as ucMixer).Config, left);
         }
+        #endregion
+
+        #region All Devices
+        private void RemoveAllDevices(Control panel)
+        {
+            for (int i = 0; i < deviceControls.DeviceCount; ++i)
+            {
+                panel.Controls.Remove(deviceControls.Device(i));
+            }
+            collection.devices.Clear();
+            deviceControls.Clear();
+        }
 
         private void MoveAvDevice(AvDeviceConfig config, bool left)
         {
@@ -263,18 +275,6 @@ namespace AVDeviceControl
             }
             PositionDevices(spltMain.Panel1);
         }
-        #endregion
-
-        #region All Devices
-        private void RemoveAllDevices(Control panel)
-        {
-            for (int i = 0; i < deviceControls.DeviceCount; ++i)
-            {
-                panel.Controls.Remove(deviceControls.Device(i));
-            }
-            collection.devices.Clear();
-            deviceControls.Clear();
-        }
 
         private void PositionDevices(Control panel)
         {
@@ -282,10 +282,21 @@ namespace AVDeviceControl
             int left = 0;
             for (int i = 0; i < deviceControls.DeviceCount; ++i)
             {
-                UserControl cam = deviceControls.Device(i);
-                cam.Size = new Size(clientHeight * cam.Width / cam.Height, clientHeight);
-                cam.Location = new Point(left, 0);
-                left += cam.Width;
+                UserControl uc = deviceControls.Device(i);
+                uc.Size = new Size(clientHeight * uc.Width / uc.Height, clientHeight);
+                uc.Location = new Point(left, 0);
+                left += uc.Width;
+
+                ucViscaCamera cam = uc as ucViscaCamera;
+                if (cam != null)
+                {
+                    cam.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
+                }
+                ucMixer mixer = uc as ucMixer; 
+                if (mixer != null)
+                {
+                    mixer.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
+                }
             }
         }
         #endregion

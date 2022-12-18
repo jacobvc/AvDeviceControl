@@ -32,10 +32,10 @@ namespace AVDeviceControl
             this.udPan = new System.Windows.Forms.NumericUpDown();
             this.udTilt = new System.Windows.Forms.NumericUpDown();
             this.pnlPt = new System.Windows.Forms.Panel();
+            this.slidTilt = new ColorSlider.ColorSlider();
             this.hostPt = new System.Windows.Forms.Integration.ElementHost();
             this.ucWpfPtControl = new AVDeviceControl.UcWpfPtControl();
             this.slidPan = new ColorSlider.ColorSlider();
-            this.slidTilt = new ColorSlider.ColorSlider();
             ((System.ComponentModel.ISupportInitialize)(this.udPan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTilt)).BeginInit();
             this.pnlPt.SuspendLayout();
@@ -95,9 +95,9 @@ namespace AVDeviceControl
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPt.BackColor = System.Drawing.Color.Transparent;
+            this.pnlPt.Controls.Add(this.slidPan);
             this.pnlPt.Controls.Add(this.hostPt);
             this.pnlPt.Controls.Add(this.udTilt);
-            this.pnlPt.Controls.Add(this.slidPan);
             this.pnlPt.Controls.Add(this.udPan);
             this.pnlPt.Location = new System.Drawing.Point(20, 1);
             this.pnlPt.Name = "pnlPt";
@@ -106,92 +106,6 @@ namespace AVDeviceControl
             this.pnlPt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanTilt_MouseDown);
             this.pnlPt.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PanTilt_MouseMove);
             this.pnlPt.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PanTilt_MouseUp);
-            // 
-            // hostPt
-            // 
-            this.hostPt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hostPt.Location = new System.Drawing.Point(3, 19);
-            this.hostPt.Name = "hostPt";
-            this.hostPt.Size = new System.Drawing.Size(119, 102);
-            this.hostPt.TabIndex = 12;
-            this.hostPt.Text = "elementHost1";
-            this.hostPt.Child = this.ucWpfPtControl;
-            // 
-            // slidPan
-            // 
-            this.slidPan.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.slidPan.BackColor = System.Drawing.Color.Transparent;
-            this.slidPan.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
-            this.slidPan.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
-            this.slidPan.BorderRoundRectSize = new System.Drawing.Size(8, 8);
-            this.slidPan.ColorSchema = ColorSlider.ColorSlider.ColorSchemas.PlainColors;
-            this.slidPan.ElapsedInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
-            this.slidPan.ElapsedPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(130)))), ((int)(((byte)(208)))));
-            this.slidPan.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
-            this.slidPan.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.slidPan.ForeColor = System.Drawing.Color.White;
-            this.slidPan.InputColor = System.Drawing.Color.SpringGreen;
-            this.slidPan.InputValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.slidPan.LargeChange = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.slidPan.Location = new System.Drawing.Point(0, -9);
-            this.slidPan.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.slidPan.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.slidPan.Name = "slidPan";
-            this.slidPan.ScaleDivisions = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.slidPan.ScaleSubDivisions = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.slidPan.ShowDivisionsText = true;
-            this.slidPan.ShowSmallScale = false;
-            this.slidPan.Size = new System.Drawing.Size(120, 40);
-            this.slidPan.SmallChange = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.slidPan.TabIndex = 11;
-            this.slidPan.Text = "colorSlider1";
-            this.slidPan.ThumbInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
-            this.slidPan.ThumbPenColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
-            this.slidPan.ThumbRoundRectSize = new System.Drawing.Size(16, 16);
-            this.slidPan.ThumbSize = new System.Drawing.Size(16, 16);
-            this.slidPan.TickAdd = 0F;
-            this.slidPan.TickColor = System.Drawing.Color.White;
-            this.slidPan.TickDivide = 0F;
-            this.slidPan.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.slidPan.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.slidPan.ValueChanged += new System.EventHandler(this.slidPan_ValueChanged);
-            this.slidPan.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slidPan_MouseUp);
             // 
             // slidTilt
             // 
@@ -264,6 +178,91 @@ namespace AVDeviceControl
             0});
             this.slidTilt.ValueChanged += new System.EventHandler(this.slidTilt_ValueChanged);
             this.slidTilt.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slidTilt_MouseUp);
+            // 
+            // hostPt
+            // 
+            this.hostPt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hostPt.Location = new System.Drawing.Point(3, 19);
+            this.hostPt.Name = "hostPt";
+            this.hostPt.Size = new System.Drawing.Size(119, 102);
+            this.hostPt.TabIndex = 12;
+            this.hostPt.Text = "elementHost1";
+            this.hostPt.Child = this.ucWpfPtControl;
+            // 
+            // slidPan
+            // 
+            this.slidPan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.slidPan.BackColor = System.Drawing.Color.Transparent;
+            this.slidPan.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
+            this.slidPan.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
+            this.slidPan.BorderRoundRectSize = new System.Drawing.Size(8, 8);
+            this.slidPan.ColorSchema = ColorSlider.ColorSlider.ColorSchemas.PlainColors;
+            this.slidPan.ElapsedInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
+            this.slidPan.ElapsedPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(130)))), ((int)(((byte)(208)))));
+            this.slidPan.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
+            this.slidPan.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.slidPan.ForeColor = System.Drawing.Color.White;
+            this.slidPan.InputColor = System.Drawing.Color.SpringGreen;
+            this.slidPan.InputValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.slidPan.LargeChange = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.slidPan.Location = new System.Drawing.Point(-3, -3);
+            this.slidPan.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.slidPan.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.slidPan.Name = "slidPan";
+            this.slidPan.ScaleDivisions = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.slidPan.ScaleSubDivisions = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.slidPan.ShowDivisionsText = true;
+            this.slidPan.ShowSmallScale = false;
+            this.slidPan.Size = new System.Drawing.Size(120, 24);
+            this.slidPan.SmallChange = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.slidPan.TabIndex = 11;
+            this.slidPan.Text = "colorSlider1";
+            this.slidPan.ThumbInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
+            this.slidPan.ThumbPenColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
+            this.slidPan.ThumbRoundRectSize = new System.Drawing.Size(16, 16);
+            this.slidPan.ThumbSize = new System.Drawing.Size(16, 16);
+            this.slidPan.TickAdd = 0F;
+            this.slidPan.TickColor = System.Drawing.Color.White;
+            this.slidPan.TickDivide = 0F;
+            this.slidPan.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.slidPan.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.slidPan.ValueChanged += new System.EventHandler(this.slidPan_ValueChanged);
+            this.slidPan.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slidPan_MouseUp);
             // 
             // ucPtControl
             // 

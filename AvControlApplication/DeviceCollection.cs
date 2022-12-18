@@ -66,7 +66,7 @@ namespace AVDeviceControl
             foreach (UserControl uc in devices)
             {
                 ucViscaCamera cam = uc as ucViscaCamera;
-                if (cam != null && cam.Camera != null)
+                if (cam != null)
                 {
                     deviceDict[cam.Config.Name] = uc;
                 }
@@ -330,7 +330,7 @@ namespace AVDeviceControl
             if (deviceDict.TryGetValue(name, out uc))
             {
                 cam = uc as ucViscaCamera;
-                if (cam != null && cam.Camera != null)
+                if (cam != null)
                 {
                     cam.Connect(!cam.Config.IsIp);
                     return true;

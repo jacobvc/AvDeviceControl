@@ -106,7 +106,7 @@ namespace AVDeviceControl
         }
         #endregion
 
-        #region Control Initialization and Tab selection
+        #region Control Initialization
         private void InitComboLists()
         {
             cmbBaud.Items.Clear();
@@ -134,8 +134,14 @@ namespace AVDeviceControl
         }
         #endregion
 
+        public void ConfigureMoveable(bool left, bool right)
+        {
+            btnLeft.Visible = left;
+            btnRight.Visible = right;
+        }
+
         #region Camera Control
- 
+
         public String Connect(bool serial)
         {
              return (String)Invoke(new Action(() => { ExecConnect(serial); }));

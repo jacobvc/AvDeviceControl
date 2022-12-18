@@ -52,6 +52,16 @@ namespace AVDeviceControl
             base.MouseMove += UcWpfPtControl_MouseMove;
         }
 
+
+        private void Form_Load(object sender, RoutedEventArgs e)
+        {
+            Pan = 0;
+            Tilt = 0;
+            Zoom = _zoom;
+        }
+        #endregion
+
+        #region Mouse Events
         private void UcWpfPtControl_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             MouseMove?.Invoke(sender, ToMouseArgs(e));
@@ -97,13 +107,6 @@ namespace AVDeviceControl
         }
 
 
-
-        private void Form_Load(object sender, RoutedEventArgs e)
-        {
-            Pan = 0;
-            Tilt = 0;
-            Zoom = _zoom;
-        }
         #endregion
 
         #region Properties

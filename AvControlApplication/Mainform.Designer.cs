@@ -74,7 +74,7 @@ namespace AVDeviceControl
             this.spltMain.Panel1.Resize += new System.EventHandler(this.spltMain_Panel1_Resize);
             this.spltMain.Panel2Collapsed = true;
             this.spltMain.Size = new System.Drawing.Size(554, 189);
-            this.spltMain.SplitterDistance = 190;
+            this.spltMain.SplitterDistance = 164;
             this.spltMain.SplitterWidth = 6;
             this.spltMain.TabIndex = 9;
             // 
@@ -103,21 +103,21 @@ namespace AVDeviceControl
             // mnuSaveConfig
             // 
             this.mnuSaveConfig.Name = "mnuSaveConfig";
-            this.mnuSaveConfig.Size = new System.Drawing.Size(160, 22);
+            this.mnuSaveConfig.Size = new System.Drawing.Size(180, 22);
             this.mnuSaveConfig.Text = "Save Config";
             this.mnuSaveConfig.Click += new System.EventHandler(this.mnuSaveConfig_Click);
             // 
             // mnuLoadConfig
             // 
             this.mnuLoadConfig.Name = "mnuLoadConfig";
-            this.mnuLoadConfig.Size = new System.Drawing.Size(160, 22);
+            this.mnuLoadConfig.Size = new System.Drawing.Size(180, 22);
             this.mnuLoadConfig.Text = "Load Config";
             this.mnuLoadConfig.Click += new System.EventHandler(this.mnuLoadConfig_Click);
             // 
             // mnuSaveJSONCopy
             // 
             this.mnuSaveJSONCopy.Name = "mnuSaveJSONCopy";
-            this.mnuSaveJSONCopy.Size = new System.Drawing.Size(160, 22);
+            this.mnuSaveJSONCopy.Size = new System.Drawing.Size(180, 22);
             this.mnuSaveJSONCopy.Text = "Save JSON Copy";
             this.mnuSaveJSONCopy.Click += new System.EventHandler(this.mnuSaveJSONCopy_Click);
             // 
@@ -133,14 +133,14 @@ namespace AVDeviceControl
             // mnuAddCamera
             // 
             this.mnuAddCamera.Name = "mnuAddCamera";
-            this.mnuAddCamera.Size = new System.Drawing.Size(140, 22);
-            this.mnuAddCamera.Text = "Add Device";
+            this.mnuAddCamera.Size = new System.Drawing.Size(180, 22);
+            this.mnuAddCamera.Text = "Add Camera";
             this.mnuAddCamera.Click += new System.EventHandler(this.mnuAddCamera_Click);
             // 
             // mnuAddMixer
             // 
             this.mnuAddMixer.Name = "mnuAddMixer";
-            this.mnuAddMixer.Size = new System.Drawing.Size(140, 22);
+            this.mnuAddMixer.Size = new System.Drawing.Size(180, 22);
             this.mnuAddMixer.Text = "Add Mixer";
             this.mnuAddMixer.Click += new System.EventHandler(this.mnuAddMixer_Click);
             // 

@@ -670,7 +670,7 @@ namespace AVDeviceControl
             // 
             // btnLeft
             // 
-            this.btnLeft.Location = new System.Drawing.Point(2, 0);
+            this.btnLeft.Location = new System.Drawing.Point(1, 0);
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(21, 21);
             this.btnLeft.TabIndex = 15;
@@ -681,7 +681,7 @@ namespace AVDeviceControl
             // btnRight
             // 
             this.btnRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRight.Location = new System.Drawing.Point(259, 0);
+            this.btnRight.Location = new System.Drawing.Point(258, 0);
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(21, 21);
             this.btnRight.TabIndex = 16;

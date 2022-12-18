@@ -113,6 +113,12 @@ namespace AVDeviceControl
         }
         #endregion
 
+        public void ConfigureMoveable(bool left, bool right)
+        {
+            btnLeft.Visible = left;
+            btnRight.Visible = right;
+        }
+
         #region Connection
         public String Connect()
         {
