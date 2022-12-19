@@ -242,7 +242,7 @@ namespace AVDeviceControl
                     case "MovePtz":
                         {
                             String error = validateNameDirAmount(jRequest,
-                               new string[] { "up", "down", "left", "right" });
+                               new string[] { "up", "down", "left", "right", "stop" });
                             if (error == null)
                             {
                                 String direction = (string)jRequest["direction"];
@@ -262,7 +262,7 @@ namespace AVDeviceControl
                     case "Zoom":
                         {
                             String error = validateNameDirAmount(jRequest,
-                               new string[] { "in", "out" });
+                               new string[] { "in", "out", "stop" });
                             if (error == null)
                             {
                                 String direction = (string)jRequest["direction"];

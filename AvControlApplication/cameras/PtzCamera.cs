@@ -96,19 +96,19 @@ namespace AVDeviceControl
         /// </summary>
         private static byte AbsSpeed(int speed) => (byte)Math.Max(Math.Abs(speed), 1);
 
-        public void ContinuousPanTilt(int ppanSpeed, int ttiltSpeed)
+        public void ContinuousPanTilt(int panSpeed, int tiltSpeed)
         {
-            //Console.WriteLine("Pan " + panSpeed + " / Tilt " + tiltSpeed);
-            PanSpeed = AbsSpeed(ppanSpeed);
-            TiltSpeed = AbsSpeed(ttiltSpeed);
+            Console.WriteLine("Pan " + panSpeed + " / Tilt " + tiltSpeed);
+            PanSpeed = AbsSpeed(panSpeed);
+            TiltSpeed = AbsSpeed(tiltSpeed);
 
-            if (ppanSpeed > 0)
+            if (panSpeed > 0)
             {
-                if (ttiltSpeed > 0)
+                if (tiltSpeed > 0)
                 {
                     UpRight();
                 }
-                else if (ttiltSpeed < 0)
+                else if (tiltSpeed < 0)
                 {
                     DownRight();
                 }
@@ -117,13 +117,13 @@ namespace AVDeviceControl
                     Right();
                 }
             }
-            else if (ppanSpeed < 0)
+            else if (panSpeed < 0)
             {
-                if (ttiltSpeed > 0)
+                if (tiltSpeed > 0)
                 {
                     UpLeft();
                 }
-                else if (ttiltSpeed < 0)
+                else if (tiltSpeed < 0)
                 {
                     DownLeft();
                 }
@@ -134,11 +134,11 @@ namespace AVDeviceControl
             }
             else // == 0
             {
-                if (ttiltSpeed > 0)
+                if (tiltSpeed > 0)
                 {
                     Up();
                 }
-                else if (ttiltSpeed < 0)
+                else if (tiltSpeed < 0)
                 {
                     Down();
                 }

@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using static AVDeviceControl.Preset;
+using System.Windows.Media.Media3D;
 
 namespace AVDeviceControl
 {
@@ -214,26 +216,28 @@ namespace AVDeviceControl
 
                 int iAmount = 50;
                 try { iAmount = int.Parse(amount); } catch (Exception) { }
-                int pan = (int)((cam.Config.MaxPan - cam.Config.MinPan)
-                   * iAmount * iAmount / 10000 / 8 * cam.Config.CountsPerDegree);
-                int tilt = (int)((cam.Config.MaxTilt - cam.Config.MinTilt)
-                   * iAmount * iAmount / 10000 / 8 * cam.Config.CountsPerDegree);
+                iAmount = Math.Min(iAmount, 100);
+                int tiltSpeed = 0;
+                int panSpeed = 0;
 
                 switch (direction)
                 {
                     case "up":
-                        cam.Camera?.PositionRelative(0, tilt);
+                        tiltSpeed = (int)(iAmount * cam.Camera.Limits.TiltSpeedLimits.High);
                         break;
                     case "down":
-                        cam.Camera?.PositionRelative(0, -tilt);
+                        tiltSpeed = -(int)(iAmount * cam.Camera.Limits.TiltSpeedLimits.High);
                         break;
                     case "left":
-                        cam.Camera?.PositionRelative(-pan, 0);
+                        panSpeed = -(int)(iAmount * cam.Camera.Limits.PanSpeedLimits.High);
                         break;
                     case "right":
-                        cam.Camera?.PositionRelative(pan, 0);
+                        panSpeed = (int)(iAmount * cam.Camera.Limits.PanSpeedLimits.High);
+                        break;
+                    case "stop":
                         break;
                 }
+                cam.Camera.ContinuousPanTilt(panSpeed / 100, tiltSpeed / 100);
                 cam.Camera?.UpdatePosition();
                 return true;
             }

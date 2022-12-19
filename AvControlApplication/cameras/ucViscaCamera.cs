@@ -406,6 +406,8 @@ namespace AVDeviceControl
             camera?.EndTrack();
             ptControl.AnglePan = ((short)e.PanPosition) / config.CountsPerDegree;
             ptControl.AngleTilt = ((short)e.TiltPosition) / config.CountsPerDegree;
+            Console.WriteLine("Position: Pan = " + (int)ptControl.AnglePan 
+                + ", Tilt = " + (int)ptControl.AngleTilt); 
         }
 
         private void Camera_ZoomPositionChanged(object sender, ViscaCamera.PositionEventArgs e)
@@ -413,6 +415,7 @@ namespace AVDeviceControl
             camera?.EndTrack();
             Zoom = e.Position / config.FullScaleZoom;
             ptControl.ZoomFraction = (float)Zoom;
+            Console.WriteLine("Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
         }
         #endregion
 
