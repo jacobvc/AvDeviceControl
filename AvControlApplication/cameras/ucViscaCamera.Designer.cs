@@ -307,9 +307,9 @@ namespace AVDeviceControl
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstLivePresets.DisplayMember = "Name";
             this.lstLivePresets.FormattingEnabled = true;
-            this.lstLivePresets.Location = new System.Drawing.Point(206, 9);
+            this.lstLivePresets.Location = new System.Drawing.Point(193, 9);
             this.lstLivePresets.Name = "lstLivePresets";
-            this.lstLivePresets.Size = new System.Drawing.Size(61, 108);
+            this.lstLivePresets.Size = new System.Drawing.Size(74, 108);
             this.lstLivePresets.Sorted = true;
             this.lstLivePresets.TabIndex = 9;
             this.lstLivePresets.ValueMember = "Name";
@@ -334,7 +334,7 @@ namespace AVDeviceControl
             this.ptControl.OblongY = 10;
             this.ptControl.OrthoRotation = -90F;
             this.ptControl.RadiusReduction = 9;
-            this.ptControl.Size = new System.Drawing.Size(173, 108);
+            this.ptControl.Size = new System.Drawing.Size(158, 122);
             this.ptControl.TabIndex = 4;
             this.ptControl.ZoomFraction = 0.6F;
             this.ptControl.ValueChanged += new AVDeviceControl.ucPtControl.PanTiltValueChangedEvent(this.PtControl_ValueChanged);

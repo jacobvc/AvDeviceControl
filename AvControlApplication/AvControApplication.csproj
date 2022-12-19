@@ -119,7 +119,7 @@
     <Compile Include="misc\ColorSlider.designer.cs">
       <DependentUpon>ColorSlider.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeviceCollection.cs" />
+    <Compile Include="AvDeviceCollection.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +168,9 @@
       <DependentUpon>ucVolumeSlider.cs</DependentUpon>
     </Compile>
     <Compile Include="transport\WebServer.cs" />
+    <Compile Include="ucAvDevice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="misc\ColorSlider.resx">
       <DependentUpon>ColorSlider.cs</DependentUpon>
     </EmbeddedResource>

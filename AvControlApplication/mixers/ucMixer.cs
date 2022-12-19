@@ -15,7 +15,7 @@ using RtMidi.Core.Devices;
 
 namespace AVDeviceControl
 {
-    public partial class ucMixer : UserControl
+    public partial class ucMixer : ucAvDevice
     {
         #region Local Variables
         MixerConfig config = new MixerConfig();
@@ -77,13 +77,14 @@ namespace AVDeviceControl
         #endregion
 
         #region Properties
+        public override string DeviceName => config.Name;
         public MixerConfig Config { get { return config; } }
         public ucVolumeSlider[] Sliders { get { return sliders.ToArray(); } }
         public Midi.MidiConnection Connection { get { return midiConnection;  } }
         #endregion
 
         #region Initialization
-        private void PositionDevices(Control panel)
+        private void PositionSliders(Control panel)
         {
             int clientHeight = panel.ClientRectangle.Height - 8; // space for scrollbar
             int left = 0;
@@ -95,7 +96,7 @@ namespace AVDeviceControl
                 cam.Location = new Point(left, 0);
                 left += cam.Width;
             }
-            this.Width = Math.Max(left + 16, 200);
+            this.Width = Math.Max(left + 16, this.Width);
         }
 
         private void RefreshMidis()
@@ -113,14 +114,18 @@ namespace AVDeviceControl
         }
         #endregion
 
-        public void ConfigureMoveable(bool left, bool right)
+        public override void SetSize(int clientHeight)
+        {
+            base.SetSize(clientHeight);
+        }
+        override public void ConfigureMoveable(bool left, bool right)
         {
             btnLeft.Visible = left;
             btnRight.Visible = right;
         }
 
         #region Connection
-        public String Connect()
+        override public String Connect()
         {
             return (String)Invoke(new Action(() => { ExecConnect(); }));
         }
@@ -165,7 +170,7 @@ namespace AVDeviceControl
                     sliders.Add(sld);
                     MapMidiChannel(ch, sld);
                 }
-                PositionDevices(tpControl);
+                PositionSliders(tpControl);
 
                 Connected = true;
 
@@ -597,7 +602,7 @@ namespace AVDeviceControl
 
         private void tpControl_Resize(object sender, EventArgs e)
         {
-            PositionDevices(tpControl);
+            PositionSliders(tpControl);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

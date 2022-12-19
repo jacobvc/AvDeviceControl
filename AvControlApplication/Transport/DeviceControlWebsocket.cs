@@ -44,7 +44,7 @@ namespace AVDeviceControl
         /// <summary>
         /// Constructor
         /// </summary>
-        public DeviceControlWebsocket(DeviceCollection devices)
+        public DeviceControlWebsocket(AvDeviceCollection devices)
         {
             //ws = this;
 
@@ -127,7 +127,7 @@ namespace AVDeviceControl
 
     public class PtzControl : WebSocketService
     {
-        DeviceCollection devices;
+        AvDeviceCollection devices;
         class session
         {
             public WebSocket webSocket;
@@ -141,7 +141,7 @@ namespace AVDeviceControl
         }
         Dictionary<WebSocket, session> sessions = new Dictionary<WebSocket, session>();
 
-        public PtzControl(DeviceCollection devices)
+        public PtzControl(AvDeviceCollection devices)
         {
             this.devices = devices;
         }

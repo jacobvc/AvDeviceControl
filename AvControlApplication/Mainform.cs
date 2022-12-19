@@ -10,7 +10,7 @@ namespace AVDeviceControl
     public partial class MainForm : Form
     {
         DeviceConfigCollection collection = new DeviceConfigCollection();
-        DeviceCollection deviceControls = new DeviceCollection();
+        AvDeviceCollection deviceControls = new AvDeviceCollection();
 
         DeviceControlWebsocket ws;
         Midi midi;
@@ -275,29 +275,23 @@ namespace AVDeviceControl
             }
             PositionDevices(spltMain.Panel1);
         }
-
+        bool positioning = false;
         private void PositionDevices(Control panel)
         {
+            positioning = true;
+            panel.AutoScrollOffset = new Point();
+            panel.Invalidate();
             int clientHeight = panel.ClientRectangle.Height - 8; // space for scrollbar
             int left = 0;
             for (int i = 0; i < deviceControls.DeviceCount; ++i)
             {
-                UserControl uc = deviceControls.Device(i);
-                uc.Size = new Size(clientHeight * uc.Width / uc.Height, clientHeight);
+                ucAvDevice uc = deviceControls.Device(i);
+                uc.SetSize(clientHeight);
                 uc.Location = new Point(left, 0);
                 left += uc.Width;
-
-                ucViscaCamera cam = uc as ucViscaCamera;
-                if (cam != null)
-                {
-                    cam.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
-                }
-                ucMixer mixer = uc as ucMixer; 
-                if (mixer != null)
-                {
-                    mixer.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
-                }
+                uc.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
             }
+            positioning = false;
         }
         #endregion
 
@@ -306,7 +300,10 @@ namespace AVDeviceControl
         #region Control Events
         private void spltMain_Panel1_Resize(object sender, EventArgs e)
         {
-            PositionDevices(spltMain.Panel1);
+            if (!positioning)
+            {
+                PositionDevices(spltMain.Panel1);
+            }
         }
 
         private void Device_click(object sender, EventArgs e)

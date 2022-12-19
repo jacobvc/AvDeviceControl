@@ -1,12 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace AVDeviceControl
 {
@@ -38,22 +32,23 @@ namespace AVDeviceControl
         VolumeSetting,
         VolumeLevel
     }
+
     /// <remarks>
     /// A collection of all of the loaded devices
     /// </remarks>
-    public partial class DeviceCollection
+    public partial class AvDeviceCollection
     {
-        List<UserControl> devices = new List<UserControl>();
-        Dictionary<String, UserControl> deviceDict = new Dictionary<string, UserControl>();
+        List<ucAvDevice> devices = new List<ucAvDevice>();
+        Dictionary<String, ucAvDevice> deviceDict = new Dictionary<string, ucAvDevice>();
 
         public event ConfigurationChanged configurationChangedEvent = null;
         public event ValueChanged valueChangedEvent = null;
 
-        public DeviceCollection()
+        public AvDeviceCollection()
         {
 
         }
-        public DeviceCollection(List<UserControl> devices)
+        public AvDeviceCollection(List<ucAvDevice> devices)
         {
             this.devices = devices;
             Update();
@@ -63,21 +58,9 @@ namespace AVDeviceControl
         void Update()
         {
             deviceDict.Clear();
-            foreach (UserControl uc in devices)
+            foreach (ucAvDevice uc in devices)
             {
-                ucViscaCamera cam = uc as ucViscaCamera;
-                if (cam != null)
-                {
-                    deviceDict[cam.Config.Name] = uc;
-                }
-                else
-                {
-                    ucMixer mixer = uc as ucMixer;
-                    if (mixer != null)
-                    {
-                        deviceDict[mixer.Config.Name] = uc;
-                    }
-                }
+                deviceDict[uc.DeviceName] = uc;
             }
         }
 
@@ -122,7 +105,7 @@ namespace AVDeviceControl
             configurationChangedEvent?.Invoke(this);
         }
 
-        public UserControl Device(int index)
+        public ucAvDevice Device(int index)
         {
             return devices[index];
         }
@@ -130,13 +113,13 @@ namespace AVDeviceControl
         {
             if (left && index > 0)
             {
-                UserControl tmp = devices[index - 1];
+                ucAvDevice tmp = devices[index - 1];
                 devices[index - 1] = devices[index];
                 devices[index] = tmp;
             }
             else if (!left && index < devices.Count - 1)
             {
-                UserControl tmp = devices[index + 1];
+                ucAvDevice tmp = devices[index + 1];
                 devices[index + 1] = devices[index];
                 devices[index] = tmp;
             }
@@ -164,7 +147,7 @@ namespace AVDeviceControl
         {
             JArray array = new JArray();
             ucMixer mixer = null;
-            foreach (UserControl uc in devices)
+            foreach (ucAvDevice uc in devices)
             {
                 ucViscaCamera cam = uc as ucViscaCamera;
                 if (cam != null)
@@ -172,7 +155,7 @@ namespace AVDeviceControl
                     JObject o = new JObject();
                     String s = "";
                     o.Add("devicetype", "viscacamera");
-                    o.Add("name", cam.Config.Name);
+                    o.Add("name", uc.DeviceName);
                     if (cam.Config.presets.Count > 0)
                     {
                         foreach (Preset p in cam.Config.presets)
@@ -191,7 +174,7 @@ namespace AVDeviceControl
                     {
                         JObject o = new JObject();
                         o.Add("devicetype", "mixer");
-                        o.Add("name", mixer.Config.Name);
+                        o.Add("name", uc.DeviceName);
                         if (mixer.Config.Channels.Count > 0)
                         {
                             JArray channels = new JArray();
@@ -223,7 +206,7 @@ namespace AVDeviceControl
         {
             Update();
             ucViscaCamera cam = null;
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(cameraName, out uc))
             {
                 cam = uc as ucViscaCamera;
@@ -263,7 +246,7 @@ namespace AVDeviceControl
         {
             Update();
             ucViscaCamera cam = null;
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(cameraName, out uc))
             {
                 cam = uc as ucViscaCamera;
@@ -299,7 +282,7 @@ namespace AVDeviceControl
         {
             Update();
             ucViscaCamera cam = null;
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(cameraName, out uc))
             {
                 cam = uc as ucViscaCamera;
@@ -324,26 +307,11 @@ namespace AVDeviceControl
         public bool ConnectAvDevice(String name)
         {
             Update();
-            ucViscaCamera cam = null;
-            ucMixer mixer = null;
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(name, out uc))
             {
-                cam = uc as ucViscaCamera;
-                if (cam != null)
-                {
-                    cam.Connect(!cam.Config.IsIp);
-                    return true;
-                }
-                else
-                {
-                    mixer = uc as ucMixer;
-                    if (mixer != null)
-                    {
-                        mixer.Connect();
-                        return true;
-                    }
-                }
+                uc.Connect();
+                return true;
             }
             return false;
         }
@@ -352,7 +320,7 @@ namespace AVDeviceControl
             Update();
             ucViscaCamera cam = null;
             ucMixer mixer = null;
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(name, out uc))
             {
                 cam = uc as ucViscaCamera;
@@ -379,7 +347,7 @@ namespace AVDeviceControl
         public bool SetMute(String mixerName, String channelName, bool value)
         {
             Update();
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(mixerName, out uc))
             {
                 ucMixer mixer = uc as ucMixer;
@@ -392,7 +360,7 @@ namespace AVDeviceControl
         public bool SetVolume(String mixerName, String channelName, int value)
         {
             Update();
-            UserControl uc;
+            ucAvDevice uc;
             if (deviceDict.TryGetValue(mixerName, out uc))
             {
                 ucMixer mixer = uc as ucMixer;

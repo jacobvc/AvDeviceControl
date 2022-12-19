@@ -10,7 +10,7 @@ using Visca;
 
 namespace AVDeviceControl
 {
-    public partial class ucViscaCamera : UserControl
+    public partial class ucViscaCamera : ucAvDevice
     {
         #region Helper functions
         /// <summary>
@@ -48,6 +48,7 @@ namespace AVDeviceControl
         double Zoom = 0;
         public PtzCamera Camera { get { return camera; } }
 
+        public override string DeviceName => config.Name;
 
         public CameraConfig Config
         {
@@ -134,7 +135,13 @@ namespace AVDeviceControl
         }
         #endregion
 
-        public void ConfigureMoveable(bool left, bool right)
+        public override void SetSize(int clientHeight)
+        {
+            double pt_y = ptControl.Height + clientHeight - Height;
+            double pt_x = pt_y * ptControl.Width / ptControl.Height;
+            Size = new System.Drawing.Size((int)pt_x + Width - ptControl.Width, clientHeight);
+        }
+        override public void ConfigureMoveable(bool left, bool right)
         {
             btnLeft.Visible = left;
             btnRight.Visible = right;
@@ -142,9 +149,9 @@ namespace AVDeviceControl
 
         #region Camera Control
 
-        public String Connect(bool serial)
+        override public String Connect()
         {
-             return (String)Invoke(new Action(() => { ExecConnect(serial); }));
+             return (String)Invoke(new Action(() => { ExecConnect(!config.IsIp); }));
             //return ExecConnect(serial);
         }
         public String ExecConnect(bool serial)
@@ -189,7 +196,7 @@ namespace AVDeviceControl
                         isConnected = value;
                         tabControl1.TabPages.Add(tabCamControl);
                         tabControl1.TabPages.Add(tabPresets);
-                        tabControl1.TabPages.Add(tabSettings);
+                        //tabControl1.TabPages.Add(tabSettings);
                         cameraBindingSource.DataSource = camera;
                         ucCamSettings1.Binding = cameraBindingSource;
                         configurationChangedEvent?.Invoke(this);
@@ -229,7 +236,7 @@ namespace AVDeviceControl
         #region Button and checkbox events
         private void BtnConnectIp_Click(object sender, EventArgs e)
         {
-            String error = Connect(false);
+            String error = Connect();
             if (error != null)
             {
                 MessageBox.Show(error, "Failed to control camera");
@@ -238,7 +245,7 @@ namespace AVDeviceControl
 
         private void BtnConnectSerial_Click(object sender, EventArgs e)
         {
-            String error = Connect(true);
+            String error = Connect();
             if (error != null)
             { 
                 MessageBox.Show(error, "Failed to control camera");
