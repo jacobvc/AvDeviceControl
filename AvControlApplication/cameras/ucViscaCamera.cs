@@ -419,8 +419,6 @@ namespace AVDeviceControl
         }
         #endregion
 
-        #endregion
-
         private void cameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             configurationChangedEvent?.Invoke(this);
@@ -435,5 +433,7 @@ namespace AVDeviceControl
         {
             RqMove?.Invoke(this, false);
         }
+
+        #endregion
     }
 }

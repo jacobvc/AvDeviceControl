@@ -204,7 +204,7 @@ namespace AVDeviceControl
             return array;
         }
 
-        public bool Move(String cameraName, String direction, String amount)
+        public bool Move(String cameraName, String direction, String speed)
         {
             Update();
             ucViscaCamera cam = null;
@@ -214,25 +214,25 @@ namespace AVDeviceControl
                 cam = uc as ucViscaCamera;
                 if (cam == null || cam.Camera == null) return false;
 
-                int iAmount = 50;
-                try { iAmount = int.Parse(amount); } catch (Exception) { }
-                iAmount = Math.Min(iAmount, 100);
+                int iSpeed = 50;
+                try { iSpeed = int.Parse(speed); } catch (Exception) { }
+                iSpeed = Math.Min(iSpeed, 100);
                 int tiltSpeed = 0;
                 int panSpeed = 0;
 
                 switch (direction)
                 {
                     case "up":
-                        tiltSpeed = (int)(iAmount * cam.Camera.Limits.TiltSpeedLimits.High);
+                        tiltSpeed = (int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High);
                         break;
                     case "down":
-                        tiltSpeed = -(int)(iAmount * cam.Camera.Limits.TiltSpeedLimits.High);
+                        tiltSpeed = -(int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High);
                         break;
                     case "left":
-                        panSpeed = -(int)(iAmount * cam.Camera.Limits.PanSpeedLimits.High);
+                        panSpeed = -(int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High);
                         break;
                     case "right":
-                        panSpeed = (int)(iAmount * cam.Camera.Limits.PanSpeedLimits.High);
+                        panSpeed = (int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High);
                         break;
                     case "stop":
                         break;
@@ -246,42 +246,41 @@ namespace AVDeviceControl
                 return false;
             }
         }
-        public bool SetZoom(String cameraName, String direction, String amount)
+        public bool SetZoom(String cameraName, String direction, String speed)
         {
             Update();
-            ucViscaCamera cam = null;
+
             ucAvDevice uc;
             if (deviceDict.TryGetValue(cameraName, out uc))
             {
-                cam = uc as ucViscaCamera;
-                if (cam == null || cam.Camera == null) return false;
-
-                int iAmount = 50;
-                try { iAmount = int.Parse(amount); } catch (Exception) { }
-                int position = cam.Camera.ZoomPosition;
-                iAmount = (int)cam.Config.FullScaleZoom * iAmount * iAmount / 10000 / 4;
-                //Console.Write("Zoom from RAW: " + position);
-                switch (direction)
+                ucViscaCamera cam = uc as ucViscaCamera;
+                if (cam != null && cam.Camera != null)
                 {
-                    case "in":
-                        position += iAmount;
-                        break;
-                    case "out":
-                        position -= iAmount;
-                        break;
-                }
-                position = (int)Math.Max(0, Math.Min(cam.Config.FullScaleZoom, position));
-                //Console.WriteLine(" to: " + position);
+                    int iSpeed = 50;
+                    try { iSpeed = int.Parse(speed); } catch (Exception) { }
+                    iSpeed = Math.Min(iSpeed, 100);
 
-                cam.Camera?.ZoomSetPosition(position);
-                cam.Camera?.UpdatePosition();
-                return true;
+                    int zoomSpeed = Math.Max(1, 
+                        (int)(iSpeed * cam.Camera.Limits.ZoomSpeedLimits.High / 100));
+
+                    switch (direction)
+                    {
+                        case "in":
+                            cam.Camera.ContinuousZoom(zoomSpeed);
+                            break;
+                        case "out":
+                            cam.Camera.ContinuousZoom(-zoomSpeed);
+                            break;
+                        default:
+                            cam.Camera.ContinuousZoom(0);
+                            break;
+                    }
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
+        
         public bool ExecPreset(String cameraName, String presetName)
         {
             Update();
