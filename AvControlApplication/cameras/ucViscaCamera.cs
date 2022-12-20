@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
 
 using Visca;
 
@@ -135,6 +131,7 @@ namespace AVDeviceControl
         }
         #endregion
 
+        #region AvDevices
         public override void SetSize(int clientHeight)
         {
             double pt_y = ptControl.Height + clientHeight - Height;
@@ -147,13 +144,14 @@ namespace AVDeviceControl
             btnRight.Visible = right;
         }
 
-        #region Camera Control
-
         override public String Connect()
         {
              return (String)Invoke(new Action(() => { ExecConnect(!config.IsIp); }));
             //return ExecConnect(serial);
         }
+        #endregion
+
+        #region Camera Control
         public String ExecConnect(bool serial)
         {
             Disconnect();
@@ -310,6 +308,16 @@ namespace AVDeviceControl
             RefreshPorts();
         }
 
+        private void btnLeft_Click(object sender, EventArgs e)
+        {
+            RqMove?.Invoke(this, true);
+        }
+
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            RqMove?.Invoke(this, false);
+        }
+
         private void ChkIsIp_CheckedChanged(object sender, EventArgs e)
         {
             config.IsIp = (sender as CheckBox).Checked;
@@ -417,22 +425,12 @@ namespace AVDeviceControl
             ptControl.ZoomFraction = (float)Zoom;
             Console.WriteLine("Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
         }
-        #endregion
 
         private void cameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             configurationChangedEvent?.Invoke(this);
         }
-
-        private void btnLeft_Click(object sender, EventArgs e)
-        {
-            RqMove?.Invoke(this, true);
-        }
-
-        private void btnRight_Click(object sender, EventArgs e)
-        {
-            RqMove?.Invoke(this, false);
-        }
+        #endregion
 
         #endregion
     }

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RtMidi.Core.Messages;
 using RtMidi.Core.Devices.Infos;
 using RtMidi.Core.Devices;
-using System.Windows.Interop;
 
 namespace AVDeviceControl
 {
@@ -78,7 +73,6 @@ namespace AVDeviceControl
         #endregion
 
         #region Properties
-        public override string DeviceName => config.Name;
         public MixerConfig Config { get { return config; } }
         public ucVolumeSlider[] Sliders { get { return sliders.ToArray(); } }
         public Midi.MidiConnection Connection { get { return midiConnection;  } }
@@ -115,6 +109,13 @@ namespace AVDeviceControl
         }
         #endregion
 
+        #region AvDevice
+        public override string DeviceName => config.Name;
+        override public String Connect()
+        {
+            return (String)Invoke(new Action(() => { ExecConnect(); }));
+        }
+
         public override void SetSize(int clientHeight)
         {
             base.SetSize(clientHeight);
@@ -124,12 +125,9 @@ namespace AVDeviceControl
             btnLeft.Visible = left;
             btnRight.Visible = right;
         }
+        #endregion
 
         #region Connection
-        override public String Connect()
-        {
-            return (String)Invoke(new Action(() => { ExecConnect(); }));
-        }
         public String ExecConnect()
         {
             Disconnect();
@@ -200,6 +198,10 @@ namespace AVDeviceControl
             Connected = false;
         }
 
+        void SendShow(String label, byte[] msg)
+        {
+            midiTestDialog?.SendShow(label, msg);
+        }
         bool isConnected = false;
         bool Connected
         {
@@ -375,6 +377,8 @@ namespace AVDeviceControl
         }
         #endregion
 
+        #region 01V96 Support
+
         // https://github.com/kryops/01v96-remote/blob/master/server/controllers/mixer.js
         enum sysExElements
         {
@@ -461,10 +465,6 @@ namespace AVDeviceControl
             }
         }
 
-        void SendShow(String label, byte[] msg)
-        {
-            midiTestDialog?.SendShow(label, msg);
-        }
 
         private void Poll01v96()
         {
@@ -516,6 +516,7 @@ namespace AVDeviceControl
                 }
             }
         }
+        #endregion
 
         #region UI to MIDI Output Support
 
@@ -649,7 +650,6 @@ namespace AVDeviceControl
         {
             Disconnect();
         }
-        #endregion
 
         private void mixerConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
@@ -665,5 +665,6 @@ namespace AVDeviceControl
         {
             RqMove?.Invoke(this, false);
         }
+        #endregion
     }
 }

@@ -12,13 +12,12 @@ namespace AVDeviceControl
     {
         public ucAvDevice() { }
 
-        virtual public void ConfigureMoveable(bool left, bool right) { }
-        virtual public String Connect() { return "Not Implemented"; }
         virtual public String DeviceName { get; }
+        virtual public String Connect() { return "Not Implemented"; }
         virtual public void SetSize(int clientHeight)
         {
             Size = new System.Drawing.Size(clientHeight * Width / Height, clientHeight);
         }
-
+        virtual public void ConfigureMoveable(bool left, bool right) { }
     }
 }
