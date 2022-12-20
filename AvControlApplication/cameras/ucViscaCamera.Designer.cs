@@ -208,7 +208,7 @@ namespace AVDeviceControl
             this.tabIpCam.Location = new System.Drawing.Point(4, 25);
             this.tabIpCam.Name = "tabIpCam";
             this.tabIpCam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabIpCam.Size = new System.Drawing.Size(273, 146);
+            this.tabIpCam.Size = new System.Drawing.Size(273, 150);
             this.tabIpCam.TabIndex = 0;
             this.tabIpCam.Text = "Configure";
             this.tabIpCam.UseVisualStyleBackColor = true;
@@ -297,7 +297,7 @@ namespace AVDeviceControl
             this.tabCamControl.Location = new System.Drawing.Point(4, 25);
             this.tabCamControl.Name = "tabCamControl";
             this.tabCamControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCamControl.Size = new System.Drawing.Size(273, 146);
+            this.tabCamControl.Size = new System.Drawing.Size(273, 150);
             this.tabCamControl.TabIndex = 2;
             this.tabCamControl.Text = "PTZ";
             // 
@@ -364,7 +364,7 @@ namespace AVDeviceControl
             0,
             0,
             0});
-            this.tbZoom.Location = new System.Drawing.Point(-5, 21);
+            this.tbZoom.Location = new System.Drawing.Point(-5, 23);
             this.tbZoom.Margin = new System.Windows.Forms.Padding(2);
             this.tbZoom.Maximum = new decimal(new int[] {
             10,
@@ -421,7 +421,7 @@ namespace AVDeviceControl
             this.tabPresets.Controls.Add(this.lstPresets);
             this.tabPresets.Location = new System.Drawing.Point(4, 25);
             this.tabPresets.Name = "tabPresets";
-            this.tabPresets.Size = new System.Drawing.Size(273, 146);
+            this.tabPresets.Size = new System.Drawing.Size(273, 150);
             this.tabPresets.TabIndex = 3;
             this.tabPresets.Text = "Presets";
             this.tabPresets.UseVisualStyleBackColor = true;
@@ -605,7 +605,7 @@ namespace AVDeviceControl
             this.tabSettings.Controls.Add(this.ucCamSettings1);
             this.tabSettings.Location = new System.Drawing.Point(4, 25);
             this.tabSettings.Name = "tabSettings";
-            this.tabSettings.Size = new System.Drawing.Size(273, 146);
+            this.tabSettings.Size = new System.Drawing.Size(273, 150);
             this.tabSettings.TabIndex = 4;
             this.tabSettings.Text = "Settings";
             this.tabSettings.UseVisualStyleBackColor = true;
@@ -615,7 +615,7 @@ namespace AVDeviceControl
             this.ucCamSettings1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucCamSettings1.Location = new System.Drawing.Point(0, 0);
             this.ucCamSettings1.Name = "ucCamSettings1";
-            this.ucCamSettings1.Size = new System.Drawing.Size(273, 146);
+            this.ucCamSettings1.Size = new System.Drawing.Size(273, 150);
             this.ucCamSettings1.TabIndex = 0;
             // 
             // chkIp
