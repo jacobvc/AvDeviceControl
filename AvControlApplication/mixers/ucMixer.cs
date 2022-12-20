@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using RtMidi.Core.Messages;
 using RtMidi.Core.Devices.Infos;
 using RtMidi.Core.Devices;
+using System.Windows.Interop;
 
 namespace AVDeviceControl
 {
@@ -143,6 +144,7 @@ namespace AVDeviceControl
                 if (chkTest.Checked)
                 {
                     midiTestDialog = new frmMidiTest(midiConnection);
+                    midiTestDialog.close += MidiTestDialog_close;
                     midiTestDialog.Show();
                 }
                 midiConnection.inp.ControlChange += MidiRx_ControlChange;
@@ -177,6 +179,11 @@ namespace AVDeviceControl
                 return null;
             }
             return "Failed MIDI Connect";
+        }
+
+        private void MidiTestDialog_close(object sender, FormClosingEventArgs e)
+        {
+            midiTestDialog = null;
         }
 
         public void Disconnect()
@@ -454,6 +461,11 @@ namespace AVDeviceControl
             }
         }
 
+        void SendShow(String label, byte[] msg)
+        {
+            midiTestDialog?.SendShow(label, msg);
+        }
+
         private void Poll01v96()
         {
             
@@ -467,18 +479,20 @@ namespace AVDeviceControl
                 element = (byte)sysExElements.channelFader;
                 byte[] msg = parameterMsgStart.Concat(new byte[] { element, parameter, channel, 0xf7 }).ToArray();
                 midiConnection.outp?.Send(new SysExMessage(msg));
+                SendShow("SysExMessage", msg);
 
                 element = (byte)sysExElements.channelOn;
                 msg = parameterMsgStart.Concat(new byte[] { element, parameter, channel, 0xf7 }).ToArray();
                 midiConnection.outp?.Send(new SysExMessage(msg));
+                SendShow("SysExMessage", msg);
             }
-            
+
             while (isConnected)
             {
                 //Console.WriteLine("POLL");
 
                 // Parameter request (section 2.8.3.23) Sends every 50ms for 10 seconds
-                midiConnection.outp?.Send(new SysExMessage(new byte[] {
+                byte[] msg = new byte[] {
                 0xF0, 0x43, 0x30, 0x3E,    // sysEx: 0xF0, YAMAHA, 0x30+channel, Digital_mixer
                 0x0D,       // 01v96
                 0x21,		// Remote Meter
@@ -487,7 +501,9 @@ namespace AVDeviceControl
                 0x00,		// Address LL - up to 0x27 / 39
                 0,			// Count H
                 32,			// Count L
-                0xF7 }));
+                0xF7 };
+                midiConnection.outp?.Send(new SysExMessage(msg));
+                SendShow("SysExMessage", msg);
 
                 for (int i = 0; i < 20; ++i)
                 {
@@ -509,6 +525,9 @@ namespace AVDeviceControl
             // Note that channel number is one based and value is zero based
             midiConnection.outp?.Send(new ControlChangeMessage((RtMidi.Core.Enums.Channel)(config.Channel - 1),
               config.Control, value));
+            SendShow("ControlChangeMessage: " + (RtMidi.Core.Enums.Channel)(config.Channel - 1) 
+              + ", " + config.Control + ", " + value, new byte[0]);
+
             valueChangedEvent?.Invoke(sender, new ValueChangedEventArgs(DeviceValueType.VolumeSetting, value));
         }
 
@@ -518,6 +537,8 @@ namespace AVDeviceControl
             // Note that channel number is one based and value is zero based
             midiConnection.outp?.Send(new ControlChangeMessage((RtMidi.Core.Enums.Channel)(config.Channel - 1),
                 config.Mute, value ? 0 : 127));
+            SendShow("ControlChangeMessage: " + (RtMidi.Core.Enums.Channel)(config.Channel - 1)
+              + ", " + config.Mute + ", " + (value ? 0 : 127), new byte[0]);
             valueChangedEvent?.Invoke(sender, new ValueChangedEventArgs(DeviceValueType.Mute, value));
 
         }

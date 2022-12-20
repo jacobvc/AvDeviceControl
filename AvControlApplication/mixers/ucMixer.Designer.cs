@@ -21,12 +21,15 @@ namespace AVDeviceControl
             this.tpConfigure = new System.Windows.Forms.TabPage();
             this.chkTest = new System.Windows.Forms.CheckBox();
             this.chk01v96 = new System.Windows.Forms.CheckBox();
+            this.mixerConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
             this.dgChannels = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Channel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Control = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.channelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnRefreshDevices = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbDevices = new System.Windows.Forms.ComboBox();
@@ -36,13 +39,10 @@ namespace AVDeviceControl
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.btnLeft = new System.Windows.Forms.Button();
-            this.mixerConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.channelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tpConfigure.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgChannels)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mixerConfigBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgChannels)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.channelsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,10 +53,10 @@ namespace AVDeviceControl
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tpConfigure);
             this.tabControl1.Controls.Add(this.tpControl);
-            this.tabControl1.Location = new System.Drawing.Point(4, 29);
+            this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(269, 172);
+            this.tabControl1.Size = new System.Drawing.Size(277, 177);
             this.tabControl1.TabIndex = 0;
             // 
             // tpConfigure
@@ -72,7 +72,7 @@ namespace AVDeviceControl
             this.tpConfigure.Location = new System.Drawing.Point(4, 22);
             this.tpConfigure.Name = "tpConfigure";
             this.tpConfigure.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConfigure.Size = new System.Drawing.Size(261, 146);
+            this.tpConfigure.Size = new System.Drawing.Size(269, 151);
             this.tpConfigure.TabIndex = 0;
             this.tpConfigure.Text = "Configure";
             this.tpConfigure.UseVisualStyleBackColor = true;
@@ -80,7 +80,7 @@ namespace AVDeviceControl
             // chkTest
             // 
             this.chkTest.AutoSize = true;
-            this.chkTest.Location = new System.Drawing.Point(123, 31);
+            this.chkTest.Location = new System.Drawing.Point(123, 7);
             this.chkTest.Name = "chkTest";
             this.chkTest.Size = new System.Drawing.Size(47, 17);
             this.chkTest.TabIndex = 20;
@@ -91,16 +91,22 @@ namespace AVDeviceControl
             // 
             this.chk01v96.AutoSize = true;
             this.chk01v96.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.mixerConfigBindingSource, "Y01v96", true));
-            this.chk01v96.Location = new System.Drawing.Point(70, 31);
+            this.chk01v96.Location = new System.Drawing.Point(70, 7);
             this.chk01v96.Name = "chk01v96";
             this.chk01v96.Size = new System.Drawing.Size(56, 17);
             this.chk01v96.TabIndex = 19;
             this.chk01v96.Text = "01v96";
             this.chk01v96.UseVisualStyleBackColor = true;
             // 
+            // mixerConfigBindingSource
+            // 
+            this.mixerConfigBindingSource.DataSource = typeof(AVDeviceControl.MixerConfig);
+            this.mixerConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.mixerConfigBindingSource_CurrentItemChanged);
+            // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(174, 29);
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelete.Location = new System.Drawing.Point(211, 5);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(55, 20);
             this.btnDelete.TabIndex = 18;
@@ -110,7 +116,7 @@ namespace AVDeviceControl
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(7, 29);
+            this.btnConnect.Location = new System.Drawing.Point(5, 5);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(55, 20);
             this.btnConnect.TabIndex = 17;
@@ -134,10 +140,17 @@ namespace AVDeviceControl
             this.dgChannels.DataSource = this.channelsBindingSource;
             this.dgChannels.Location = new System.Drawing.Point(0, 52);
             this.dgChannels.Name = "dgChannels";
-            this.dgChannels.Size = new System.Drawing.Size(258, 91);
+            this.dgChannels.Size = new System.Drawing.Size(266, 96);
             this.dgChannels.TabIndex = 16;
             this.dgChannels.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgChannels_CellValidating);
             this.dgChannels.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgChannels_EditingControlShowing);
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.Width = 60;
             // 
             // Channel
             // 
@@ -160,10 +173,14 @@ namespace AVDeviceControl
             this.Mute.Name = "Mute";
             this.Mute.Width = 56;
             // 
+            // channelsBindingSource
+            // 
+            this.channelsBindingSource.DataSource = typeof(AVDeviceControl.MidiChannel);
+            // 
             // btnRefreshDevices
             // 
             this.btnRefreshDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshDevices.Location = new System.Drawing.Point(235, 5);
+            this.btnRefreshDevices.Location = new System.Drawing.Point(241, 29);
             this.btnRefreshDevices.Name = "btnRefreshDevices";
             this.btnRefreshDevices.Size = new System.Drawing.Size(25, 23);
             this.btnRefreshDevices.TabIndex = 15;
@@ -175,7 +192,7 @@ namespace AVDeviceControl
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 10);
+            this.label1.Location = new System.Drawing.Point(4, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 14;
@@ -189,9 +206,9 @@ namespace AVDeviceControl
             this.cmbDevices.DisplayMember = "name";
             this.cmbDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDevices.FormattingEnabled = true;
-            this.cmbDevices.Location = new System.Drawing.Point(73, 6);
+            this.cmbDevices.Location = new System.Drawing.Point(73, 30);
             this.cmbDevices.Name = "cmbDevices";
-            this.cmbDevices.Size = new System.Drawing.Size(156, 21);
+            this.cmbDevices.Size = new System.Drawing.Size(164, 21);
             this.cmbDevices.TabIndex = 13;
             this.cmbDevices.ValueMember = "name";
             // 
@@ -200,7 +217,7 @@ namespace AVDeviceControl
             this.tpControl.Location = new System.Drawing.Point(4, 22);
             this.tpControl.Name = "tpControl";
             this.tpControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tpControl.Size = new System.Drawing.Size(261, 146);
+            this.tpControl.Size = new System.Drawing.Size(269, 149);
             this.tpControl.TabIndex = 1;
             this.tpControl.Text = "Control";
             this.tpControl.UseVisualStyleBackColor = true;
@@ -258,22 +275,6 @@ namespace AVDeviceControl
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
-            // mixerConfigBindingSource
-            // 
-            this.mixerConfigBindingSource.DataSource = typeof(AVDeviceControl.MixerConfig);
-            this.mixerConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.mixerConfigBindingSource_CurrentItemChanged);
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // channelsBindingSource
-            // 
-            this.channelsBindingSource.DataSource = typeof(AVDeviceControl.MidiChannel);
-            // 
             // ucMixer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -291,8 +292,8 @@ namespace AVDeviceControl
             this.tabControl1.ResumeLayout(false);
             this.tpConfigure.ResumeLayout(false);
             this.tpConfigure.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgChannels)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mixerConfigBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgChannels)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.channelsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

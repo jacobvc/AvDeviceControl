@@ -223,21 +223,22 @@ namespace AVDeviceControl
                 switch (direction)
                 {
                     case "up":
-                        tiltSpeed = (int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High);
+                        tiltSpeed = (int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High / 100);
                         break;
                     case "down":
-                        tiltSpeed = -(int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High);
+                        tiltSpeed = -(int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High / 100);
                         break;
                     case "left":
-                        panSpeed = -(int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High);
+                        panSpeed = -(int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High / 100);
                         break;
                     case "right":
-                        panSpeed = (int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High);
+                        panSpeed = (int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High / 100);
                         break;
                     case "stop":
-                        break;
+                        cam.Camera.ContinuousPanTilt(panSpeed, tiltSpeed);
+                        return true;
                 }
-                cam.Camera.ContinuousPanTilt(panSpeed / 100, tiltSpeed / 100);
+                cam.Camera.ContinuousPanTilt(Math.Max(1, panSpeed), Math.Max(1, tiltSpeed));
                 cam.Camera?.UpdatePosition();
                 return true;
             }

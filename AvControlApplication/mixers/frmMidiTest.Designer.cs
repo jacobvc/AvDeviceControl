@@ -37,22 +37,22 @@ namespace AVDeviceControl
             this.rtxtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtxtOutput.Location = new System.Drawing.Point(17, 16);
-            this.rtxtOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rtxtOutput.Location = new System.Drawing.Point(13, 13);
             this.rtxtOutput.Name = "rtxtOutput";
-            this.rtxtOutput.Size = new System.Drawing.Size(1048, 500);
+            this.rtxtOutput.Size = new System.Drawing.Size(787, 407);
             this.rtxtOutput.TabIndex = 0;
             this.rtxtOutput.Text = "";
             // 
             // frmMidiTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.rtxtOutput);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmMidiTest";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmMidiTest";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMidiTest_FormClosing);
             this.Load += new System.EventHandler(this.frmMidiTest_Load);
             this.ResumeLayout(false);
 

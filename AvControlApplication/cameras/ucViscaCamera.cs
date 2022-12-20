@@ -226,7 +226,8 @@ namespace AVDeviceControl
                 btnLeft.Visible = !value;
                 btnRight.Visible = !value;
                 tabControl1.Visible = true;
-                pnlConnected.Visible = isConnected;
+                btnCtlDisconnect.Visible = isConnected;
+                chkIp.Visible= !isConnected;
             }
         }
         #endregion
@@ -337,11 +338,10 @@ namespace AVDeviceControl
             if (camera != null)
             {
                 double panFraction = data.value.X * 2.0 / data.Range_X;
-                int panSpeed = (int)(panFraction * panFraction * camera.Limits.PanSpeedLimits.High);
+                int panSpeed = (int)(panFraction * camera.Limits.PanSpeedLimits.High);
                 double tiltFraction = data.value.Y * 2.0 / data.Range_Y;
-                int tiltSpeed = (int)(tiltFraction * tiltFraction * camera.Limits.TiltSpeedLimits.High);
-                camera.ContinuousPanTilt(Math.Sign(panFraction) * panSpeed, 
-                    Math.Sign(tiltFraction) * tiltSpeed);
+                int tiltSpeed = (int)(tiltFraction * camera.Limits.TiltSpeedLimits.High);
+                camera.ContinuousPanTilt(panSpeed, tiltSpeed);
             }
         }
         #endregion

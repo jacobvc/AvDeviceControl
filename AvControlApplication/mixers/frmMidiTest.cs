@@ -11,11 +11,15 @@ using System.Windows.Forms;
 using RtMidi.Core.Messages;
 using RtMidi.Core.Enums;
 using RtMidi.Core.Devices;
+using System.Windows.Interop;
 
 namespace AVDeviceControl
 {
     public partial class frmMidiTest : Form
     {
+        public delegate void Close(object sender, FormClosingEventArgs e);
+        public event Close close = null;
+
         Midi.MidiConnection con;
 
         public frmMidiTest(Midi.MidiConnection con)
@@ -33,6 +37,26 @@ namespace AVDeviceControl
             con.inp.NoteOff += Inp_NoteOff;
             con.inp.NoteOn += Inp_NoteOn;
             con.inp.ProgramChange += Inp_ProgramChange;
+
+        }
+
+        private void frmMidiTest_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            close?.Invoke(this, e);
+        }
+
+        public void SendShow(String label, byte[] msg)
+        {
+            Invoke(new Action(() => {
+                if (msg.Length > 0)
+                {
+                    Emit("Sent " + label, "Data=" + BitConverter.ToString(msg));
+                }
+                else
+                {
+                    Emit("Sent " + label, "");
+                }
+            }));
         }
 
         void Emit(String type,  Channel channel, String msg)
