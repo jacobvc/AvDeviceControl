@@ -25,10 +25,6 @@ namespace AVDeviceControl
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
             this.dgChannels = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Channel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Control = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Mute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.channelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnRefreshDevices = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,6 +35,10 @@ namespace AVDeviceControl
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.btnLeft = new System.Windows.Forms.Button();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Channel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Control = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tpConfigure.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mixerConfigBindingSource)).BeginInit();
@@ -145,34 +145,6 @@ namespace AVDeviceControl
             this.dgChannels.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgChannels_CellValidating);
             this.dgChannels.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgChannels_EditingControlShowing);
             // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // Channel
-            // 
-            this.Channel.DataPropertyName = "Channel";
-            this.Channel.HeaderText = "Channel";
-            this.Channel.Name = "Channel";
-            this.Channel.Width = 71;
-            // 
-            // Control
-            // 
-            this.Control.DataPropertyName = "Control";
-            this.Control.HeaderText = "Control";
-            this.Control.Name = "Control";
-            this.Control.Width = 65;
-            // 
-            // Mute
-            // 
-            this.Mute.DataPropertyName = "Mute";
-            this.Mute.HeaderText = "Mute";
-            this.Mute.Name = "Mute";
-            this.Mute.Width = 56;
-            // 
             // channelsBindingSource
             // 
             this.channelsBindingSource.DataSource = typeof(AVDeviceControl.MidiChannel);
@@ -217,7 +189,7 @@ namespace AVDeviceControl
             this.tpControl.Location = new System.Drawing.Point(4, 22);
             this.tpControl.Name = "tpControl";
             this.tpControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tpControl.Size = new System.Drawing.Size(269, 149);
+            this.tpControl.Size = new System.Drawing.Size(269, 151);
             this.tpControl.TabIndex = 1;
             this.tpControl.Text = "Control";
             this.tpControl.UseVisualStyleBackColor = true;
@@ -275,6 +247,34 @@ namespace AVDeviceControl
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // Channel
+            // 
+            this.Channel.DataPropertyName = "Channel";
+            this.Channel.HeaderText = "Velocity";
+            this.Channel.Name = "Channel";
+            this.Channel.Width = 69;
+            // 
+            // Control
+            // 
+            this.Control.DataPropertyName = "Control";
+            this.Control.HeaderText = "Control";
+            this.Control.Name = "Control";
+            this.Control.Width = 65;
+            // 
+            // Mute
+            // 
+            this.Mute.DataPropertyName = "Mute";
+            this.Mute.HeaderText = "Mute";
+            this.Mute.Name = "Mute";
+            this.Mute.Width = 56;
+            // 
             // ucMixer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,10 +313,6 @@ namespace AVDeviceControl
         private System.Windows.Forms.ComboBox cmbDevices;
         private System.Windows.Forms.DataGridView dgChannels;
         private System.Windows.Forms.BindingSource channelsBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Channel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Control;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Mute;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnDisconnect;
@@ -324,5 +320,9 @@ namespace AVDeviceControl
         private System.Windows.Forms.CheckBox chkTest;
         private System.Windows.Forms.Button btnRight;
         private System.Windows.Forms.Button btnLeft;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Channel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Control;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Mute;
     }
 }
