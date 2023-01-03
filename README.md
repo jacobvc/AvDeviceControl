@@ -56,6 +56,7 @@ including DeviceControlWebsocket for exchanging information.
     - Maintains DeviceCollection
     - Hosts ucViscaCamera
     - Hosts ucMixer
+    - Hosts DeviceControlWebsocket
 
 - ucViscaCamera(CameraConfig) UserControl
   - Contains PtzController
