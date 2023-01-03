@@ -19,6 +19,16 @@ It implements a OBS Studio V5 compatible Websocket Server and is supported by th
 
 
 # Design
+This is a C# application, and is / has been built using Visual Studio Community 2019 and newer. and is
+built by loading and building AvDeviceControl.sln.
+
+The MainForm is primarily a hosting container for VISCA (ucViscaCamera) and Audio Mixer (ucMixer) user controls.
+The device user controls resize when the main form is resized vertically and a horizontal scrollbar scrolls the 
+user controlls when they are wider than the main form.
+
+The device collection is maintained as a collection of all active user controls, and is utilized by all transports
+including DeviceControlWebsocket for exchanging information.
+
 - MainForm Windows.Form
     - Loads / Saves DeviceConfigCollection
     - Maintains DeviceCollection
@@ -42,3 +52,5 @@ It implements a OBS Studio V5 compatible Websocket Server and is supported by th
     - Midi - Midi interface for mixer
     - DeviceControlWebsocket - Protocol interface for websocket
         - uses Webserver - The websocket server
+
+
