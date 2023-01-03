@@ -17,6 +17,28 @@ It implements a OBS Studio V5 compatible Websocket Server and is supported by th
 - MIDI Audio Mixer Support
 - Websocket Server, serving OBS Studio Websocket v5 compatible protocol
 
+# Websocket Interface
+
+## Requests
+### All devices
+- GetVersion
+- GetAvDevices
+- Connect
+- Disconnect
+### VISCA Device
+- MovePtz
+- Zoom
+- Preset
+### MIDI Device
+- Mute
+- VolumeSetting
+- 
+## Events
+- ConfigurationChanged
+- MuteChanged
+- VolumeLevelChanged
+- VolumeSettingChanged
+- Exiting
 
 # Design
 This is a C# application, and is / has been built using Visual Studio Community 2019 and newer. and is
