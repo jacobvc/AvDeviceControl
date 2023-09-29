@@ -10,10 +10,12 @@ using Visca;
 
 namespace AVDeviceControl
 {
+    public delegate void Aborted(String reason);
     public abstract class ViscaTransport
     {
         public delegate void ReceiveData(byte[] data);
         public event ReceiveData receive;
+        public event Aborted abort;
 
         public abstract void Stop();
         public abstract string Start();
@@ -26,6 +28,7 @@ namespace AVDeviceControl
                 receive(data);
             }
         }
+        protected void DoAbort(String msg) { abort?.Invoke(msg);  }
     }
 
     public class SerialViscaConfig
