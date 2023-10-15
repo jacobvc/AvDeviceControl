@@ -160,6 +160,7 @@
       <DependentUpon>ucViscaCamera.cs</DependentUpon>
     </Compile>
     <Compile Include="transport\Protocol.cs" />
+    <Compile Include="transport\TcpViscaTransport.cs" />
     <Compile Include="transport\ViscaTransport.cs" />
     <Compile Include="mixers\ucVolumeSlider.cs">
       <SubType>UserControl</SubType>

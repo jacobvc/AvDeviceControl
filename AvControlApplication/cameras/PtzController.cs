@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AVDeviceControl.transport;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,8 @@ namespace AVDeviceControl
     {
         public static LogLevel logLevel = LogLevel.Warning;
 
-        SerialViscaTransport transport = null;
+        ViscaTransport transport = null;
+        public event Aborted abort;
         public ViscaProtocolProcessor controller;
         private ViscaCameraParameters cameraParams = new ViscaCameraDefaultParameters();
 
@@ -42,25 +44,27 @@ namespace AVDeviceControl
                     Disconnect();
                 }
                 transport = new SerialViscaTransport(config.Port, int.Parse(config.Baud));
-                error = transport.Start();
-                if (error == null)
-                {
-                    controller = new ViscaProtocolProcessor(
-                      new Action<byte[]>(b => { transport?.sendBytes(b); }),
-                      LogAction);
-                }
-                else
-                {
-                    return error;
-                }
             }
             else
             {
+                
+                transport = new TcpViscaTransport(config.CamIp, config.CamIpPort);
                 //tabControl1.SelectedTab = tabControl;
-                return "ONLY Serial VISCA is currently supported"; //  Only support serial for now
+            }
+            error = transport.Start();
+            if (error == null)
+            {
+                controller = new ViscaProtocolProcessor(
+                  new Action<byte[]>(b => { transport?.sendBytes(b); }),
+                  LogAction);
+            }
+            else
+            {
+                return error;
             }
             // Hook up incoming data
             transport.receive += controller.ProcessIncomingData;
+            transport.abort += Transport_abort;
 
             PollViscaInfo();
 
@@ -73,6 +77,11 @@ namespace AVDeviceControl
             Camera.Connect();
 
             return error;
+        }
+
+        private void Transport_abort(string reason)
+        {
+            abort?.Invoke(reason);
         }
 
         public void PollViscaInfo()

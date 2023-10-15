@@ -144,23 +144,19 @@ namespace AVDeviceControl
             btnRight.Visible = right;
         }
 
-        override public String Connect()
-        {
-             return (String)Invoke(new Action(() => { ExecConnect(!config.IsIp); }));
-            //return ExecConnect(serial);
-        }
         #endregion
 
         #region Camera Control
-        public String ExecConnect(bool serial)
+        override public String Connect()
         {
             Disconnect();
             // Connect to PtzController and camera
-            String error = ctl.Connect(serial, config);
+            String error = ctl.Connect(!config.IsIp, config);
             if (error == null)
             {
                 // Connect the camera to this user control
                 camera = ctl.Camera;
+                ctl.abort += Ctl_abort;
                 camera.ZoomPositionChanged += Camera_ZoomPositionChanged;
                 camera.PTZPositionChanged += Camera_PTZPositionChanged;
                 cameraBindingSource.DataSource = camera;
@@ -168,6 +164,12 @@ namespace AVDeviceControl
             }
             return error;
         }
+
+        private void Ctl_abort(string reason)
+        {
+            Disconnect();
+        }
+
         public void Disconnect()
         {
             Invoke(new Action(() => { ExecDisconnect(); }));

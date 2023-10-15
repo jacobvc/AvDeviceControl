@@ -313,7 +313,7 @@ namespace AVDeviceControl
             ucAvDevice uc;
             if (deviceDict.TryGetValue(name, out uc))
             {
-                uc.Connect();
+                uc.Invoke(new Action(() => { uc.Connect(); }));
                 return true;
             }
             return false;
