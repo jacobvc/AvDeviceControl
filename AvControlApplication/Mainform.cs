@@ -45,10 +45,13 @@ namespace AVDeviceControl
         {
             StopWebSockServer();
 
-            Properties.Settings.Default.formLoc = this.Location;
-            Properties.Settings.Default.formSize = this.Size;
-            Properties.Settings.Default.Split = spltMain.SplitterDistance;
             Properties.Settings.Default.logLevel = MnuLogLevel;
+            if (WindowState != FormWindowState.Minimized)
+            {
+                Properties.Settings.Default.formLoc = this.Location;
+                Properties.Settings.Default.formSize = this.Size;
+                Properties.Settings.Default.Split = spltMain.SplitterDistance;
+            }
             SaveSettings(false);
 
             Properties.Settings.Default.Save();
