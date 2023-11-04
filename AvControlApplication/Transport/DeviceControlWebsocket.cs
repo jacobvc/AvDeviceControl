@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Linq;
 using AVDeviceControl;
 using System.Net.WebSockets;
+using System.Runtime.Remoting.Contexts;
 
 namespace AVDeviceControl
 {
@@ -221,12 +222,16 @@ namespace AVDeviceControl
                         jData.Add("obsVersion", "1");
                         jData.Add("obsWebSocketVersion", "5.0.1");
                         jData.Add("rpcVersion", 1);
-                        jData.Add("availableRequests", "");
                         jData.Add("supportedImageFormats", "[]");
-                        /* 
-                        "availableRequests": "GetVersion,GetAvDevices,MovePtz,Zoom,Preset,Connect,Disconnect,Mute,VolumeSetting",
-                        "supported-image-export-formats": "bmp,cur,icns,ico,jpeg,jpg,pbm,pgm,png,ppm,tif,tiff,wbmp,webp,xbm,xpm",
-                         */
+                        JArray availableRequests = new JArray {
+                            "GetVersion", "GetAvDevices", "MovePtz", "Zoom",
+                            "Preset", "Connect", "Disconnect", "Mute", "VolumeSetting"
+                        };
+                        jData.Add("availableRequests", availableRequests);
+                        JArray supported_image_export_formats = new JArray {
+                            "bmp", "cur", "icns", "ico", "jpeg", "jpg", "pbm", "pgm", "png", "ppm", "tif", "tiff", "wbmp", "webp", "xbm", "xpm"
+                        };
+                        jData.Add("supported-image-export-formats", supported_image_export_formats);
                         jData.Add("platform", "Windows");
                         jData.Add("platformDescription", "Windows 10");
                         jData.Add("server", Assembly.GetEntryAssembly().GetName().Name);
