@@ -23,6 +23,7 @@ namespace AVDeviceControl.transport
         {
             CamIp = camIp;
             CamPort = camPort;
+            client = new Socket(SocketType.Stream, ProtocolType.Tcp);
 
         }
         public void Dispose()
@@ -37,7 +38,7 @@ namespace AVDeviceControl.transport
             }
             catch (SocketException se)
             {
-                //Stop();
+                Stop();
                 Start();
             }
             catch (Exception ex)
@@ -53,7 +54,6 @@ namespace AVDeviceControl.transport
             {
                 try
                 {
-                    client = new Socket(SocketType.Stream, ProtocolType.Tcp);
                     client.SendTimeout = 1000;
                     IAsyncResult result = client.BeginConnect(CamIp, port, null, null);
 
@@ -88,7 +88,7 @@ namespace AVDeviceControl.transport
         }
         private void Receive(object obj)
         {
-            while (client.Connected)
+            while (true)
             {
                 try
                 {
@@ -102,14 +102,14 @@ namespace AVDeviceControl.transport
                     }
                     else
                     {
-
+                        Stop();
+                        break;
                     }
                 }
                 catch (SocketException se)
                 {
-                    //Stop();
-                    Start();
-                    return;
+                    Stop();
+                    break;
                 }
                 catch (Exception ex)
                 {
@@ -118,6 +118,7 @@ namespace AVDeviceControl.transport
                     return;
                 }
             }
+            Start();
         }
     }
 }
