@@ -23,11 +23,11 @@ namespace AVDeviceControl.transport
         {
             CamIp = camIp;
             CamPort = camPort;
-            client = new Socket(SocketType.Stream, ProtocolType.Tcp);
-
         }
         public void Dispose()
         {
+            client?.Close();
+            client?.Dispose();
             receiveThread?.Abort();
         }
         public override void sendBytes(byte[] data)
@@ -54,6 +54,7 @@ namespace AVDeviceControl.transport
             {
                 try
                 {
+                    client = new Socket(SocketType.Stream, ProtocolType.Tcp);
                     client.SendTimeout = 1000;
                     IAsyncResult result = client.BeginConnect(CamIp, port, null, null);
 
@@ -84,7 +85,8 @@ namespace AVDeviceControl.transport
 
         public override void Stop()
         {
-            client.Close();
+            client?.Close();
+            client = null;
         }
         private void Receive(object obj)
         {
@@ -109,6 +111,7 @@ namespace AVDeviceControl.transport
                 catch (SocketException se)
                 {
                     Stop();
+                    if (se.SocketErrorCode != SocketError.ConnectionReset) { return; }
                     break;
                 }
                 catch (Exception ex)
