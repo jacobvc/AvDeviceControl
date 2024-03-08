@@ -170,7 +170,7 @@ namespace AVDeviceControl
             Disconnect();
         }
 
-        public void Disconnect()
+        public override void Disconnect()
         {
             Invoke(new Action(() => { ExecDisconnect(); }));
         }

@@ -184,7 +184,7 @@ namespace AVDeviceControl
             midiTestDialog = null;
         }
 
-        public void Disconnect()
+        public override void Disconnect()
         {
             Invoke(new Action(() => { ExecDisconnect(); }));
         }
