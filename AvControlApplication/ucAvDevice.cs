@@ -8,13 +8,13 @@ using System.Windows.Forms;
 
 namespace AVDeviceControl
 {
-    public abstract class ucAvDevice : UserControl
+    public class ucAvDevice : UserControl
     {
         public ucAvDevice() { }
 
         virtual public String DeviceName { get; }
         virtual public String Connect() { return "Not Implemented"; }
-        abstract public void Disconnect();
+        virtual public void Disconnect() { }
         virtual public void SetSize(int clientHeight)
         {
             Size = new System.Drawing.Size(clientHeight * Width / Height, clientHeight);
