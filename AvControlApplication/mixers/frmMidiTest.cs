@@ -17,8 +17,8 @@ namespace AVDeviceControl
 {
     public partial class frmMidiTest : Form
     {
-        public delegate void Close(object sender, FormClosingEventArgs e);
-        public event Close close = null;
+        public delegate void MidiTestClose(object sender, FormClosingEventArgs e);
+        public event MidiTestClose close = null;
 
         Midi.MidiConnection con;
 

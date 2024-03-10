@@ -170,7 +170,7 @@ namespace AVDeviceControl
             Disconnect();
         }
 
-        public void Disconnect()
+        public override void Disconnect()
         {
             Invoke(new Action(() => { ExecDisconnect(); }));
         }
@@ -196,7 +196,7 @@ namespace AVDeviceControl
                         isConnected = value;
                         tabControl1.TabPages.Add(tabCamControl);
                         tabControl1.TabPages.Add(tabPresets);
-                        //tabControl1.TabPages.Add(tabSettings);
+                        tabControl1.TabPages.Add(tabSettings);
                         cameraBindingSource.DataSource = camera;
                         ucCamSettings1.Binding = cameraBindingSource;
                         configurationChangedEvent?.Invoke(this);

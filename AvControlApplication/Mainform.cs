@@ -189,6 +189,7 @@ namespace AVDeviceControl
 
         private void RemoveCamera(ucViscaCamera ctl, Control panel)
         {
+            ctl.Disconnect();
             collection.devices.Remove(ctl.Config);
             deviceControls.RemoveCamera(ctl);
             panel.Controls.Remove(ctl);
@@ -223,6 +224,7 @@ namespace AVDeviceControl
 
         private void RemoveMixer(ucMixer ctl, Control panel)
         {
+            ctl.Disconnect();
             collection.devices.Remove(ctl.Config);
             deviceControls.RemoveMixer(ctl);
             panel.Controls.Remove(ctl);
@@ -246,7 +248,9 @@ namespace AVDeviceControl
         {
             for (int i = 0; i < deviceControls.DeviceCount; ++i)
             {
-                panel.Controls.Remove(deviceControls.Device(i));
+                ucAvDevice dev = deviceControls.Device(i);
+                dev.Disconnect();
+                panel.Controls.Remove(dev);
             }
             collection.devices.Clear();
             deviceControls.Clear();
