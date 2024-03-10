@@ -271,12 +271,19 @@ namespace AVDeviceControl
                             if (error == null)
                             {
                                 String direction = (string)jRequest["direction"];
-                               devices.SetZoom((string)jRequest["cameraname"],
-                                  (string)jRequest["direction"], (string)jRequest["amount"]);
-                                jStatus.Add("result", true);
-                                jStatus.Add("code", 0);
-                                //Console.WriteLine("Zoom cam: " + (string)obj["cameraname"]
-                                //  + ", dir: " + (string)obj["direction"] + ", amount: " + (string)obj["amount"]);
+                                if (devices.SetZoom((string)jRequest["cameraname"],
+                                  (string)jRequest["direction"], (string)jRequest["amount"])) {
+                                    jStatus.Add("result", true);
+                                    jStatus.Add("code", 0);
+                                }
+                                else
+                                {
+                                    jStatus.Add("comment", "Camera not found");
+                                    jStatus.Add("result", false);
+                                    jStatus.Add("code", -1);
+                                }
+                                Console.WriteLine("Zoom cam: " + (string)jRequest["cameraname"]
+                                  + ", dir: " + (string)jRequest["direction"] + ", amount: " + (string)jRequest["amount"]);
                             }
                             else
                             {
