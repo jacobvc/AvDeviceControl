@@ -42,6 +42,8 @@ namespace AVDeviceControl
             this.ptControl = new AVDeviceControl.ucPtControl();
             this.tbZoom = new ColorSlider.ColorSlider();
             this.tabPresets = new System.Windows.Forms.TabPage();
+            this.btnMenuOff = new System.Windows.Forms.Button();
+            this.btnMenuOn = new System.Windows.Forms.Button();
             this.btnDelPreset = new System.Windows.Forms.Button();
             this.grpPresets = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -67,6 +69,7 @@ namespace AVDeviceControl
             this.btnLeft = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.cameraBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnMenuOk = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabUsbCam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraConfigBindingSource)).BeginInit();
@@ -415,6 +418,9 @@ namespace AVDeviceControl
             // 
             // tabPresets
             // 
+            this.tabPresets.Controls.Add(this.btnMenuOk);
+            this.tabPresets.Controls.Add(this.btnMenuOff);
+            this.tabPresets.Controls.Add(this.btnMenuOn);
             this.tabPresets.Controls.Add(this.btnDelPreset);
             this.tabPresets.Controls.Add(this.grpPresets);
             this.tabPresets.Controls.Add(this.btnNewPreset);
@@ -425,6 +431,28 @@ namespace AVDeviceControl
             this.tabPresets.TabIndex = 3;
             this.tabPresets.Text = "Presets";
             this.tabPresets.UseVisualStyleBackColor = true;
+            // 
+            // btnMenuOff
+            // 
+            this.btnMenuOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMenuOff.Location = new System.Drawing.Point(37, 116);
+            this.btnMenuOff.Name = "btnMenuOff";
+            this.btnMenuOff.Size = new System.Drawing.Size(33, 23);
+            this.btnMenuOff.TabIndex = 5;
+            this.btnMenuOff.Text = "M-";
+            this.btnMenuOff.UseVisualStyleBackColor = true;
+            this.btnMenuOff.Click += new System.EventHandler(this.btnMenuOff_Click);
+            // 
+            // btnMenuOn
+            // 
+            this.btnMenuOn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMenuOn.Location = new System.Drawing.Point(2, 116);
+            this.btnMenuOn.Name = "btnMenuOn";
+            this.btnMenuOn.Size = new System.Drawing.Size(33, 23);
+            this.btnMenuOn.TabIndex = 4;
+            this.btnMenuOn.Text = "M+";
+            this.btnMenuOn.UseVisualStyleBackColor = true;
+            this.btnMenuOn.Click += new System.EventHandler(this.btnMenuOn_Click);
             // 
             // btnDelPreset
             // 
@@ -684,6 +712,17 @@ namespace AVDeviceControl
             // 
             this.cameraBindingSource.DataSource = typeof(AVDeviceControl.PtzCamera);
             // 
+            // btnMenuOk
+            // 
+            this.btnMenuOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMenuOk.Location = new System.Drawing.Point(73, 116);
+            this.btnMenuOk.Name = "btnMenuOk";
+            this.btnMenuOk.Size = new System.Drawing.Size(33, 23);
+            this.btnMenuOk.TabIndex = 6;
+            this.btnMenuOk.Text = "Ok";
+            this.btnMenuOk.UseVisualStyleBackColor = true;
+            this.btnMenuOk.Click += new System.EventHandler(this.btnMenuOk_Click);
+            // 
             // ucViscaCamera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -770,5 +809,8 @@ namespace AVDeviceControl
         private ucPtControl ptControl;
         private System.Windows.Forms.Button btnLeft;
         private System.Windows.Forms.Button btnRight;
+        private System.Windows.Forms.Button btnMenuOff;
+        private System.Windows.Forms.Button btnMenuOn;
+        private System.Windows.Forms.Button btnMenuOk;
     }
 }

@@ -435,5 +435,20 @@ namespace AVDeviceControl
         #endregion
 
         #endregion
+
+        private void btnMenuOn_Click(object sender, EventArgs e)
+        {
+            camera?.OsdMenu(true);
+        }
+
+        private void btnMenuOff_Click(object sender, EventArgs e)
+        {
+            camera?.OsdMenu(false);
+        }
+
+        private void btnMenuOk_Click(object sender, EventArgs e)
+        {
+            camera?.OsdOk();
+        }
     }
 }

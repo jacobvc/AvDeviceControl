@@ -86,6 +86,41 @@ namespace AVDeviceControl
             monitor.Arrived();
         }
 
+        #region Custom commands for OAS Menu control (buttons on Preset tab)
+        // Documented and tested for Clear One
+        public class ViscaOsdMenu : ViscaCommand
+        {
+            String action;
+            public ViscaOsdMenu(byte address, bool on)
+            : base(address)
+            {
+                action = on ? "ON" : "OFF";
+                Append(new byte[]{ 0x06, 0x06, (byte)(on ? 0x02 : 0x03) });
+            }
+
+            public override string ToString()
+            {
+                return String.Format("Camera{0} OSD Menu " + action, this.Destination);
+            }
+        }
+        // Documented for Sony. Tested for Clear One
+        public class ViscaOsdOk : ViscaCommand
+        {
+            public ViscaOsdOk(byte address)
+            : base(address)
+            {
+                Append(new byte[] { 0x06, 0x06, 0x05 });
+            }
+
+            public override string ToString()
+            {
+                return String.Format("Camera{0} OSD Menu", this.Destination);
+            }
+        }
+        public void OsdMenu(bool on) { ptz.controller.EnqueueCommand(new ViscaOsdMenu(address, on)); }
+        public void OsdOk() { ptz.controller.EnqueueCommand(new ViscaOsdOk(address)); }
+        #endregion
+
         void ReceivedBrightness(short brightness)
         {
             _brightness = brightness;
