@@ -44,6 +44,7 @@ namespace AVDeviceControl
         public string CamIp { get; set; } = "";
         public string CamIpPort { get; set; } = "5678";
         public string CamRtsp { get; set; } = "";
+        public bool Reverse { get; set; } = false;
 
         public double CountsPerDegree { get; set; } = 14.4;
         public double FullScaleZoom { get; set; } = 0x4000;

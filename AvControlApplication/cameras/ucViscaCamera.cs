@@ -351,7 +351,7 @@ namespace AVDeviceControl
                 int panSpeed = (int)(panFraction * camera.Limits.PanSpeedLimits.High);
                 double tiltFraction = data.value.Y * 2.0 / data.Range_Y;
                 int tiltSpeed = (int)(tiltFraction * camera.Limits.TiltSpeedLimits.High);
-                camera.ContinuousPanTilt(panSpeed, tiltSpeed);
+                camera.ContinuousPanTilt(panSpeed, tiltSpeed, config.Reverse);
             }
         }
         #endregion
@@ -434,8 +434,7 @@ namespace AVDeviceControl
         }
         #endregion
 
-        #endregion
-
+        #region OSD Button Events
         private void btnMenuOn_Click(object sender, EventArgs e)
         {
             camera?.OsdMenu(true);
@@ -450,5 +449,8 @@ namespace AVDeviceControl
         {
             camera?.OsdOk();
         }
+        #endregion
+
+        #endregion
     }
 }

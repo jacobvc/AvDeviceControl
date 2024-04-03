@@ -131,9 +131,14 @@ namespace AVDeviceControl
         /// </summary>
         private static byte AbsSpeed(int speed) => (byte)Math.Max(Math.Abs(speed), 1);
 
-        public void ContinuousPanTilt(int panSpeed, int tiltSpeed)
+        public void ContinuousPanTilt(int panSpeed, int tiltSpeed, bool reversePan)
         {
-            Console.WriteLine("Pan " + panSpeed + " / Tilt " + tiltSpeed);
+
+            Console.WriteLine("Pan " + panSpeed + (reversePan ? " REVERSE":"") + " / Tilt " + tiltSpeed);
+            if (reversePan)
+            {
+                panSpeed = -panSpeed;
+            }
             PanSpeed = AbsSpeed(panSpeed);
             TiltSpeed = AbsSpeed(tiltSpeed);
 

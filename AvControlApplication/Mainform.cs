@@ -174,7 +174,7 @@ namespace AVDeviceControl
         #endregion
 
         #region Camera Devices
-        private void AddCamera(CameraConfig cfg, Control panel)
+        private void AddCamera(CameraConfig cfg, SplitterPanel panel)
         {
             ucViscaCamera cam = new ucViscaCamera(cfg);
             cam.Click += Device_click;
@@ -187,7 +187,7 @@ namespace AVDeviceControl
             
         }
 
-        private void RemoveCamera(ucViscaCamera ctl, Control panel)
+        private void RemoveCamera(ucViscaCamera ctl, SplitterPanel panel)
         {
             ctl.Disconnect();
             collection.devices.Remove(ctl.Config);
@@ -210,7 +210,7 @@ namespace AVDeviceControl
         #endregion
 
         #region Mixer Devices
-        private void AddMixer(MixerConfig cfg, Control panel)
+        private void AddMixer(MixerConfig cfg, SplitterPanel panel)
         {
             ucMixer brd = new ucMixer(midi, cfg);
             brd.Click += Device_click;
@@ -222,7 +222,7 @@ namespace AVDeviceControl
             PositionDevices(panel);
         }
 
-        private void RemoveMixer(ucMixer ctl, Control panel)
+        private void RemoveMixer(ucMixer ctl, SplitterPanel panel)
         {
             ctl.Disconnect();
             collection.devices.Remove(ctl.Config);
@@ -283,13 +283,14 @@ namespace AVDeviceControl
             PositionDevices(spltMain.Panel1);
         }
         bool positioning = false;
-        private void PositionDevices(Control panel)
+        private void PositionDevices(SplitterPanel panel)
         {
             positioning = true;
-            panel.AutoScrollOffset = new Point();
+            //panel.AutoScrollOffset = new Point();
+            
             panel.Invalidate();
             int clientHeight = panel.ClientRectangle.Height - 8; // space for scrollbar
-            int left = 0;
+            int left = panel.HorizontalScroll.Value;
             for (int i = 0; i < deviceControls.DeviceCount; ++i)
             {
                 ucAvDevice uc = deviceControls.Device(i);

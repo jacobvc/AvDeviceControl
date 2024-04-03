@@ -237,7 +237,8 @@ namespace AVDeviceControl
                     case "stop":
                         break;
                 }
-                cam.Camera.ContinuousPanTilt(panSpeed, tiltSpeed);
+                
+                cam.Camera.ContinuousPanTilt(panSpeed, tiltSpeed, cam.Config.Reverse);
                 cam.Camera?.UpdatePosition();
                 return true;
             }

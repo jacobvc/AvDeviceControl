@@ -20,15 +20,17 @@ namespace AVDeviceControl
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabUsbCam = new System.Windows.Forms.TabPage();
+            this.chkComReverse = new System.Windows.Forms.CheckBox();
+            this.cameraConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnRefreshPorts = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbBaud = new System.Windows.Forms.ComboBox();
-            this.cameraConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbComPort = new System.Windows.Forms.ComboBox();
             this.btnConnectSerial = new System.Windows.Forms.Button();
             this.tabIpCam = new System.Windows.Forms.TabPage();
+            this.chkIpReverse = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnDelete2 = new System.Windows.Forms.Button();
@@ -42,6 +44,7 @@ namespace AVDeviceControl
             this.ptControl = new AVDeviceControl.ucPtControl();
             this.tbZoom = new ColorSlider.ColorSlider();
             this.tabPresets = new System.Windows.Forms.TabPage();
+            this.btnMenuOk = new System.Windows.Forms.Button();
             this.btnMenuOff = new System.Windows.Forms.Button();
             this.btnMenuOn = new System.Windows.Forms.Button();
             this.btnDelPreset = new System.Windows.Forms.Button();
@@ -69,7 +72,6 @@ namespace AVDeviceControl
             this.btnLeft = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.cameraBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnMenuOk = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabUsbCam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraConfigBindingSource)).BeginInit();
@@ -102,6 +104,7 @@ namespace AVDeviceControl
             // 
             // tabUsbCam
             // 
+            this.tabUsbCam.Controls.Add(this.chkComReverse);
             this.tabUsbCam.Controls.Add(this.btnRefreshPorts);
             this.tabUsbCam.Controls.Add(this.btnDelete);
             this.tabUsbCam.Controls.Add(this.label2);
@@ -116,6 +119,22 @@ namespace AVDeviceControl
             this.tabUsbCam.TabIndex = 1;
             this.tabUsbCam.Text = "Configure";
             this.tabUsbCam.UseVisualStyleBackColor = true;
+            // 
+            // chkComReverse
+            // 
+            this.chkComReverse.AutoSize = true;
+            this.chkComReverse.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.cameraConfigBindingSource, "Reverse", true));
+            this.chkComReverse.Location = new System.Drawing.Point(7, 78);
+            this.chkComReverse.Name = "chkComReverse";
+            this.chkComReverse.Size = new System.Drawing.Size(88, 17);
+            this.chkComReverse.TabIndex = 16;
+            this.chkComReverse.Text = "Reverse Pan";
+            this.chkComReverse.UseVisualStyleBackColor = true;
+            // 
+            // cameraConfigBindingSource
+            // 
+            this.cameraConfigBindingSource.DataSource = typeof(AVDeviceControl.CameraConfig);
+            this.cameraConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.cameraConfigBindingSource_CurrentItemChanged);
             // 
             // btnRefreshPorts
             // 
@@ -171,11 +190,6 @@ namespace AVDeviceControl
             this.cmbBaud.Size = new System.Drawing.Size(161, 21);
             this.cmbBaud.TabIndex = 6;
             // 
-            // cameraConfigBindingSource
-            // 
-            this.cameraConfigBindingSource.DataSource = typeof(AVDeviceControl.CameraConfig);
-            this.cameraConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.cameraConfigBindingSource_CurrentItemChanged);
-            // 
             // cmbComPort
             // 
             this.cmbComPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -200,6 +214,7 @@ namespace AVDeviceControl
             // 
             // tabIpCam
             // 
+            this.tabIpCam.Controls.Add(this.chkIpReverse);
             this.tabIpCam.Controls.Add(this.label7);
             this.tabIpCam.Controls.Add(this.textBox1);
             this.tabIpCam.Controls.Add(this.btnDelete2);
@@ -215,6 +230,17 @@ namespace AVDeviceControl
             this.tabIpCam.TabIndex = 0;
             this.tabIpCam.Text = "Configure";
             this.tabIpCam.UseVisualStyleBackColor = true;
+            // 
+            // chkIpReverse
+            // 
+            this.chkIpReverse.AutoSize = true;
+            this.chkIpReverse.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.cameraConfigBindingSource, "Reverse", true));
+            this.chkIpReverse.Location = new System.Drawing.Point(12, 101);
+            this.chkIpReverse.Name = "chkIpReverse";
+            this.chkIpReverse.Size = new System.Drawing.Size(88, 17);
+            this.chkIpReverse.TabIndex = 15;
+            this.chkIpReverse.Text = "Reverse Pan";
+            this.chkIpReverse.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -431,6 +457,17 @@ namespace AVDeviceControl
             this.tabPresets.TabIndex = 3;
             this.tabPresets.Text = "Presets";
             this.tabPresets.UseVisualStyleBackColor = true;
+            // 
+            // btnMenuOk
+            // 
+            this.btnMenuOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMenuOk.Location = new System.Drawing.Point(73, 116);
+            this.btnMenuOk.Name = "btnMenuOk";
+            this.btnMenuOk.Size = new System.Drawing.Size(33, 23);
+            this.btnMenuOk.TabIndex = 6;
+            this.btnMenuOk.Text = "Ok";
+            this.btnMenuOk.UseVisualStyleBackColor = true;
+            this.btnMenuOk.Click += new System.EventHandler(this.btnMenuOk_Click);
             // 
             // btnMenuOff
             // 
@@ -712,17 +749,6 @@ namespace AVDeviceControl
             // 
             this.cameraBindingSource.DataSource = typeof(AVDeviceControl.PtzCamera);
             // 
-            // btnMenuOk
-            // 
-            this.btnMenuOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMenuOk.Location = new System.Drawing.Point(73, 116);
-            this.btnMenuOk.Name = "btnMenuOk";
-            this.btnMenuOk.Size = new System.Drawing.Size(33, 23);
-            this.btnMenuOk.TabIndex = 6;
-            this.btnMenuOk.Text = "Ok";
-            this.btnMenuOk.UseVisualStyleBackColor = true;
-            this.btnMenuOk.Click += new System.EventHandler(this.btnMenuOk_Click);
-            // 
             // ucViscaCamera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -812,5 +838,7 @@ namespace AVDeviceControl
         private System.Windows.Forms.Button btnMenuOff;
         private System.Windows.Forms.Button btnMenuOn;
         private System.Windows.Forms.Button btnMenuOk;
+        private System.Windows.Forms.CheckBox chkComReverse;
+        private System.Windows.Forms.CheckBox chkIpReverse;
     }
 }
