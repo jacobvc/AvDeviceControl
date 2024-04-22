@@ -148,6 +148,7 @@ namespace AVDeviceControl
                     }
                 }
             }
+            PositionDevices(spltMain.Panel1);
          }
         private void SaveSettings(bool ask)
         {
@@ -295,10 +296,11 @@ namespace AVDeviceControl
                 int scrLeft = -panel.HorizontalScroll.Value;
                 panel.VerticalScroll.Value = 0;
                 // Column count based on panel size and aspect ratio
-                int aCols = Math.Max(1, 
-                   (int)((double)clientWidth / clientHeight * deviceControls.Device(0).AspectRatio));
+                double aCols = Math.Max(1, 
+                   (double)clientWidth / clientHeight * deviceControls.Device(0).AspectRatio);
                 // Row / col count is based on best 2 dim fit of cells into panel
-                int aRows = Math.Max(deviceControls.DeviceCount / aCols, 1);
+                aCols *= Math.Sqrt(aCols);
+                int aRows = Math.Max(deviceControls.DeviceCount / (int)aCols, 1);
                 int rows = aRows;
                 int cols = (deviceControls.DeviceCount + rows - 1) / rows;
                 // Cell height is smaller of "fill height", or "fill width"
