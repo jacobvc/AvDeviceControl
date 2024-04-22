@@ -134,9 +134,10 @@ namespace AVDeviceControl
         #region AvDevices
         public override void SetSize(int clientHeight)
         {
-            double pt_y = ptControl.Height + clientHeight - Height;
-            double pt_x = pt_y * ptControl.Width / ptControl.Height;
-            Size = new System.Drawing.Size((int)pt_x + Width - ptControl.Width, clientHeight);
+            base.SetSize(clientHeight);
+            //double pt_y = ptControl.Height + clientHeight - Height;
+            //double pt_x = pt_y * ptControl.Width / ptControl.Height;
+            //Size = new System.Drawing.Size((int)pt_x + Width - ptControl.Width, clientHeight);
         }
         override public void ConfigureMoveable(bool left, bool right)
         {

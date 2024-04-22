@@ -283,23 +283,58 @@ namespace AVDeviceControl
             PositionDevices(spltMain.Panel1);
         }
         bool positioning = false;
+        int minDeviceHeight = 220;
         private void PositionDevices(SplitterPanel panel)
         {
-            positioning = true;
-            //panel.AutoScrollOffset = new Point();
-            
-            panel.Invalidate();
-            int clientHeight = panel.ClientRectangle.Height - 8; // space for scrollbar
-            int left = panel.HorizontalScroll.Value;
-            for (int i = 0; i < deviceControls.DeviceCount; ++i)
+            if (deviceControls.DeviceCount > 0)
             {
-                ucAvDevice uc = deviceControls.Device(i);
-                uc.SetSize(clientHeight);
-                uc.Location = new Point(left, 0);
-                left += uc.Width;
-                uc.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
+                positioning = true;
+
+                int clientHeight = panel.Parent.ClientRectangle.Height - 8; // space for scrollbar
+                int clientWidth = panel.Parent.ClientRectangle.Width;
+                int scrLeft = -panel.HorizontalScroll.Value;
+                panel.VerticalScroll.Value = 0;
+                // Column count based on panel size and aspect ratio
+                int aCols = Math.Max(1, 
+                   (int)((double)clientWidth / clientHeight * deviceControls.Device(0).AspectRatio));
+                // Row / col count is based on best 2 dim fit of cells into panel
+                int aRows = Math.Max(deviceControls.DeviceCount / aCols, 1);
+                int rows = aRows;
+                int cols = (deviceControls.DeviceCount + rows - 1) / rows;
+                // Cell height is smaller of "fill height", or "fill width"
+                int cellHeight = Math.Min(clientHeight / rows,
+                  (int)(clientWidth / cols / deviceControls.Device(0).AspectRatio));
+                if (cellHeight < minDeviceHeight)
+                {
+                    cellHeight = minDeviceHeight;
+                    //cols = (int)(clientWidth / (cellHeight * deviceControls.Device(0).AspectRatio));
+                    //rows = Math.Max(deviceControls.DeviceCount / cols, 1);
+                    Console.WriteLine("MinHeight " + aCols + "=>" + cols + " Cols, "
+                      + aRows + "=>" + rows + " Rows, Cellheight " + cellHeight);
+                }
+                else
+                {
+                    Console.WriteLine("MinWidth " + cols + " Cols, " + rows + " Rows, Cellheight " + cellHeight);
+                }
+                int top = 0;
+                int left = scrLeft;
+
+                for (int i = 0; i < deviceControls.DeviceCount; ++i)
+                {
+                    ucAvDevice uc = deviceControls.Device(i);
+                    uc.SetSize(cellHeight);
+                    uc.Location = new Point(left, top);
+                    left += uc.Width;
+                    uc.ConfigureMoveable(i > 0, i < deviceControls.DeviceCount - 1);
+                    if ((i + 1) % cols == 0)
+                    {
+                        top += cellHeight;
+                        left = scrLeft;
+                    }
+                }
+                panel.Invalidate();
+                positioning = false;
             }
-            positioning = false;
         }
         #endregion
 

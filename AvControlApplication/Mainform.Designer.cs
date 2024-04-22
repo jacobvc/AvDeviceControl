@@ -103,21 +103,21 @@ namespace AVDeviceControl
             // mnuSaveConfig
             // 
             this.mnuSaveConfig.Name = "mnuSaveConfig";
-            this.mnuSaveConfig.Size = new System.Drawing.Size(180, 22);
+            this.mnuSaveConfig.Size = new System.Drawing.Size(160, 22);
             this.mnuSaveConfig.Text = "Save Config";
             this.mnuSaveConfig.Click += new System.EventHandler(this.mnuSaveConfig_Click);
             // 
             // mnuLoadConfig
             // 
             this.mnuLoadConfig.Name = "mnuLoadConfig";
-            this.mnuLoadConfig.Size = new System.Drawing.Size(180, 22);
+            this.mnuLoadConfig.Size = new System.Drawing.Size(160, 22);
             this.mnuLoadConfig.Text = "Load Config";
             this.mnuLoadConfig.Click += new System.EventHandler(this.mnuLoadConfig_Click);
             // 
             // mnuSaveJSONCopy
             // 
             this.mnuSaveJSONCopy.Name = "mnuSaveJSONCopy";
-            this.mnuSaveJSONCopy.Size = new System.Drawing.Size(180, 22);
+            this.mnuSaveJSONCopy.Size = new System.Drawing.Size(160, 22);
             this.mnuSaveJSONCopy.Text = "Save JSON Copy";
             this.mnuSaveJSONCopy.Click += new System.EventHandler(this.mnuSaveJSONCopy_Click);
             // 
@@ -133,14 +133,14 @@ namespace AVDeviceControl
             // mnuAddCamera
             // 
             this.mnuAddCamera.Name = "mnuAddCamera";
-            this.mnuAddCamera.Size = new System.Drawing.Size(180, 22);
+            this.mnuAddCamera.Size = new System.Drawing.Size(140, 22);
             this.mnuAddCamera.Text = "Add Camera";
             this.mnuAddCamera.Click += new System.EventHandler(this.mnuAddCamera_Click);
             // 
             // mnuAddMixer
             // 
             this.mnuAddMixer.Name = "mnuAddMixer";
-            this.mnuAddMixer.Size = new System.Drawing.Size(180, 22);
+            this.mnuAddMixer.Size = new System.Drawing.Size(140, 22);
             this.mnuAddMixer.Text = "Add Mixer";
             this.mnuAddMixer.Click += new System.EventHandler(this.mnuAddMixer_Click);
             // 
@@ -170,6 +170,7 @@ namespace AVDeviceControl
             // 
             // mnuWebsocketPort
             // 
+            this.mnuWebsocketPort.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.mnuWebsocketPort.Name = "mnuWebsocketPort";
             this.mnuWebsocketPort.Size = new System.Drawing.Size(100, 23);
             this.mnuWebsocketPort.TextChanged += new System.EventHandler(this.mnuWebsocketPort_TextChanged);
@@ -271,7 +272,7 @@ namespace AVDeviceControl
             this.Controls.Add(this.spltMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuMain;
-            this.MinimumSize = new System.Drawing.Size(570, 280);
+            this.MinimumSize = new System.Drawing.Size(300, 280);
             this.Name = "MainForm";
             this.Text = "Audio Visual Device Controller";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);

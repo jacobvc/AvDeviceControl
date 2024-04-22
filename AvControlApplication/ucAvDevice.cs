@@ -17,8 +17,9 @@ namespace AVDeviceControl
         virtual public void Disconnect() { }
         virtual public void SetSize(int clientHeight)
         {
-            Size = new System.Drawing.Size(clientHeight * Width / Height, clientHeight);
+            Size = new System.Drawing.Size((int)(clientHeight * AspectRatio), clientHeight);
         }
+        virtual public double AspectRatio { get { return 1.25; } }
         virtual public void ConfigureMoveable(bool left, bool right) { }
     }
 }
