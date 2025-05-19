@@ -91,7 +91,7 @@ namespace AVDeviceControl
                 cam.Location = new Point(left, 0);
                 left += cam.Width;
             }
-            this.Width = Math.Max(left + 16, this.Width);
+            this.Width =Math.Min(Math.Max(left + 16, this.Width), ClientRectangle.Width);
         }
 
         private void RefreshMidis()
