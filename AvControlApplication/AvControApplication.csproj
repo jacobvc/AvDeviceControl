@@ -69,7 +69,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RtMidi.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RtMidi.Core.1.0.51\lib\netstandard2.0\RtMidi.Core.dll</HintPath>
+      <HintPath>..\packages\RtMidi.Core.1.0.53\lib\netstandard2.0\RtMidi.Core.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.12.0\lib\net47\Serilog.dll</HintPath>
@@ -268,11 +268,11 @@
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\RtMidi.Core.1.0.53\build\RtMidi.Core.targets" Condition="Exists('..\packages\RtMidi.Core.1.0.53\build\RtMidi.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\RtMidi.Core.1.0.51\build\RtMidi.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RtMidi.Core.1.0.51\build\RtMidi.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\RtMidi.Core.1.0.53\build\RtMidi.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RtMidi.Core.1.0.53\build\RtMidi.Core.targets'))" />
   </Target>
-  <Import Project="..\packages\RtMidi.Core.1.0.51\build\RtMidi.Core.targets" Condition="Exists('..\packages\RtMidi.Core.1.0.51\build\RtMidi.Core.targets')" />
 </Project>
