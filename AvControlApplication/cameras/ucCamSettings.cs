@@ -43,10 +43,11 @@ namespace AVDeviceControl
                 {
                     BindToPosition(sldBright, "Brightness", camera.LimitsX.Brightness);
                     BindToPosition(sldAperture, "Aperture", camera.LimitsX.Arpeture);
-                    BindToPosition(sldRGain, "RGain", camera.LimitsX.BGain);
-                    BindToPosition(sldBGain, "BGain", camera.LimitsX.RGain);
+                    BindToPosition(sldRGain, "RGain", camera.LimitsX.RGain);
+                    BindToPosition(sldBGain, "BGain", camera.LimitsX.BGain);
+                    BindToPosition(sldHue, "Clear1Hue", camera.LimitsX.Clear1Hue);
                 }
-             }
+            }
         }
 
         private void cameraInfo_VisibleChanged(object sender, EventArgs e)

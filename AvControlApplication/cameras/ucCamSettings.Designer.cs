@@ -36,10 +36,12 @@ namespace AVDeviceControl
             this.label4 = new System.Windows.Forms.Label();
             this.grpCamera = new System.Windows.Forms.GroupBox();
             this.cameraInfo = new System.Windows.Forms.TextBox();
+            this.sldHue = new ColorSlider.ColorSlider();
             this.sldBGain = new ColorSlider.ColorSlider();
             this.sldRGain = new ColorSlider.ColorSlider();
             this.sldAperture = new ColorSlider.ColorSlider();
             this.sldBright = new ColorSlider.ColorSlider();
+            this.label5 = new System.Windows.Forms.Label();
             this.grpCamera.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,9 +87,9 @@ namespace AVDeviceControl
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpCamera.Controls.Add(this.cameraInfo);
-            this.grpCamera.Location = new System.Drawing.Point(188, 0);
+            this.grpCamera.Location = new System.Drawing.Point(223, 0);
             this.grpCamera.Name = "grpCamera";
-            this.grpCamera.Size = new System.Drawing.Size(110, 150);
+            this.grpCamera.Size = new System.Drawing.Size(361, 150);
             this.grpCamera.TabIndex = 9;
             this.grpCamera.TabStop = false;
             this.grpCamera.Text = "Device";
@@ -100,9 +102,80 @@ namespace AVDeviceControl
             this.cameraInfo.Name = "cameraInfo";
             this.cameraInfo.ReadOnly = true;
             this.cameraInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.cameraInfo.Size = new System.Drawing.Size(104, 131);
+            this.cameraInfo.Size = new System.Drawing.Size(355, 131);
             this.cameraInfo.TabIndex = 0;
             this.cameraInfo.VisibleChanged += new System.EventHandler(this.cameraInfo_VisibleChanged);
+            // 
+            // sldHue
+            // 
+            this.sldHue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.sldHue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(77)))), ((int)(((byte)(95)))));
+            this.sldHue.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
+            this.sldHue.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
+            this.sldHue.BorderRoundRectSize = new System.Drawing.Size(8, 8);
+            this.sldHue.ElapsedInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
+            this.sldHue.ElapsedPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(130)))), ((int)(((byte)(208)))));
+            this.sldHue.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
+            this.sldHue.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.sldHue.ForeColor = System.Drawing.Color.White;
+            this.sldHue.InputColor = System.Drawing.Color.SpringGreen;
+            this.sldHue.InputValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.sldHue.LargeChange = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.sldHue.Location = new System.Drawing.Point(176, 17);
+            this.sldHue.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.sldHue.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.sldHue.Name = "sldHue";
+            this.sldHue.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.sldHue.ScaleDivisions = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.sldHue.ScaleSubDivisions = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.sldHue.ShowDivisionsText = false;
+            this.sldHue.ShowSmallScale = false;
+            this.sldHue.Size = new System.Drawing.Size(63, 133);
+            this.sldHue.SmallChange = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.sldHue.TabIndex = 10;
+            this.sldHue.Text = "colorSlider4";
+            this.sldHue.ThumbImage = ((System.Drawing.Image)(resources.GetObject("sldHue.ThumbImage")));
+            this.sldHue.ThumbInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
+            this.sldHue.ThumbPenColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
+            this.sldHue.ThumbRoundRectSize = new System.Drawing.Size(16, 16);
+            this.sldHue.ThumbSize = new System.Drawing.Size(16, 16);
+            this.sldHue.TickAdd = 0F;
+            this.sldHue.TickColor = System.Drawing.Color.White;
+            this.sldHue.TickDivide = 0F;
+            this.sldHue.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             // 
             // sldBGain
             // 
@@ -117,12 +190,18 @@ namespace AVDeviceControl
             this.sldBGain.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
             this.sldBGain.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             this.sldBGain.ForeColor = System.Drawing.Color.White;
+            this.sldBGain.InputColor = System.Drawing.Color.SpringGreen;
+            this.sldBGain.InputValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.sldBGain.LargeChange = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.sldBGain.Location = new System.Drawing.Point(140, 17);
+            this.sldBGain.Location = new System.Drawing.Point(139, 17);
             this.sldBGain.Maximum = new decimal(new int[] {
             100,
             0,
@@ -182,6 +261,12 @@ namespace AVDeviceControl
             this.sldRGain.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
             this.sldRGain.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             this.sldRGain.ForeColor = System.Drawing.Color.White;
+            this.sldRGain.InputColor = System.Drawing.Color.SpringGreen;
+            this.sldRGain.InputValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.sldRGain.LargeChange = new decimal(new int[] {
             5,
             0,
@@ -247,6 +332,12 @@ namespace AVDeviceControl
             this.sldAperture.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
             this.sldAperture.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             this.sldAperture.ForeColor = System.Drawing.Color.White;
+            this.sldAperture.InputColor = System.Drawing.Color.SpringGreen;
+            this.sldAperture.InputValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.sldAperture.LargeChange = new decimal(new int[] {
             5,
             0,
@@ -312,6 +403,12 @@ namespace AVDeviceControl
             this.sldBright.ElapsedPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(140)))), ((int)(((byte)(180)))));
             this.sldBright.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             this.sldBright.ForeColor = System.Drawing.Color.White;
+            this.sldBright.InputColor = System.Drawing.Color.SpringGreen;
+            this.sldBright.InputValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.sldBright.LargeChange = new decimal(new int[] {
             5,
             0,
@@ -364,11 +461,21 @@ namespace AVDeviceControl
             0,
             0});
             // 
+            // label5
+            // 
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label5.Location = new System.Drawing.Point(183, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 23);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Clear1_Hue";
+            // 
             // ucCamSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.grpCamera);
+            this.Controls.Add(this.sldHue);
             this.Controls.Add(this.sldBGain);
             this.Controls.Add(this.sldRGain);
             this.Controls.Add(this.sldAperture);
@@ -377,8 +484,9 @@ namespace AVDeviceControl
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label5);
             this.Name = "ucCamSettings";
-            this.Size = new System.Drawing.Size(301, 150);
+            this.Size = new System.Drawing.Size(587, 150);
             this.grpCamera.ResumeLayout(false);
             this.grpCamera.PerformLayout();
             this.ResumeLayout(false);
@@ -397,5 +505,7 @@ namespace AVDeviceControl
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox grpCamera;
         private System.Windows.Forms.TextBox cameraInfo;
+        private ColorSlider.ColorSlider sldHue;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -14,6 +14,10 @@ namespace AVDeviceControl
 
         public const byte Bright = 0x0D;
         public const byte BrightValue = 0x4D;
+
+        // Added Clear1Hue support
+        public const byte Clear1Hue = 0x4F;
+        public const byte Clear1HueValue = 0x4F;
     }
 
     public class PtzParametersExtend
@@ -26,6 +30,8 @@ namespace AVDeviceControl
           = new ViscaRangeLimits<int>(0, 20, "BGain limits");
         public ViscaRangeLimits<int> RGain
           = new ViscaRangeLimits<int>(0, 20, "RGain limits");
+        public ViscaRangeLimits<int> Clear1Hue
+          = new ViscaRangeLimits<int>(0, 14, "Clear1Hue limits");
     }
     /// <summary>
     /// ViscaInfo class 
@@ -135,6 +141,61 @@ namespace AVDeviceControl
         public override string ToString()
         {
             return String.Format("Device{0} Bright.Inquiry", this.Destination);
+        }
+    }
+
+    public class ViscaClear1HueValue : ViscaPositionCommand
+    {
+        public ViscaClear1HueValue(byte address, int position, PtzCamera camera)
+            : this(address, position, camera.LimitsX.Clear1Hue)
+        { }
+
+        public ViscaClear1HueValue(byte address, int position, IViscaRangeLimits<int> limits)
+            : base(address, position, limits)
+        {
+            Append(new byte[] { /* Visca.Category.Camera1 */ 0x04, Commands.Clear1HueValue });
+            AppendPosition();
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Device{0} Clear1Hue.Value 0x{1:X2} ({1})", this.Destination, Position);
+        }
+    }
+
+    public class ViscaClear1HueInquiry : ViscaInquiry
+    {
+        private readonly Action<short> _completionAction;
+        public ViscaClear1HueInquiry(byte address, Action<short> action)
+            : base(address)
+        {
+            Append(new byte[] { /* Visca.Category.Camera1 */ 0x04, Commands.Clear1HueValue });
+            _completionAction = action;
+        }
+
+        public override void Process(ViscaRxPacket viscaRxPacket)
+        {
+            if (_completionAction != null)
+            {
+                if (viscaRxPacket.PayLoad.Length >= 4)
+                {
+                    if (viscaRxPacket.PayLoad.Length == 4)
+                    {
+                        _completionAction((short)((viscaRxPacket.PayLoad[0] << 12) +
+                                 (viscaRxPacket.PayLoad[1] << 8) +
+                                 (viscaRxPacket.PayLoad[2] << 4) +
+                                  viscaRxPacket.PayLoad[3])
+                         );
+                    }
+                }
+                else
+                    throw new ArgumentOutOfRangeException("viscaRxPacket", "Recieved packet is not Clear1HueInquiry");
+            }
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Device{0} Clear1Hue.Inquiry", this.Destination);
         }
     }
 }
