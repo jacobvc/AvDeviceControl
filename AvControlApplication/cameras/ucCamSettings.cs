@@ -45,7 +45,7 @@ namespace AVDeviceControl
                     BindToPosition(sldAperture, "Aperture", camera.LimitsX.Arpeture);
                     BindToPosition(sldRGain, "RGain", camera.LimitsX.RGain);
                     BindToPosition(sldBGain, "BGain", camera.LimitsX.BGain);
-                    BindToPosition(sldHue, "Clear1Hue", camera.LimitsX.Clear1Hue);
+                    BindToPosition(sldHue, "Hue", camera.LimitsX.Hue);
                 }
             }
         }
@@ -53,9 +53,9 @@ namespace AVDeviceControl
         private void cameraInfo_VisibleChanged(object sender, EventArgs e)
         {
             PtzCamera camera = _binding.DataSource as PtzCamera;
-            cameraInfo.Text = "";
-            cameraInfo.Text = camera?.PtzInfo.ToString().Replace(",", "\r\n") + "\r\n"
-              + camera?.ToString().Replace("\t", "  ");
+            cameraInfo.Text = "Camera Info";
+            cameraInfo.Text += (("\r\n\t" + camera?.PtzInfo.ToString()).Replace(",", "\r\n\t") + "\r\n"
+              + "\r\n" + camera?.ToString()).Replace("\t", "    ");
         }
     }
 }

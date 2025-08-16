@@ -30,8 +30,8 @@ namespace AVDeviceControl
           = new ViscaRangeLimits<int>(0, 20, "BGain limits");
         public ViscaRangeLimits<int> RGain
           = new ViscaRangeLimits<int>(0, 20, "RGain limits");
-        public ViscaRangeLimits<int> Clear1Hue
-          = new ViscaRangeLimits<int>(0, 14, "Clear1Hue limits");
+        public ViscaRangeLimits<int> Hue
+          = new ViscaRangeLimits<int>(0, 14, "Hue limits");
     }
     /// <summary>
     /// ViscaInfo class 
@@ -147,7 +147,7 @@ namespace AVDeviceControl
     public class ViscaClear1HueValue : ViscaPositionCommand
     {
         public ViscaClear1HueValue(byte address, int position, PtzCamera camera)
-            : this(address, position, camera.LimitsX.Clear1Hue)
+            : this(address, position, camera.LimitsX.Hue)
         { }
 
         public ViscaClear1HueValue(byte address, int position, IViscaRangeLimits<int> limits)

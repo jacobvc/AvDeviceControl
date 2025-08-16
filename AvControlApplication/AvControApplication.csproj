@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cameras\CameraConfig.cs" />
-    <Compile Include="cameras\Clear1ViscaCamera.cs" />
+    <Compile Include="cameras\Clear1PtzCamera.cs" />
     <Compile Include="cameras\UcWpfPtControl.xaml.cs">
       <DependentUpon>UcWpfPtControl.xaml</DependentUpon>
     </Compile>

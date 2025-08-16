@@ -24,6 +24,7 @@ namespace AVDeviceControl
         public ViscaProtocolProcessor controller;
         private ViscaCameraParameters cameraParams = new ViscaCameraDefaultParameters();
 
+        // Change the type of Camera property from PtzCamera to Clear1PtzCamera
         public PtzCamera Camera { get; set; } = null;
         public ViscaInfo info = new ViscaInfo();
 
@@ -72,7 +73,12 @@ namespace AVDeviceControl
             byte cameraAddress = (byte)id;
 
             cameraParams = new Rocware10xUsbCamera();
-            Camera = new PtzCamera(id, cameraParams, this);
+            // If you need Camera to be of type PtzCamera for other usages, you can cast Clear1PtzCamera to PtzCamera
+            // Replace this line:
+            // Camera = new PtzCamera(id, cameraParams, this);
+
+            // With this line:
+            Camera = new Clear1PtzCamera(id, cameraParams, this);
 
             Camera.Connect();
 

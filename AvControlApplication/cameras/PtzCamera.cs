@@ -10,7 +10,7 @@ using Visca;
 
 namespace AVDeviceControl
 {
-    public class PtzCamera : Clear1ViscaCamera, IBindableComponent
+    public class PtzCamera : ViscaCamera, IBindableComponent
     {
         byte address;
         public PtzController ptz;
@@ -28,16 +28,22 @@ namespace AVDeviceControl
         public PtzParametersExtend LimitsX { get; }
         private int _brightness;
 
+        public ViscaInfo PtzInfo { get { return ptz.info;  } }
+        #endregion
         public int Brightness
         {
             get { return _brightness; }
-            set { _brightness = value;  ptz.controller.EnqueueCommand(
-              new ViscaBrightValue(address, value, this)); }
+            set
+            {
+                _brightness = value; ptz.controller.EnqueueCommand(
+              new ViscaBrightValue(address, value, this));
+            }
         }
-
-
-        public ViscaInfo PtzInfo { get { return ptz.info;  } }
-        #endregion
+        public virtual int Hue
+        {
+            get { return 0; }
+            set { }
+        }
 
         #region Constructors / Destructors
         public PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
@@ -57,19 +63,17 @@ namespace AVDeviceControl
             LimitsX = new PtzParametersExtend();
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             monitor?.Terminate();
         }
         #endregion
 
-        public void Connect()
+        public override void Connect()
         {
             monitor = new PtzMonitor(this);
 
             monitor.Update();
-            ptz.controller.EnqueueCommand(new ViscaBrightInquiry(address, ReceivedBrightness));
-            ptz.controller.EnqueueCommand(new ViscaClear1HueInquiry(address, updateClear1Hue));
 
             PollEnabled = true;
             Poll();
