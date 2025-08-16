@@ -468,7 +468,7 @@ namespace AVDeviceControl
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(45, 23);
             this.label5.TabIndex = 11;
-            this.label5.Text = "Clear1_Hue";
+            this.label5.Text = "Hue";
             // 
             // ucCamSettings
             // 
