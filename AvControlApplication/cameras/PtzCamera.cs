@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Windows.Media.Animation;
 using Visca;
 
 namespace AVDeviceControl
 {
+    using LimitsDictionary = Dictionary<string, (object Low, object High, string Message)>;
     public class PtzCamera : ViscaCamera, IBindableComponent
     {
         byte address;
@@ -45,13 +47,83 @@ namespace AVDeviceControl
             set { }
         }
 
+
+        public LimitsDictionary limitsDict = new LimitsDictionary();
+
+        public void ConvertFields(Type type, LimitsDictionary dict)
+        {
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            foreach (var field in fields)
+            {
+                if (dict.ContainsKey(field.Name))
+                {
+                    Console.WriteLine("Replacing " + field.Name);
+                }
+                var value = field.GetValue(null);
+                if (value is IViscaRangeLimits<byte> byteLimits)
+                    dict[field.Name] = (byteLimits.Low, byteLimits.High, byteLimits.Message);
+                else if (value is IViscaRangeLimits<int> intLimits)
+                    dict[field.Name] = (intLimits.Low, intLimits.High, intLimits.Message);
+                else
+                {
+                    Console.WriteLine("Unsupported Type");
+                }
+            }
+        }
+
+        public void ConvertFields(object obj, LimitsDictionary dict)
+        {
+            var type = obj.GetType();
+
+            // Process public instance fields
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var field in fields)
+            {
+                if (dict.ContainsKey(field.Name))
+                {
+                    Console.WriteLine("Unsupported Type for " + field.Name);
+                }
+
+                var value = field.GetValue(obj);
+                if (value is IViscaRangeLimits<byte> byteLimits)
+                    dict[field.Name] = (byteLimits.Low, byteLimits.High, byteLimits.Message);
+                else if (value is IViscaRangeLimits<int> intLimits)
+                    dict[field.Name] = (intLimits.Low, intLimits.High, intLimits.Message);
+                else
+                {
+                    Console.WriteLine("Unsupported Type for " + field.Name);
+                }
+            }
+
+            // Process public instance properties
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var prop in properties)
+            {
+                if (dict.ContainsKey(prop.Name))
+                {
+                    Console.WriteLine("Replacing " + prop.Name);
+                }
+                var value = prop.GetValue(obj);
+                if (value is IViscaRangeLimits<byte> byteLimits)
+                    dict[prop.Name] = (byteLimits.Low, byteLimits.High, byteLimits.Message);
+                else if (value is IViscaRangeLimits<int> intLimits)
+                    dict[prop.Name] = (intLimits.Low, intLimits.High, intLimits.Message);
+                else
+                {
+                    Console.WriteLine("Unsupported Type for " + prop.Name); 
+                }
+            }
+        }
+
         #region Constructors / Destructors
         public PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
-            : base(id, parameters, ptz?.controller)
+            : base(id, new ViscaCameraDefaultParameters(), ptz?.controller)
         {
             this.address = (byte)id;
             this.ptz = ptz;
 
+            ConvertFields(typeof(ViscaDefaults), limitsDict);
             if (parameters == null)
             {
                 Limits = new ViscaCameraDefaultParameters();
@@ -61,7 +133,9 @@ namespace AVDeviceControl
                 Limits = parameters;
             }
             LimitsX = new PtzParametersExtend();
+            ConvertFields(LimitsX, limitsDict);
         }
+
 
         public new void Dispose()
         {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Visca;
+using static AVDeviceControl.Preset;
 
 namespace AVDeviceControl
 {
@@ -71,8 +72,16 @@ namespace AVDeviceControl
             ViscaCameraId id = ViscaCameraId.Camera1;
             byte cameraAddress = (byte)id;
 
-            cameraParams = new Rocware10xUsbCamera();
-            Camera = new Clear1PtzCamera(id, cameraParams, this);
+            if (config.CameraModel == CameraName.ClearOne.ToString())
+            {
+                cameraParams = null; // new Clear1PtzCameraParameters();
+                Camera = new Clear1PtzCamera(id, cameraParams, this);
+            }
+            else // if (config.CameraModel == CameraName.Other)
+            {
+                //cameraParams = new Clear1PtzExtendedCameraParameters();
+                Camera = new PtzCamera(id, null, this);
+            }
 
             Camera.Connect();
 

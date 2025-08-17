@@ -37,6 +37,7 @@ namespace AVDeviceControl
 
         #region Bindable properties
         [JsonProperty]
+        public string CameraModel { get; set; } = "Other";
         public string Port { get; set; } = "";
         public bool IsIp { get; set; } = false;
         public string Baud { get; set; } = "9600";
@@ -156,6 +157,12 @@ namespace AVDeviceControl
             Fast,
             Very_Fast,
             NOT_SET
+        }
+
+        public enum CameraName
+        {
+            Other,
+            ClearOne,
         }
 
         [JsonProperty]

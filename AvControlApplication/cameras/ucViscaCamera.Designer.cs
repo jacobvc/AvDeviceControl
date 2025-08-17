@@ -20,8 +20,10 @@ namespace AVDeviceControl
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabUsbCam = new System.Windows.Forms.TabPage();
-            this.chkComReverse = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.usbCamName = new System.Windows.Forms.ComboBox();
             this.cameraConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.chkComReverse = new System.Windows.Forms.CheckBox();
             this.btnRefreshPorts = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -72,6 +74,8 @@ namespace AVDeviceControl
             this.btnLeft = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.cameraBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label13 = new System.Windows.Forms.Label();
+            this.ipCamName = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabUsbCam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraConfigBindingSource)).BeginInit();
@@ -104,6 +108,8 @@ namespace AVDeviceControl
             // 
             // tabUsbCam
             // 
+            this.tabUsbCam.Controls.Add(this.label3);
+            this.tabUsbCam.Controls.Add(this.usbCamName);
             this.tabUsbCam.Controls.Add(this.chkComReverse);
             this.tabUsbCam.Controls.Add(this.btnRefreshPorts);
             this.tabUsbCam.Controls.Add(this.btnDelete);
@@ -120,21 +126,43 @@ namespace AVDeviceControl
             this.tabUsbCam.Text = "Configure";
             this.tabUsbCam.UseVisualStyleBackColor = true;
             // 
-            // chkComReverse
+            // label3
             // 
-            this.chkComReverse.AutoSize = true;
-            this.chkComReverse.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.cameraConfigBindingSource, "Reverse", true));
-            this.chkComReverse.Location = new System.Drawing.Point(7, 78);
-            this.chkComReverse.Name = "chkComReverse";
-            this.chkComReverse.Size = new System.Drawing.Size(88, 17);
-            this.chkComReverse.TabIndex = 16;
-            this.chkComReverse.Text = "Reverse Pan";
-            this.chkComReverse.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 80);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Camera";
+            // 
+            // usbCamName
+            // 
+            this.usbCamName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.usbCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
+            this.usbCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.usbCamName.FormattingEnabled = true;
+            this.usbCamName.Location = new System.Drawing.Point(73, 78);
+            this.usbCamName.Name = "usbCamName";
+            this.usbCamName.Size = new System.Drawing.Size(161, 21);
+            this.usbCamName.TabIndex = 17;
             // 
             // cameraConfigBindingSource
             // 
             this.cameraConfigBindingSource.DataSource = typeof(AVDeviceControl.CameraConfig);
             this.cameraConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.cameraConfigBindingSource_CurrentItemChanged);
+            // 
+            // chkComReverse
+            // 
+            this.chkComReverse.AutoSize = true;
+            this.chkComReverse.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.cameraConfigBindingSource, "Reverse", true));
+            this.chkComReverse.Location = new System.Drawing.Point(7, 118);
+            this.chkComReverse.Name = "chkComReverse";
+            this.chkComReverse.Size = new System.Drawing.Size(88, 17);
+            this.chkComReverse.TabIndex = 16;
+            this.chkComReverse.Text = "Reverse Pan";
+            this.chkComReverse.UseVisualStyleBackColor = true;
             // 
             // btnRefreshPorts
             // 
@@ -214,6 +242,8 @@ namespace AVDeviceControl
             // 
             // tabIpCam
             // 
+            this.tabIpCam.Controls.Add(this.label13);
+            this.tabIpCam.Controls.Add(this.ipCamName);
             this.tabIpCam.Controls.Add(this.chkIpReverse);
             this.tabIpCam.Controls.Add(this.label7);
             this.tabIpCam.Controls.Add(this.textBox1);
@@ -235,7 +265,7 @@ namespace AVDeviceControl
             // 
             this.chkIpReverse.AutoSize = true;
             this.chkIpReverse.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.cameraConfigBindingSource, "Reverse", true));
-            this.chkIpReverse.Location = new System.Drawing.Point(12, 101);
+            this.chkIpReverse.Location = new System.Drawing.Point(8, 127);
             this.chkIpReverse.Name = "chkIpReverse";
             this.chkIpReverse.Size = new System.Drawing.Size(88, 17);
             this.chkIpReverse.TabIndex = 15;
@@ -749,6 +779,28 @@ namespace AVDeviceControl
             // 
             this.cameraBindingSource.DataSource = typeof(AVDeviceControl.PtzCamera);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(8, 102);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Camera";
+            // 
+            // ipCamName
+            // 
+            this.ipCamName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ipCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
+            this.ipCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ipCamName.FormattingEnabled = true;
+            this.ipCamName.Location = new System.Drawing.Point(78, 100);
+            this.ipCamName.Name = "ipCamName";
+            this.ipCamName.Size = new System.Drawing.Size(121, 21);
+            this.ipCamName.TabIndex = 19;
+            // 
             // ucViscaCamera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -840,5 +892,9 @@ namespace AVDeviceControl
         private System.Windows.Forms.Button btnMenuOk;
         private System.Windows.Forms.CheckBox chkComReverse;
         private System.Windows.Forms.CheckBox chkIpReverse;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox usbCamName;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox ipCamName;
     }
 }

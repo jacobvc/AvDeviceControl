@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 using Visca;
+using static AVDeviceControl.Preset;
 
 namespace AVDeviceControl
 {
@@ -112,6 +113,12 @@ namespace AVDeviceControl
             {
                 cmbBaud.Items.Add(item);
             }
+            String[] models = Enum.GetNames(typeof(CameraName));
+            usbCamName.Items.Clear();
+            usbCamName.Items.AddRange(models);
+            ipCamName.Items.Clear();
+            ipCamName.Items.AddRange(models);
+
 
             RefreshPorts();
         }
