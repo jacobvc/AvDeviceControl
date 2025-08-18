@@ -5,34 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Visca;
+using static AVDeviceControl.PtzCamera;
+using static Visca.Visca;
 
 namespace AVDeviceControl
 {
     public static partial class Commands
     {
         public const byte Info = 0x02;
-
-        public const byte Bright = 0x0D;
-        public const byte BrightValue = 0x4D;
-
-        // Added Clear1Hue support
-        public const byte Clear1Hue = 0x4F;
-        public const byte Clear1HueValue = 0x4F;
     }
 
-    public class PtzParametersExtend
-    {
-        public ViscaRangeLimits<int> Brightness 
-          = new ViscaRangeLimits<int>(0, 14, "Brightness limits");
-        public ViscaRangeLimits<int> Arpeture
-          = new ViscaRangeLimits<int>(0, 14, "Arpeture limits");
-        public ViscaRangeLimits<int> BGain
-          = new ViscaRangeLimits<int>(0, 20, "BGain limits");
-        public ViscaRangeLimits<int> RGain
-          = new ViscaRangeLimits<int>(0, 20, "RGain limits");
-        public ViscaRangeLimits<int> Hue
-          = new ViscaRangeLimits<int>(0, 14, "Hue limits");
-    }
     /// <summary>
     /// ViscaInfo class 
     /// </summary>
@@ -67,7 +49,7 @@ namespace AVDeviceControl
         public ViscaInfoInquiry(byte address, Action<ViscaInfo> action)
             : base(address)
         {
-            Append(new byte[] { /* Visca.Category.Interface */0x00, Commands.Info });
+            Append(new byte[] { Category.Interface, Commands.Info });
             _completionAction = action;
         }
 
@@ -89,113 +71,90 @@ namespace AVDeviceControl
             }
         }
     }
-    public class ViscaBrightValue : ViscaPositionCommand
+
+    public class GenericParameters
     {
-        public ViscaBrightValue(byte address, int position, PtzCamera camera)
-        : this(address, position, camera.LimitsX.Brightness)
-        { }
-
-        public ViscaBrightValue(byte address, int position, IViscaRangeLimits<int> limits)
-        : base(address, position, limits)
+        public readonly string name;
+        public readonly byte inqCmd;
+        public readonly byte valueCmd;
+        public readonly byte category;
+        public GenericParameters(string name, byte inqCmd, byte valueCmd, byte category)
         {
-            Append(new byte[]{ /* Visca.Category.Camera1 */0x04, Commands.BrightValue });
-            AppendPosition();
-        }
-
-        public override string ToString()
-        {
-            return String.Format("Device{0} Bright.Value 0x{1:X2} ({1})", this.Destination, Position);
+            this.name = name;
+            this.inqCmd = inqCmd;
+            this.valueCmd = valueCmd;
+            this.category = category;
         }
     }
-
-    public class ViscaBrightInquiry : ViscaInquiry
+    public class GenericPositionInterface
     {
-        private readonly Action<short> _completionAction;
-        public ViscaBrightInquiry(byte address, Action<short> action)
-        : base(address)
+        private readonly GenericParameters p;
+        private readonly byte address;
+        private readonly PtzCamera camera;
+
+        // Constructor to initialize all fields
+        public GenericPositionInterface(GenericParameters parameters,
+            byte address, PtzCamera camera)
         {
-            Append(new byte[] { /* Visca.Category.Camera1 */0x04, Commands.BrightValue });
-            _completionAction = action;
+            this.p = parameters;
+            this.address = address;
+            this.camera = camera;
         }
 
-        public override void Process(ViscaRxPacket viscaRxPacket)
+        public GenericPositionCommand Command(int position)
         {
-            if (_completionAction != null)
+            return new GenericPositionCommand(address, position, camera.limits.getInt(p.name), p.category, p.valueCmd);
+        }
+
+        public GenericPositionInquiry Inquiry(Action<short> action)
+        {
+            return new GenericPositionInquiry(p.inqCmd, p.category, address,
+              position => { action(position); });
+        }
+        public class GenericPositionCommand : ViscaPositionCommand
+        {
+            public GenericPositionCommand(byte address, int position, IViscaRangeLimits<int> limits,
+                byte category, byte valueCmd)
+                : base(address, position, limits)
             {
-                if (viscaRxPacket.PayLoad.Length >= 4)
-                {
-                    if (viscaRxPacket.PayLoad.Length == 4)
-                    {
-                        _completionAction((short)((viscaRxPacket.PayLoad[0] << 12) +
-                                 (viscaRxPacket.PayLoad[1] << 8) +
-                                 (viscaRxPacket.PayLoad[2] << 4) +
-                                  viscaRxPacket.PayLoad[3])
-                         );
-                    }
-                }
-                else
-                    throw new ArgumentOutOfRangeException("viscaRxPacket", "Recieved packet is not Brightness Inquiry");
+                Append(new byte[] { category, valueCmd });
+                AppendPosition();
             }
         }
 
-        public override string ToString()
+        public class GenericPositionInquiry : ViscaInquiry
         {
-            return String.Format("Device{0} Bright.Inquiry", this.Destination);
-        }
-    }
-
-    public class ViscaClear1HueValue : ViscaPositionCommand
-    {
-        public ViscaClear1HueValue(byte address, int position, PtzCamera camera)
-            : this(address, position, camera.LimitsX.Hue)
-        { }
-
-        public ViscaClear1HueValue(byte address, int position, IViscaRangeLimits<int> limits)
-            : base(address, position, limits)
-        {
-            Append(new byte[] { /* Visca.Category.Camera1 */ 0x04, Commands.Clear1HueValue });
-            AppendPosition();
-        }
-
-        public override string ToString()
-        {
-            return String.Format("Device{0} Clear1Hue.Value 0x{1:X2} ({1})", this.Destination, Position);
-        }
-    }
-
-    public class ViscaClear1HueInquiry : ViscaInquiry
-    {
-        private readonly Action<short> _completionAction;
-        public ViscaClear1HueInquiry(byte address, Action<short> action)
-            : base(address)
-        {
-            Append(new byte[] { /* Visca.Category.Camera1 */ 0x04, Commands.Clear1HueValue });
-            _completionAction = action;
-        }
-
-        public override void Process(ViscaRxPacket viscaRxPacket)
-        {
-            if (_completionAction != null)
+            private readonly Action<short> _completionAction;
+            public GenericPositionInquiry(byte inqCmd, byte category, byte address, Action<short> action)
+                : base(address)
             {
-                if (viscaRxPacket.PayLoad.Length >= 4)
+                Append(new byte[] { category, inqCmd });
+                _completionAction = action;
+            }
+
+            public override void Process(ViscaRxPacket viscaRxPacket)
+            {
+                if (_completionAction != null)
                 {
-                    if (viscaRxPacket.PayLoad.Length == 4)
+                    if (viscaRxPacket.PayLoad.Length >= 4)
                     {
-                        _completionAction((short)((viscaRxPacket.PayLoad[0] << 12) +
-                                 (viscaRxPacket.PayLoad[1] << 8) +
-                                 (viscaRxPacket.PayLoad[2] << 4) +
-                                  viscaRxPacket.PayLoad[3])
-                         );
+                        if (viscaRxPacket.PayLoad.Length == 4)
+                        {
+                            _completionAction((short)((viscaRxPacket.PayLoad[0] << 12) +
+                                     (viscaRxPacket.PayLoad[1] << 8) +
+                                     (viscaRxPacket.PayLoad[2] << 4) +
+                                      viscaRxPacket.PayLoad[3])
+                             );
+                        }
                     }
+                    else
+                        throw new ArgumentOutOfRangeException("viscaRxPacket", "Recieved packet is not Clear1HueInquiry");
                 }
-                else
-                    throw new ArgumentOutOfRangeException("viscaRxPacket", "Recieved packet is not Clear1HueInquiry");
             }
         }
-
         public override string ToString()
         {
-            return String.Format("Device{0} Clear1Hue.Inquiry", this.Destination);
+            return String.Format("Device{0} {1}.Value 0x{1:X2} ()", this.address, this.p.name);
         }
     }
 }

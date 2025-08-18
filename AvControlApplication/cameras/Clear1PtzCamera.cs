@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 using Visca;
+using static AVDeviceControl.GenericPositionInterface;
+using static Visca.Visca;
 
 namespace AVDeviceControl
 {
@@ -11,9 +13,32 @@ namespace AVDeviceControl
     /// </summary>
     public class Clear1PtzCamera : PtzCamera
     {
-        private readonly ViscaClear1HueInquiry _rClear1HueInquiry;
+        private GenericPositionInterface hueInterface;
+        private readonly GenericPositionInquiry _rClear1HueInquiry;
         private int _Clear1Hue;
         private bool _suppressSet = false;
+
+        GenericParameters hueParameters = new GenericParameters(
+            name: "Hue",
+            inqCmd: 0x4f,
+            valueCmd: 0x4f,
+            category: Category.Camera1
+         );
+
+        public static class PtzParametersExtend
+        {
+            public static ViscaRangeLimits<int> Brightness
+              = new ViscaRangeLimits<int>(0, 14, "Brightness limits");
+            public static ViscaRangeLimits<int> Aperture
+              = new ViscaRangeLimits<int>(0, 14, "Aperture limits");
+            public static ViscaRangeLimits<int> BGain
+              = new ViscaRangeLimits<int>(0, 20, "BGain limits");
+            public static ViscaRangeLimits<int> RGain
+              = new ViscaRangeLimits<int>(0, 20, "RGain limits");
+            public static ViscaRangeLimits<int> Hue
+              = new ViscaRangeLimits<int>(0, 14, "Hue limits");
+        }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Clear1PtzCamera"/> class.
@@ -24,17 +49,12 @@ namespace AVDeviceControl
         public Clear1PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
             : base(id, parameters, ptz)
         {
-            _rClear1HueInquiry = new ViscaClear1HueInquiry(
-                (byte)id,
-                position => { updateClear1Hue(position); });
+            hueInterface = new GenericPositionInterface(hueParameters, (byte)id, this);
+            _rClear1HueInquiry = hueInterface.Inquiry(updateClear1Hue);
 
             _pollCommands.Add(_rClear1HueInquiry);
 
-            _visca.EnqueueCommand(_rClear1HueInquiry);
-
-            //extensionSource.DataSource = this;
-            //DataBindings.Add("Clear1Hue", extensionSource, "Clear1Hue");     
-            
+            ptz.controller.EnqueueCommand(_rClear1HueInquiry);
         }
         public override string ToString()
         {
@@ -44,7 +64,7 @@ namespace AVDeviceControl
 
         protected virtual void OnClear1HueChanged(PositionEventArgs e)
         {
-           _Clear1Hue = e.Position;
+            _Clear1Hue = e.Position;
         }
 
         public override int Hue
@@ -54,7 +74,7 @@ namespace AVDeviceControl
             {
                 if (_Clear1Hue != value)
                 {
-                    _visca.EnqueueCommand(new ViscaClear1HueValue(1, value, new PtzParametersExtend().Hue));
+                    _visca.EnqueueCommand(hueInterface.Command(value));
                 }
             }
         }
@@ -68,5 +88,5 @@ namespace AVDeviceControl
             }
         }
         // Expose Clear1ViscaCamera functionality as needed
-     }
+    }
 }

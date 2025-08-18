@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,15 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
 using Visca;
+using static Visca.Visca;
 
 namespace AVDeviceControl
 {
-    using LimitsDictionary = Dictionary<string, (object Low, object High, string Message)>;
     public class PtzCamera : ViscaCamera, IBindableComponent
     {
         byte address;
         public PtzController ptz;
         PtzMonitor monitor;
+
+        GenericPositionInterface brightInterface;
+        GenericParameters brightnessParameters = new GenericParameters(
+            name: "Bright",
+            inqCmd: 0xa1,
+            valueCmd: 0xa1,
+            category: Category.Camera1
+         );
 
         #region Binding variables
         public event EventHandler Disposed;
@@ -27,7 +36,6 @@ namespace AVDeviceControl
 
         #region Properties
         public ViscaCameraParameters Limits { get; }
-        public PtzParametersExtend LimitsX { get; }
         private int _brightness;
 
         public ViscaInfo PtzInfo { get { return ptz.info;  } }
@@ -38,7 +46,7 @@ namespace AVDeviceControl
             set
             {
                 _brightness = value; ptz.controller.EnqueueCommand(
-              new ViscaBrightValue(address, value, this));
+              brightInterface.Command(value));
             }
         }
         public virtual int Hue
@@ -48,73 +56,7 @@ namespace AVDeviceControl
         }
 
 
-        public LimitsDictionary limitsDict = new LimitsDictionary();
-
-        public void ConvertFields(Type type, LimitsDictionary dict)
-        {
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-            foreach (var field in fields)
-            {
-                if (dict.ContainsKey(field.Name))
-                {
-                    Console.WriteLine("Replacing " + field.Name);
-                }
-                var value = field.GetValue(null);
-                if (value is IViscaRangeLimits<byte> byteLimits)
-                    dict[field.Name] = (byteLimits.Low, byteLimits.High, byteLimits.Message);
-                else if (value is IViscaRangeLimits<int> intLimits)
-                    dict[field.Name] = (intLimits.Low, intLimits.High, intLimits.Message);
-                else
-                {
-                    Console.WriteLine("Unsupported Type");
-                }
-            }
-        }
-
-        public void ConvertFields(object obj, LimitsDictionary dict)
-        {
-            var type = obj.GetType();
-
-            // Process public instance fields
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var field in fields)
-            {
-                if (dict.ContainsKey(field.Name))
-                {
-                    Console.WriteLine("Unsupported Type for " + field.Name);
-                }
-
-                var value = field.GetValue(obj);
-                if (value is IViscaRangeLimits<byte> byteLimits)
-                    dict[field.Name] = (byteLimits.Low, byteLimits.High, byteLimits.Message);
-                else if (value is IViscaRangeLimits<int> intLimits)
-                    dict[field.Name] = (intLimits.Low, intLimits.High, intLimits.Message);
-                else
-                {
-                    Console.WriteLine("Unsupported Type for " + field.Name);
-                }
-            }
-
-            // Process public instance properties
-            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var prop in properties)
-            {
-                if (dict.ContainsKey(prop.Name))
-                {
-                    Console.WriteLine("Replacing " + prop.Name);
-                }
-                var value = prop.GetValue(obj);
-                if (value is IViscaRangeLimits<byte> byteLimits)
-                    dict[prop.Name] = (byteLimits.Low, byteLimits.High, byteLimits.Message);
-                else if (value is IViscaRangeLimits<int> intLimits)
-                    dict[prop.Name] = (intLimits.Low, intLimits.High, intLimits.Message);
-                else
-                {
-                    Console.WriteLine("Unsupported Type for " + prop.Name); 
-                }
-            }
-        }
+        public ViscaRangeDictionary limits = new ViscaRangeDictionary();
 
         #region Constructors / Destructors
         public PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
@@ -123,7 +65,7 @@ namespace AVDeviceControl
             this.address = (byte)id;
             this.ptz = ptz;
 
-            ConvertFields(typeof(ViscaDefaults), limitsDict);
+            limits.Add(typeof(ViscaDefaults));
             if (parameters == null)
             {
                 Limits = new ViscaCameraDefaultParameters();
@@ -131,9 +73,15 @@ namespace AVDeviceControl
             else
             {
                 Limits = parameters;
+                // Replace this line:
+                // limits.Add(Clear1PtzCamera.PtzParametersExtend());
+
+                // With this line:
+                limits.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
             }
-            LimitsX = new PtzParametersExtend();
-            ConvertFields(LimitsX, limitsDict);
+            limits.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
+            brightInterface = new GenericPositionInterface(brightnessParameters, (byte)id, this);
+            //_rClear1HueInquiry = hueInterface.Inquiry(updateClear1Hue);
         }
 
 

@@ -23,33 +23,35 @@ namespace AVDeviceControl
             InitializeComponent();
         }
 
-        private void BindToPosition(String member, ViscaRangeLimits<int> limits)
+        private void BindToPosition(String member)
         {
-            ColorSlider.ColorSlider ctl = AddSlider(member);
-            if (ctl.DataBindings.Count > 0)
-            {
-                ctl.DataBindings.RemoveAt(0);
-            }
-            ctl.DataBindings.Add(new Binding("Value", _binding, member, true, 
+            PtzCamera camera = _binding.DataSource as PtzCamera;
+            if (camera != null) {
+                ColorSlider.ColorSlider ctl = AddSlider(member);
+                if (ctl.DataBindings.Count > 0)
+                {
+                    ctl.DataBindings.RemoveAt(0);
+                }
+                ViscaRangeDictionary.Limits limits = camera.limits.get(member);
+            ctl.DataBindings.Add(new Binding("Value", _binding, member, true,
                 DataSourceUpdateMode.OnPropertyChanged));
-            ctl.Minimum = limits.Low;
-            ctl.Maximum = limits.High;
-            int range = limits.High - limits.Low;
-            ctl.ScaleDivisions = (range > 20) ? 10 : range;
+                ctl.Minimum = limits.Low;
+                ctl.Maximum = limits.High;
+                int range = limits.High - limits.Low;
+                ctl.ScaleDivisions = (range > 20) ? 10 : range;
+            }
         }
         public BindingSource Binding
         {
             set
             {
                 _binding = value;
-                PtzCamera camera = _binding.DataSource as PtzCamera;
-                if (camera != null)
                 {
-                    BindToPosition("Brightness", camera.LimitsX.Brightness);
-                    BindToPosition("Aperture", camera.LimitsX.Arpeture);
-                    BindToPosition("RGain", camera.LimitsX.RGain);
-                    BindToPosition("BGain", camera.LimitsX.BGain);
-                    BindToPosition( "Hue", camera.LimitsX.Hue);
+                    BindToPosition("Brightness");
+                    BindToPosition("Aperture");
+                    BindToPosition("RGain");
+                    BindToPosition("BGain");
+                    BindToPosition( "Hue");
                 }
             }
         }
@@ -86,7 +88,7 @@ namespace AVDeviceControl
             sld.Width = width;
             sld.Height = height;
             sld.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
-
+            sld.ShowDivisionsText = true;
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucCamSettings));
             sld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -112,10 +114,9 @@ namespace AVDeviceControl
             0,
             0,
             0});
-            sld.ShowDivisionsText = false;
             sld.ShowSmallScale = false;
             sld.TabIndex = 10;
-            sld.ThumbImage = ((System.Drawing.Image)(resources.GetObject("sld.ThumbImage")));
+            sld.ThumbImage = AVDeviceControl.Properties.Resources.slider_knob_small;
             sld.ThumbInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
             sld.ThumbPenColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
             sld.ThumbRoundRectSize = new System.Drawing.Size(16, 16);
