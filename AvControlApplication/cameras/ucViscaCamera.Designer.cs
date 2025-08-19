@@ -32,6 +32,8 @@ namespace AVDeviceControl
             this.cmbComPort = new System.Windows.Forms.ComboBox();
             this.btnConnectSerial = new System.Windows.Forms.Button();
             this.tabIpCam = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.ipCamName = new System.Windows.Forms.ComboBox();
             this.chkIpReverse = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -74,8 +76,6 @@ namespace AVDeviceControl
             this.btnLeft = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.cameraBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label13 = new System.Windows.Forms.Label();
-            this.ipCamName = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabUsbCam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraConfigBindingSource)).BeginInit();
@@ -260,6 +260,28 @@ namespace AVDeviceControl
             this.tabIpCam.TabIndex = 0;
             this.tabIpCam.Text = "Configure";
             this.tabIpCam.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(8, 102);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Camera";
+            // 
+            // ipCamName
+            // 
+            this.ipCamName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ipCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
+            this.ipCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ipCamName.FormattingEnabled = true;
+            this.ipCamName.Location = new System.Drawing.Point(78, 100);
+            this.ipCamName.Name = "ipCamName";
+            this.ipCamName.Size = new System.Drawing.Size(121, 21);
+            this.ipCamName.TabIndex = 19;
             // 
             // chkIpReverse
             // 
@@ -707,6 +729,7 @@ namespace AVDeviceControl
             // 
             // ucCamSettings1
             // 
+            this.ucCamSettings1.AutoScroll = true;
             this.ucCamSettings1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucCamSettings1.Location = new System.Drawing.Point(0, 0);
             this.ucCamSettings1.Name = "ucCamSettings1";
@@ -778,28 +801,6 @@ namespace AVDeviceControl
             // cameraBindingSource
             // 
             this.cameraBindingSource.DataSource = typeof(AVDeviceControl.PtzCamera);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(8, 102);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(49, 13);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "Camera";
-            // 
-            // ipCamName
-            // 
-            this.ipCamName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ipCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
-            this.ipCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ipCamName.FormattingEnabled = true;
-            this.ipCamName.Location = new System.Drawing.Point(78, 100);
-            this.ipCamName.Name = "ipCamName";
-            this.ipCamName.Size = new System.Drawing.Size(121, 21);
-            this.ipCamName.TabIndex = 19;
             // 
             // ucViscaCamera
             // 

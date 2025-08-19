@@ -32,13 +32,16 @@ namespace AVDeviceControl
                 {
                     ctl.DataBindings.RemoveAt(0);
                 }
-                ViscaRangeDictionary.Limits limits = camera.limits.get(member);
+                ViscaRangeDictionary.Limits limits = camera.limitsByPropertyName.get(member);
             ctl.DataBindings.Add(new Binding("Value", _binding, member, true,
                 DataSourceUpdateMode.OnPropertyChanged));
                 ctl.Minimum = limits.Low;
                 ctl.Maximum = limits.High;
                 int range = limits.High - limits.Low;
-                ctl.ScaleDivisions = (range > 20) ? 10 : range;
+                ctl.ScaleDivisions = (range > 5) ? 5 : range;
+                ctl.ShowBorder = true;
+                ctl.BorderColor = Color.DarkGray;
+                ctl.LabelTextRotation = -90;
             }
         }
         public BindingSource Binding
@@ -89,6 +92,7 @@ namespace AVDeviceControl
             sld.Height = height;
             sld.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
             sld.ShowDivisionsText = true;
+            sld.Orientation = System.Windows.Forms.Orientation.Vertical;
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucCamSettings));
             sld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -103,12 +107,6 @@ namespace AVDeviceControl
             sld.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             sld.ForeColor = System.Drawing.Color.White;
             sld.InputColor = System.Drawing.Color.SpringGreen;
-            sld.Orientation = System.Windows.Forms.Orientation.Vertical;
-            sld.ScaleDivisions = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             sld.ScaleSubDivisions = new decimal(new int[] {
             5,
             0,

@@ -13,20 +13,13 @@ using static Visca.Visca;
 
 namespace AVDeviceControl
 {
-    public class PtzCamera : ViscaCamera, IBindableComponent
+    public partial class PtzCamera : ViscaCamera, IBindableComponent
     {
         byte address;
         public PtzController ptz;
         PtzMonitor monitor;
 
-        GenericPositionInterface brightInterface;
-        GenericParameters brightnessParameters = new GenericParameters(
-            name: "Bright",
-            inqCmd: 0xa1,
-            valueCmd: 0xa1,
-            category: Category.Camera1
-         );
-
+ 
         #region Binding variables
         public event EventHandler Disposed;
         private BindingContext bindingContext;
@@ -36,27 +29,10 @@ namespace AVDeviceControl
 
         #region Properties
         public ViscaCameraParameters Limits { get; }
-        private int _brightness;
 
         public ViscaInfo PtzInfo { get { return ptz.info;  } }
         #endregion
-        public int Brightness
-        {
-            get { return _brightness; }
-            set
-            {
-                _brightness = value; ptz.controller.EnqueueCommand(
-              brightInterface.Command(value));
-            }
-        }
-        public virtual int Hue
-        {
-            get { return 0; }
-            set { }
-        }
-
-
-        public ViscaRangeDictionary limits = new ViscaRangeDictionary();
+        
 
         #region Constructors / Destructors
         public PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
@@ -65,7 +41,7 @@ namespace AVDeviceControl
             this.address = (byte)id;
             this.ptz = ptz;
 
-            limits.Add(typeof(ViscaDefaults));
+            limitsByPropertyName.Add(typeof(ViscaDefaults));
             if (parameters == null)
             {
                 Limits = new ViscaCameraDefaultParameters();
@@ -74,14 +50,12 @@ namespace AVDeviceControl
             {
                 Limits = parameters;
                 // Replace this line:
-                // limits.Add(Clear1PtzCamera.PtzParametersExtend());
+                // limitsByPropertyName.Add(Clear1PtzCamera.PtzParametersExtend());
 
                 // With this line:
-                limits.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
+                limitsByPropertyName.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
             }
-            limits.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
-            brightInterface = new GenericPositionInterface(brightnessParameters, (byte)id, this);
-            //_rClear1HueInquiry = hueInterface.Inquiry(updateClear1Hue);
+            limitsByPropertyName.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
         }
 
 
@@ -149,10 +123,6 @@ namespace AVDeviceControl
         public void OsdOk() { ptz.controller.EnqueueCommand(new ViscaOsdOk(address)); }
         #endregion
 
-        void ReceivedBrightness(short brightness)
-        {
-            _brightness = brightness;
-        }
         /// <summary>
         /// Calculate the speed to use in the VISCA packet, assuming that a speed
         /// of 0 should become 1 

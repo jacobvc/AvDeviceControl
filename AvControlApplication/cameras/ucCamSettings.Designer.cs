@@ -39,9 +39,9 @@ namespace AVDeviceControl
             this.grpCamera.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.grpCamera.Controls.Add(this.cameraInfo);
-            this.grpCamera.Location = new System.Drawing.Point(199, 0);
+            this.grpCamera.Location = new System.Drawing.Point(175, 0);
             this.grpCamera.Name = "grpCamera";
-            this.grpCamera.Size = new System.Drawing.Size(160, 150);
+            this.grpCamera.Size = new System.Drawing.Size(184, 150);
             this.grpCamera.TabIndex = 9;
             this.grpCamera.TabStop = false;
             this.grpCamera.Text = "Device";
@@ -54,7 +54,7 @@ namespace AVDeviceControl
             this.cameraInfo.Name = "cameraInfo";
             this.cameraInfo.ReadOnly = true;
             this.cameraInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.cameraInfo.Size = new System.Drawing.Size(154, 131);
+            this.cameraInfo.Size = new System.Drawing.Size(178, 131);
             this.cameraInfo.TabIndex = 0;
             this.cameraInfo.VisibleChanged += new System.EventHandler(this.cameraInfo_VisibleChanged);
             // 
