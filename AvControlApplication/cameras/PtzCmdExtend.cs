@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Diagnostics;
 using Visca;
 using static AVDeviceControl.PtzCamera;
 using static Visca.Visca;
@@ -67,7 +69,8 @@ namespace AVDeviceControl
                     _completionAction(info);
                 }
                 else
-                    throw new ArgumentOutOfRangeException("viscaRxPacket", "Recieved packet is not ViscaInfo Inquiry");
+                    Debug.WriteLine($"Recieved packet length {viscaRxPacket.PayLoad.Length} is not ViscaInfo Inquiry (>= 5)");
+                    //throw new ArgumentOutOfRangeException("ViscaInfo", "Recieved packet length {viscaRxPacket.PayLoad.Length} is not ViscaInfo Inquiry");
             }
         }
     }
@@ -103,33 +106,38 @@ namespace AVDeviceControl
 
         public GenericPositionCommand Command(int position)
         {
-            return new GenericPositionCommand(address, position, camera.limitsByPropertyName.getInt(p.name), p.category, p.valueCmd);
+            return new GenericPositionCommand(address, position, camera.limitsByPropertyName.getInt(p.name), p);
         }
 
         public GenericPositionInquiry Inquiry(Action<short> action)
         {
-            return new GenericPositionInquiry(p.inqCmd, p.category, address,
-              position => { action(position); });
+            return new GenericPositionInquiry(p, address, position => { action(position); });
         }
         public class GenericPositionCommand : ViscaPositionCommand
         {
+            private readonly GenericParameters p;
             public GenericPositionCommand(byte address, int position, IViscaRangeLimits<int> limits,
-                byte category, byte valueCmd)
+                GenericParameters parameters)
                 : base(address, position, limits)
             {
-                Append(new byte[] { category, valueCmd });
+                p = parameters;
+                Append(new byte[] { parameters.category, p.valueCmd });
                 AppendPosition();
+                Debug.WriteLine($"GenericInterface({p.name}): Position({position}) sending {BitConverter.ToString(_bytes, 0, Length)}");
             }
         }
 
         public class GenericPositionInquiry : ViscaInquiry
         {
             private readonly Action<short> _completionAction;
-            public GenericPositionInquiry(byte inqCmd, byte category, byte address, Action<short> action)
+            private readonly GenericParameters p;
+            public GenericPositionInquiry(GenericParameters parameters, byte address, Action<short> action)
                 : base(address)
             {
-                Append(new byte[] { category, inqCmd });
+                this.p = parameters;
+                Append(new byte[] { p.category, p.inqCmd });
                 _completionAction = action;
+                //Debug.WriteLine($"GenericInterface({p.name}): Inquiry sending {BitConverter.ToString(_bytes, 0, Length)}");
             }
 
             public override void Process(ViscaRxPacket viscaRxPacket)
@@ -140,21 +148,30 @@ namespace AVDeviceControl
                     {
                         if (viscaRxPacket.PayLoad.Length == 4)
                         {
-                            _completionAction((short)((viscaRxPacket.PayLoad[0] << 12) +
+                            short value = ((short)((viscaRxPacket.PayLoad[0] << 12) +
                                      (viscaRxPacket.PayLoad[1] << 8) +
                                      (viscaRxPacket.PayLoad[2] << 4) +
                                       viscaRxPacket.PayLoad[3])
                              );
+                            _completionAction(value);
+                            Debug.WriteLine($"GenericInterface({p.name}): Received value ({value})");
+                        }
+                        else
+                        {
+                            throw new ArgumentOutOfRangeException("viscaRxPacket",
+                              $"GenericInterface({p.name}): Recieved packet (payload length {viscaRxPacket.PayLoad.Length}) is too long");
+
                         }
                     }
                     else
-                        throw new ArgumentOutOfRangeException("viscaRxPacket", "Recieved packet is not Clear1HueInquiry");
+                        throw new ArgumentOutOfRangeException("viscaRxPacket",
+                          $"GenericInterface({p.name}): Recieved packet (payload length {viscaRxPacket.PayLoad.Length}) is too short");
                 }
             }
         }
         public override string ToString()
         {
-            return String.Format("Device{0} {1}.Value 0x{1:X2} ()", this.address, this.p.name);
+            return $"Device{this.address} {this.p.name}";
         }
     }
 }

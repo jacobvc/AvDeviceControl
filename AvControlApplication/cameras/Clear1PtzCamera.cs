@@ -1,15 +1,19 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Windows.Forms;
 using Visca;
-using static AVDeviceControl.GenericPositionInterface;
 using static Visca.Visca;
 
 namespace AVDeviceControl
 {
     public partial class PtzCamera
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         // Interfaces for generic position inquiries
         protected GenericPositionInterface brightInterface;
         protected GenericPositionInterface saturationInterface;
@@ -27,68 +31,75 @@ namespace AVDeviceControl
         protected int _hue;
         public int Brightness
         {
-            get { return _brightness; }
+            get
+            {
+                Debug.WriteLine($"Get Brightness ({_brightness})");
+                return _brightness;
+            }
             set
             {
-                _brightness = value; ptz.controller.EnqueueCommand(
-              brightInterface.Command(value));
+                if (_brightness != value)
+                {
+                    Debug.WriteLine($"Brightness set to ({value})");
+                    _brightness = value;
+                    ptz.controller.EnqueueCommand(brightInterface.Command(value));
+                }
             }
         }
-        protected virtual void onBrightnessChanged(PositionEventArgs e)
-        {
-            _brightness = e.Position;
-        }
-
         protected void updateBrightness(short brightness)
         {
             if (_brightness != brightness)
             {
+                Debug.WriteLine($"Brightness updated to ({brightness})");
                 _brightness = brightness;
-                onBrightnessChanged(new PositionEventArgs(brightness));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Brightness)));
             }
         }
 
         public int Saturation
         {
-            get { return _saturation; }
+            get 
+            {
+                Debug.WriteLine($"Get Satutation ({_saturation})");
+                return _saturation; 
+            }
             set
             {
                 if (_saturation != value)
                 {
+                    Debug.WriteLine($"Saturation set to ({value})");
+                    _saturation = value;
                     ptz.controller.EnqueueCommand(saturationInterface.Command(value));
                 }
             }
-        }
-
-        protected virtual void onSaturationChanged(PositionEventArgs e)
-        {
-            _saturation = e.Position;
         }
 
         protected void updateSaturation(short saturation)
         {
             if (_saturation != saturation)
             {
+                Debug.WriteLine($"Saturation updated to ({saturation})");
                 _saturation = saturation;
-                onSaturationChanged(new PositionEventArgs(saturation));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Saturation)));
             }
         }
 
         public int Contrast
         {
-            get { return _contrast; }
+            get 
+            {
+                Debug.WriteLine($"Get Contrast ({_contrast})");
+                return _contrast; 
+            }
             set
             {
                 if (_contrast != value)
                 {
+                    Debug.WriteLine($"Contrast set to ({value})");
+                    _contrast = value;
                     ptz.controller.EnqueueCommand(contrastInterface.Command(value));
                 }
             }
-        }
-
-        protected virtual void onContrastChanged(PositionEventArgs e)
-        {
-            _contrast = e.Position;
         }
 
         protected void updateContrast(short contrast)
@@ -96,49 +107,51 @@ namespace AVDeviceControl
             if (_contrast != contrast)
             {
                 _contrast = contrast;
-                onContrastChanged(new PositionEventArgs(contrast));
+                Debug.WriteLine($"Contrast updated to ({contrast})");
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Contrast)));
             }
         }
 
         public int Sharpness
         {
-            get { return _sharpness; }
+            get 
+            {
+                Debug.WriteLine($"Get Sharpness ({_sharpness})");
+                return _sharpness; 
+            }
             set
             {
                 if (_sharpness != value)
                 {
+                    Debug.WriteLine($"Sharpness set to ({value})");
                     ptz.controller.EnqueueCommand(sharpnessInterface.Command(value));
                 }
             }
         }
-        protected virtual void onSharpnessChanged(PositionEventArgs e)
-        {
-            _sharpness = e.Position;
-        }
-
         protected void updateSharpness(short sharpness)
         {
             if (_sharpness != sharpness)
             {
                 _sharpness = sharpness;
-                onSharpnessChanged(new PositionEventArgs(sharpness));
+                Debug.WriteLine($"Sharpness updated to ({sharpness})");
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Sharpness)));
             }
         }
         public int Hue
         {
-            get { return _hue; }
+            get 
+            {
+                Debug.WriteLine($"Get Hue ({_hue})");
+                return _hue; 
+            }
             set
             {
                 if (_hue != value)
                 {
+                    Debug.WriteLine($"Hue set to ({value})");
                     ptz.controller.EnqueueCommand(hueInterface.Command(value));
                 }
             }
-        }
-
-        protected virtual void onHueChanged(PositionEventArgs e)
-        {
-            _hue = e.Position;
         }
 
         protected void updateHue(short hue)
@@ -146,7 +159,8 @@ namespace AVDeviceControl
             if (_hue != hue)
             {
                 _hue = hue;
-                onHueChanged(new PositionEventArgs(hue));
+                Debug.WriteLine($"Hue updated to ({hue})");
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Hue)));
             }
         }
 
@@ -191,31 +205,30 @@ namespace AVDeviceControl
         public static class PtzParametersExtend
         {
             //public static ViscaRangeLimits<int> BGain
-            //  = new ViscaRangeLimits<int>(0, 20, "BGain limitsByPropertyName");
+            //  = new ViscaRangeLimits<int>(0, 20, "BGain limits");
             //public static ViscaRangeLimits<int> RGain
-            //  = new ViscaRangeLimits<int>(0, 20, "RGain limitsByPropertyName");
+            //  = new ViscaRangeLimits<int>(0, 20, "RGain limits");
             public static ViscaRangeLimits<int> Brightness
-              = new ViscaRangeLimits<int>(0, 14, "Brightness limitsByPropertyName");
+              = new ViscaRangeLimits<int>(0, 14, "Brightness limits");
             public static ViscaRangeLimits<int> Saturation
-              = new ViscaRangeLimits<int>(0, 14, "Saturation limitsByPropertyName");
+              = new ViscaRangeLimits<int>(0, 14, "Saturation limits");
             public static ViscaRangeLimits<int> Contrast
-              = new ViscaRangeLimits<int>(0, 14, "Contrast limitsByPropertyName");
+              = new ViscaRangeLimits<int>(0, 14, "Contrast limits");
             public static ViscaRangeLimits<int> Sharpness
-              = new ViscaRangeLimits<int>(60, 200, "Aperture limitsByPropertyName");
+              = new ViscaRangeLimits<int>(0, 14, "Aperture (sharpness) limits");
             public static ViscaRangeLimits<int> Hue
-              = new ViscaRangeLimits<int>(0, 14, "Hue limitsByPropertyName");
+              = new ViscaRangeLimits<int>(0, 14, "Hue limits");
         }
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Clear1PtzCamera"/> class.
         /// </summary>
         /// <param name="id">Camera ID.</param>
-        /// <param name="parameters">Camera parameters.</param>
         /// <param name="ptz">PTZ controller.</param>
-        public Clear1PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
-            : base(id, parameters, ptz)
+        public Clear1PtzCamera(ViscaCameraId id, PtzController ptz) : base(id, ptz)
         {
+            limitsByPropertyName.Add(typeof(PtzParametersExtend));
+
             brightInterface = new GenericPositionInterface(brightnessParameters, (byte)id, this);
             InquiriesByPropertyName.Add("Brightness", brightInterface.Inquiry(updateBrightness));
 
@@ -230,8 +243,19 @@ namespace AVDeviceControl
 
             hueInterface = new GenericPositionInterface(hueParameters, (byte)id, this);
             InquiriesByPropertyName.Add("Hue", hueInterface.Inquiry(updateHue));
+
+            propertyList = new string[]
+            {
+                "Brightness",
+                "Saturation",
+                "Contrast",
+                "Sharpness",
+                "Hue"
+            };
+            PollListNew();
+            PollListAddRange(propertyList);
         }
- 
+
         // Expose Clear1ViscaCamera functionality as needed
     }
 }

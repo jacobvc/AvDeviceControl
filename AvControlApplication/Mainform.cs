@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Drawing;
+using System.Diagnostics;
 
 namespace AVDeviceControl
 {
@@ -15,6 +17,8 @@ namespace AVDeviceControl
         DeviceControlWebsocket ws;
         Midi midi;
 
+        DebugForm debugForm = new DebugForm();
+
         #region Constructor / Form Events
         public MainForm()
         {
@@ -22,11 +26,13 @@ namespace AVDeviceControl
             mnuCmbLog.Items.AddRange(Enum.GetNames(typeof(LogLevel)));
 
             midi = new Midi();
+
         }
 
+        private TextBoxTraceListener _textBoxListener;
         private void MainForm_Load(object sender, EventArgs e)
         {
-           if (Properties.Settings.Default.formSize.Width != 0)
+            if (Properties.Settings.Default.formSize.Width != 0)
             {
                 this.Location = Properties.Settings.Default.formLoc;
                 this.Size = Properties.Settings.Default.formSize;
@@ -78,7 +84,8 @@ namespace AVDeviceControl
         {
             ws = new DeviceControlWebsocket(deviceControls);
             int iPort;
-            if (Int32.TryParse(mnuWebsocketPort.Text, out iPort)) {
+            if (Int32.TryParse(mnuWebsocketPort.Text, out iPort))
+            {
                 ws.Start(iPort);
                 lblWebSocket.ForeColor = Color.Black;
                 lblWebSocket.Text = "Websocket running on port " + mnuWebsocketPort.Text;
@@ -123,15 +130,32 @@ namespace AVDeviceControl
             if (collection != null)
             {
                 Properties.Settings.Default.cameraSettings = filename;
-                staLblConfigFile.Text = filename; 
+                staLblConfigFile.Text = filename;
             }
-            else { 
+            else
+            {
                 collection = new DeviceConfigCollection();
             }
             if (collection.DeviceCount == 0)
             {
                 collection.AddCamera(new CameraConfig());
             }
+            if (Properties.Settings.Default.logLevel == "Verbose") 
+            {
+                debugForm.Show();
+                debugForm.FormClosing += (s, e) => {
+                    if (_textBoxListener != null)
+                    {
+                        Debug.Listeners.Remove(_textBoxListener); // Or Trace.Listeners.Remove(_textBoxListener);
+                        _textBoxListener.Dispose();
+                        _textBoxListener = null;
+                        //Debug.Listeners.Add(Console);
+                    }
+                };
+                _textBoxListener = new TextBoxTraceListener(debugForm.TextBox);
+                Debug.Listeners.Add(_textBoxListener); // Or Trace.Listeners.Add(_textBoxListener);
+            }
+
             foreach (AvDeviceConfig dev in collection.devices)
             {
                 CameraConfig cam = dev as CameraConfig;
@@ -149,7 +173,7 @@ namespace AVDeviceControl
                 }
             }
             PositionDevices(spltMain.Panel1);
-         }
+        }
         private void SaveSettings(bool ask)
         {
             string filename = null;
@@ -185,7 +209,7 @@ namespace AVDeviceControl
             panel.Controls.Add(cam);
 
             PositionDevices(panel);
-            
+
         }
 
         private void RemoveCamera(ucViscaCamera ctl, SplitterPanel panel)
@@ -296,7 +320,7 @@ namespace AVDeviceControl
                 int scrLeft = -panel.HorizontalScroll.Value;
                 panel.VerticalScroll.Value = 0;
                 // Column count based on panel size and aspect ratio
-                double aCols = Math.Max(1, 
+                double aCols = Math.Max(1,
                    (double)clientWidth / clientHeight * deviceControls.Device(0).AspectRatio);
                 // Row / col count is based on best 2 dim fit of cells into panel
                 aCols *= Math.Sqrt(aCols);
@@ -396,13 +420,13 @@ namespace AVDeviceControl
             if (Properties.Settings.Default.webSocketPort
                 != mnuWebsocketPort.Text.Trim())
             {
-                pnlPending.Visible= true;
+                pnlPending.Visible = true;
                 lblPending.Text = mnuWebsocketPort.Text;
                 lblPending.ForeColor = Color.Black;
             }
             else
             {
-                pnlPending.Visible= false;
+                pnlPending.Visible = false;
             }
         }
 
@@ -428,5 +452,33 @@ namespace AVDeviceControl
             mnuWebsocketPort.Text = Properties.Settings.Default.webSocketPort;
         }
         #endregion
+    }
+
+    public class TextBoxTraceListener : TraceListener
+    {
+        private TextBox _outputTextBox;
+
+        public TextBoxTraceListener(TextBox outputTextBox)
+        {
+            _outputTextBox = outputTextBox ?? throw new ArgumentNullException(nameof(outputTextBox));
+        }
+
+        public override void Write(string message)
+        {
+            // Ensure thread safety when updating UI controls
+            if (_outputTextBox.InvokeRequired)
+            {
+                _outputTextBox.Invoke(new Action(() => _outputTextBox.AppendText(message)));
+            }
+            else
+            {
+                _outputTextBox.AppendText(message);
+            }
+        }
+
+        public override void WriteLine(string message)
+        {
+            Write(message + Environment.NewLine);
+        }
     }
 }

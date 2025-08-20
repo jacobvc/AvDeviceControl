@@ -26,7 +26,6 @@ namespace AVDeviceControl
         #region Member Variables, Events, and classes
 
         PtzController ctl = new PtzController();
-        private readonly PtzCamera nullCamera = new PtzCamera(0, null, null);
 
         private readonly CameraConfig config = new CameraConfig();
         private PtzCamera camera;
@@ -167,7 +166,6 @@ namespace AVDeviceControl
                 ctl.abort += Ctl_abort;
                 camera.ZoomPositionChanged += Camera_ZoomPositionChanged;
                 camera.PTZPositionChanged += Camera_PTZPositionChanged;
-                cameraBindingSource.DataSource = camera;
                 Connected = true;
             }
             return error;
@@ -206,6 +204,7 @@ namespace AVDeviceControl
                         tabControl1.TabPages.Add(tabPresets);
                         tabControl1.TabPages.Add(tabSettings);
                         cameraBindingSource.DataSource = camera;
+                        ucCamSettings1.Sliders = camera.propertyList;
                         ucCamSettings1.Binding = cameraBindingSource;
                         configurationChangedEvent?.Invoke(this);
                     }
@@ -410,7 +409,6 @@ namespace AVDeviceControl
         #region Tab control vents
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cameraBindingSource.DataSource = nullCamera;
             if (camera != null)
             {
                 cameraBindingSource.DataSource = camera;

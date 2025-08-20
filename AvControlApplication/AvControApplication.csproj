@@ -104,8 +104,20 @@
   <ItemGroup>
     <Compile Include="cameras\CameraConfig.cs" />
     <Compile Include="cameras\Clear1PtzCamera.cs" />
+    <Compile Include="cameras\ucSettingSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="cameras\ucSettingSlider.Designer.cs">
+      <DependentUpon>ucSettingSlider.cs</DependentUpon>
+    </Compile>
     <Compile Include="cameras\UcWpfPtControl.xaml.cs">
       <DependentUpon>UcWpfPtControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="mixers\frmMidiTest.cs">
       <SubType>Form</SubType>
@@ -173,6 +185,12 @@
     <Compile Include="ucAvDevice.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <EmbeddedResource Include="cameras\ucSettingSlider.resx">
+      <DependentUpon>ucSettingSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="misc\ColorSlider.resx">
       <DependentUpon>ColorSlider.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mixers\ucVolumeSlider.resx">
       <DependentUpon>ucVolumeSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucAvDevice.resx">
+      <DependentUpon>ucAvDevice.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\videoCam.stl">
       <Link>videoCam.stl</Link>

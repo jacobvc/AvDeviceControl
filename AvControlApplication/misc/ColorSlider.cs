@@ -511,27 +511,6 @@ namespace ColorSlider
             }
         }
 
-        private int _labelTextRotation = 0; // 0, 90, or -90
-
-        [Description("Rotation angle for label text (0, 90, or -90 degrees)")]
-        [Category("ColorSlider")]
-        [DefaultValue(0)]
-        public int LabelTextRotation
-        {
-            get { return _labelTextRotation; }
-            set
-            {
-                if (value == 0 || value == 90 || value == -90)
-                {
-                    _labelTextRotation = value;
-                    Invalidate();
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("LabelTextRotation must be 0, 90, or -90.");
-                }
-            }
-        }
         #endregion
 
 
@@ -1710,52 +1689,87 @@ namespace ColorSlider
                             // Draw string graduations
                             if (_showDivisionsText)
                             {
+                                if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both && Radius > 0)
+                                {
+                                    double angle = SliderAngle(_minimum + (_maximum - _minimum) * i / _scaleDivisions);
+                                    float x = (float)CurveX(angle);
+                                    float y = (float)CurveY(angle) + topOfCurve;
+                                    e.Graphics.DrawString(str, font, br, (float)(x - size.Width * .5), y - (float)(size.Height * 1.5));
+                                }
+                                else if (Radius == 0)
+                                {
+                                    if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
+                                    {
+                                        tx = (start + barRect.X + interval) - (float)(size.Width * 0.5);
+                                        //ty = barRect.Y + barRect.Height / 2 - (1.5F)*(size.Height) - scaleL - offset;
+                                        ty = barRect.Y + barRect.Height / 2 - size.Height - scaleL - offset;
+                                        e.Graphics.DrawString(str, font, br, tx, ty);
+                                    }
+                                    if (_tickStyle == TickStyle.BottomRight || _tickStyle == TickStyle.Both)
+                                    {
+                                        tx = (start + barRect.X + interval) - (float)(size.Width * 0.5);
+                                        //ty = barRect.Y + barRect.Height/2 + (size.Height/2) + scaleL + offset;
+                                        ty = barRect.Y + barRect.Height / 2 + scaleL + offset;
+                                        e.Graphics.DrawString(str, font, br, tx, ty);
+                                    }
+                                }
+                            }
+
+                            // draw main ticks                           
+                            if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both && Radius > 0)
+                            {
+                                RenderRadialLine(e, penTickL, -1, 5, _minimum + (_maximum - _minimum) * i / _scaleDivisions);
+                            }
+                            else if (Radius == 0)
+                            {
                                 if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
                                 {
-                                    tx = (start + barRect.X + interval);
-                                    ty = barRect.Y + barRect.Height / 2 - size.Height - scaleL - offset;
-
-                                    // Center label on tick, except for ends
-                                    float labelX = isEndLabel
-                                        ? (i == 0 ? tx + size.Width / 2 : tx - size.Width / 2)
-                                        : tx;
-                                    float labelY = ty;
-
-                                    DrawRotatedLabel(e.Graphics, str, font, br, labelX, labelY, _labelTextRotation);
+                                    x1 = start + barRect.X + interval;
+                                    y1 = barRect.Y + barRect.Height / 2 - scaleL - offset;
+                                    x2 = start + barRect.X + interval;
+                                    y2 = barRect.Y + barRect.Height / 2 - offset;
+                                    e.Graphics.DrawLine(penTickL, x1, y1, x2, y2);
                                 }
                                 if (_tickStyle == TickStyle.BottomRight || _tickStyle == TickStyle.Both)
                                 {
-                                    tx = (start + barRect.X + interval);
-                                    ty = barRect.Y + barRect.Height / 2 + scaleL + offset;
 
-                                    float labelX = isEndLabel
-                                        ? (i == 0 ? tx + size.Width / 2 : tx - size.Width / 2)
-                                        : tx;
-                                    float labelY = ty;
-
-                                    DrawRotatedLabel(e.Graphics, str, font, br, labelX, labelY, _labelTextRotation);
+                                    x1 = start + barRect.X + interval;
+                                    y1 = barRect.Y + barRect.Height / 2 + offset;
+                                    x2 = start + barRect.X + interval;
+                                    y2 = barRect.Y + barRect.Height / 2 + scaleL + offset;
+                                    e.Graphics.DrawLine(penTickL, x1, y1, x2, y2);
                                 }
                             }
-                            else
+                                  
+                            rulerValue += (float)((_maximum - _minimum) / (_scaleDivisions));
+
+                            // Draw subdivisions
+                            if (i < _scaleDivisions)
                             {
-                                // draw ticks
-                                x1 = start + barRect.X + interval;
-                                y1 = barRect.Y + barRect.Height / 2 - scaleL - offset;
-                                y2 = barRect.Y + barRect.Height / 2 + scaleL + offset;
-
-                                if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
+                                for (int j = 0; j <= _scaleSubDivisions; j++)
                                 {
-                                    e.Graphics.DrawLine(penTickL, x1, y1, x1, y2);
-                                }
+                                    idx++;
+                                    interval = idx * W / (nbticks - 1);
 
-                                // Sub ticks
-                                if (_showSmallScale && _scaleSubDivisions > 0)
-                                {
-                                    int smallInterval = scaleL / (int)_scaleSubDivisions;
-                                    for (int j = 1; j < _scaleSubDivisions; j++)
+                                    if (_showSmallScale)
                                     {
-                                        int x = x1 + j * smallInterval;
-                                        e.Graphics.DrawLine(penTickS, x, y1, x, y2);
+                                        // Horizontal                            
+                                        if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
+                                        {
+                                            x1 = start + barRect.X + interval;                                            
+                                            y1 = barRect.Y + barRect.Height/2 -scaleS - offset;
+                                            x2 = start + barRect.X + interval;                                            
+                                            y2 = barRect.Y + barRect.Height/2 - offset;
+                                            e.Graphics.DrawLine(penTickS, x1, y1, x2, y2);
+                                        }
+                                        if (_tickStyle == TickStyle.BottomRight || _tickStyle == TickStyle.Both)
+                                        {
+                                            x1 = start + barRect.X + interval;                                            
+                                            y1 = barRect.Y + barRect.Height/2 + offset;
+                                            x2 = start + barRect.X + interval;                                            
+                                            y2 = barRect.Y + barRect.Height/2 + scaleS + offset;
+                                            e.Graphics.DrawLine(penTickS, x1, y1, x2, y2);
+                                        }
                                     }
                                 }
                             }
@@ -1771,55 +1785,71 @@ namespace ColorSlider
                                 if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
                                 {
                                     tx = barRect.X + barRect.Width / 2 - scaleL - size.Width - offset;
-                                    ty = start + barRect.Y + interval;
-
-                                    float labelX = tx;
-                                    float labelY = isEndLabel
-                                        ? (i == 0 ? ty + size.Height / 2 : ty - size.Height / 2)
-                                        : ty;
-
-                                    DrawRotatedLabel(e.Graphics, str, font, br, labelX, labelY, _labelTextRotation);
+                                    ty = start + barRect.Y + interval - (float)(size.Height * 0.5);
+                                    e.Graphics.DrawString(str, font, br, tx, ty);
                                 }
                                 if (_tickStyle == TickStyle.BottomRight || _tickStyle == TickStyle.Both)
                                 {
                                     tx = barRect.X + barRect.Width / 2 + scaleL + offset;
-                                    ty = start + barRect.Y + interval;
-
-                                    float labelX = tx;
-                                    float labelY = isEndLabel
-                                        ? (i == 0 ? ty + size.Height / 2 : ty - size.Height / 2)
-                                        : ty;
-
-                                    DrawRotatedLabel(e.Graphics, str, font, br, labelX, labelY, _labelTextRotation);
+                                    ty = start + barRect.Y + interval - (float)(size.Height * 0.5);
+                                    e.Graphics.DrawString(str, font, br, tx, ty);
                                 }
+
+                                startDiv = (int)maxsize.Width + 3;
                             }
-                            else
-                            {
-                                // draw ticks
+                            
+
+                            // draw main ticks                            
+                            if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
+                            {                                
                                 x1 = barRect.X + barRect.Width / 2 - scaleL - offset;
-                                y1 = start + barRect.Y + interval;
+                                y1 = start + barRect.Y + interval;                             
+                                x2 = barRect.X + barRect.Width / 2 - offset;
+                                y2 = start + barRect.Y + interval;
+                                e.Graphics.DrawLine(penTickL, x1, y1, x2, y2);
+                            }
+                            if (_tickStyle == TickStyle.BottomRight || _tickStyle == TickStyle.Both)
+                            {                                
+                                x1 = barRect.X + barRect.Width / 2 + offset;
+                                y1 = start + barRect.Y + interval;                             
                                 x2 = barRect.X + barRect.Width / 2 + scaleL + offset;
+                                y2 = start + barRect.Y + interval;
+                                e.Graphics.DrawLine(penTickL, x1, y1, x2, y2);
+                            }
 
-                                if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
-                                {
-                                    e.Graphics.DrawLine(penTickL, x1, y1, x2, y1);
-                                }
+                            rulerValue -= (float)((_maximum - _minimum) / (_scaleDivisions));
 
-                                // Sub ticks
-                                if (_showSmallScale && _scaleSubDivisions > 0)
+                            // draw subdivisions
+                            if (i < _scaleDivisions)
+                            {
+                                for (int j = 0; j <= _scaleSubDivisions; j++)
                                 {
-                                    int smallInterval = scaleL / (int)_scaleSubDivisions;
-                                    for (int j = 1; j < _scaleSubDivisions; j++)
+                                    idx++;
+                                    interval = idx * W / (nbticks - 1);
+
+                                    if (_showSmallScale)
                                     {
-                                        int y = y1 + j * smallInterval;
-                                        e.Graphics.DrawLine(penTickS, x1, y, x2, y);
+                                        if (_tickStyle == TickStyle.TopLeft || _tickStyle == TickStyle.Both)
+                                        {                                            
+                                            x1 = barRect.X + barRect.Width / 2 - scaleS - offset;
+                                            y1 = start + barRect.Y + interval;                                         
+                                            x2 = barRect.X + barRect.Width / 2 - offset;
+                                            y2 = start + barRect.Y + interval;
+                                            e.Graphics.DrawLine(penTickS, x1, y1, x2, y2);
+                                        }
+                                        if (_tickStyle == TickStyle.BottomRight || _tickStyle == TickStyle.Both)
+                                        {                                            
+                                            x1 = barRect.X + barRect.Width / 2 + offset;
+                                            y1 = start + barRect.Y + interval;                                         
+                                            x2 = barRect.X + barRect.Width / 2 + scaleS + offset;
+                                            y2 = start + barRect.Y + interval;
+                                            e.Graphics.DrawLine(penTickS, x1, y1, x2, y2);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        #endregion
-
-                        interval += (int)((W) / _scaleDivisions);
+                            #endregion
+                        }                       
                     }
                 }
                 #endregion
@@ -2152,23 +2182,6 @@ namespace ColorSlider
             if (pt.X > rect.Left & pt.X < rect.Right & pt.Y > rect.Top & pt.Y < rect.Bottom)
                 return true;
             else return false;
-        }
-
-        private void DrawRotatedLabel(Graphics g, string text, Font font, Brush brush, float x, float y, int rotation)
-        {
-            SizeF textSize = g.MeasureString(text, font);
-            g.TranslateTransform(x, y);
-            g.RotateTransform(rotation);
-            // Adjust position so the label is fully visible
-            if (rotation == 90)
-            {
-                g.DrawString(text, font, brush, 0, -textSize.Width);
-            }
-            else
-            {
-                g.DrawString(text, font, brush, 0, 0);
-            }
-            g.ResetTransform();
         }
 
         #endregion

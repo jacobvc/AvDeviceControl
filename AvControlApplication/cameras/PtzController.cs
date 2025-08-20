@@ -74,13 +74,11 @@ namespace AVDeviceControl
 
             if (config.CameraModel == CameraName.ClearOne.ToString())
             {
-                cameraParams = null; // new Clear1PtzCameraParameters();
-                Camera = new Clear1PtzCamera(id, cameraParams, this);
+                Camera = new Clear1PtzCamera(id, this);
             }
             else // if (config.CameraModel == CameraName.Other)
             {
-                //cameraParams = new Clear1PtzExtendedCameraParameters();
-                Camera = new PtzCamera(id, null, this);
+                Camera = new PtzCamera(id, this);
             }
 
             Camera.Connect();

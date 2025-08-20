@@ -18,8 +18,9 @@ namespace AVDeviceControl
         byte address;
         public PtzController ptz;
         PtzMonitor monitor;
+        public string[] propertyList = new string[0];
 
- 
+
         #region Binding variables
         public event EventHandler Disposed;
         private BindingContext bindingContext;
@@ -33,29 +34,12 @@ namespace AVDeviceControl
         public ViscaInfo PtzInfo { get { return ptz.info;  } }
         #endregion
         
-
         #region Constructors / Destructors
-        public PtzCamera(ViscaCameraId id, ViscaCameraParameters parameters, PtzController ptz)
-            : base(id, new ViscaCameraDefaultParameters(), ptz?.controller)
+        public PtzCamera(ViscaCameraId id, PtzController ptz)
+            : base(id, ptz?.controller)
         {
             this.address = (byte)id;
             this.ptz = ptz;
-
-            limitsByPropertyName.Add(typeof(ViscaDefaults));
-            if (parameters == null)
-            {
-                Limits = new ViscaCameraDefaultParameters();
-            }
-            else
-            {
-                Limits = parameters;
-                // Replace this line:
-                // limitsByPropertyName.Add(Clear1PtzCamera.PtzParametersExtend());
-
-                // With this line:
-                limitsByPropertyName.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
-            }
-            limitsByPropertyName.Add(typeof(Clear1PtzCamera.PtzParametersExtend));
         }
 
 
@@ -65,6 +49,7 @@ namespace AVDeviceControl
         }
         #endregion
 
+        #region Connect / Disconnect / Monitor
         public override void Connect()
         {
             monitor = new PtzMonitor(this);
@@ -87,6 +72,7 @@ namespace AVDeviceControl
         {
             monitor.Arrived();
         }
+        #endregion
 
         #region Custom commands for OAS Menu control (buttons on Preset tab)
         // Documented and tested for Clear One
@@ -123,6 +109,7 @@ namespace AVDeviceControl
         public void OsdOk() { ptz.controller.EnqueueCommand(new ViscaOsdOk(address)); }
         #endregion
 
+        #region PTZ / Preset
         /// <summary>
         /// Calculate the speed to use in the VISCA packet, assuming that a speed
         /// of 0 should become 1 
@@ -131,7 +118,6 @@ namespace AVDeviceControl
 
         public void ContinuousPanTilt(int panSpeed, int tiltSpeed, bool reversePan)
         {
-
             Console.WriteLine("Pan " + panSpeed + (reversePan ? " REVERSE":"") + " / Tilt " + tiltSpeed);
             if (reversePan)
             {
@@ -231,7 +217,7 @@ namespace AVDeviceControl
             this.ZoomSetPosition((int)(p.Zoom * config.FullScaleZoom));
             StartTrack();
         }
-
+        #endregion
 
         #region Binding boilerplate
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
