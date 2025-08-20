@@ -204,8 +204,9 @@ namespace AVDeviceControl
                         tabControl1.TabPages.Add(tabPresets);
                         tabControl1.TabPages.Add(tabSettings);
                         cameraBindingSource.DataSource = camera;
-                        ucCamSettings1.Sliders = camera.propertyList;
-                        ucCamSettings1.Binding = cameraBindingSource;
+                        ucCamSettings.Binding = null;
+                        ucCamSettings.Binding = cameraBindingSource;
+                        ucCamSettings.Sliders = camera.propertyList;
                         configurationChangedEvent?.Invoke(this);
                     }
                 }
@@ -345,7 +346,7 @@ namespace AVDeviceControl
             if (camera != null)
             {
                 decimal fraction = tbZoom.Value * 2 / (tbZoom.Maximum - tbZoom.Minimum);
-                int zoomSpeed = (int)(fraction * fraction * camera.Limits.ZoomSpeedLimits.High);
+                int zoomSpeed = (int)(fraction * fraction * camera.limitsByPropertyName["ZoomSpeed"].High);
                 camera.ContinuousZoom(Math.Sign(fraction) * zoomSpeed);
             }
         }
@@ -355,9 +356,9 @@ namespace AVDeviceControl
             if (camera != null)
             {
                 double panFraction = data.value.X * 2.0 / data.Range_X;
-                int panSpeed = (int)(panFraction * camera.Limits.PanSpeedLimits.High);
+                int panSpeed = (int)(panFraction * camera.limitsByPropertyName["PanSpeed"].High);
                 double tiltFraction = data.value.Y * 2.0 / data.Range_Y;
-                int tiltSpeed = (int)(tiltFraction * camera.Limits.TiltSpeedLimits.High);
+                int tiltSpeed = (int)(tiltFraction * camera.limitsByPropertyName["TiltSpeed"].High);
                 camera.ContinuousPanTilt(panSpeed, tiltSpeed, config.Reverse);
             }
         }
@@ -411,7 +412,9 @@ namespace AVDeviceControl
         {
             if (camera != null)
             {
+                ucCamSettings.Binding = null;
                 cameraBindingSource.DataSource = camera;
+                ucCamSettings.Binding = cameraBindingSource;
             }
         }
         #endregion

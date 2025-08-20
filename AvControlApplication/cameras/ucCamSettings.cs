@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Visca.Camera.PropertyDictionary;
+using Visca;
 
 namespace AVDeviceControl
 {
@@ -38,9 +38,11 @@ namespace AVDeviceControl
                 ctl.Minimum = limits.Low;
                 ctl.Maximum = limits.High;
                 int range = limits.High - limits.Low;
-                ctl.ScaleDivisions = (range > 5) ? 5 : range;
+                int bestDiv = bestDivision(range, 5, 2);
+                ctl.ScaleDivisions = bestDiv;
+                ctl.ScaleSubDivisions = (range / bestDiv) - 1;
                 ctl.ShowBorder = true;
-                //      ctl.BorderColor = Color.DarkGray;
+                ctl.BorderColor = Color.DarkGray;
                 // ctl.LabelTextRotation = limits.High > 99 ? -90 : 0;
                 ctl.ShowDivisionsText = true;
                 ctl.LabelText = limits.Label;
@@ -58,6 +60,7 @@ namespace AVDeviceControl
             set
             {
                 _binding = value;
+                if (value != null)
                 {
                     foreach (string propertyName in _sliderList)
                     {
@@ -73,12 +76,13 @@ namespace AVDeviceControl
                 return _sliders[name];
 
             ucSettingSlider sld = new ucSettingSlider();
+            sld.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             int visibleWidth = sld.Width;
-            int width = sld.Width;
 
             int x = _sliders.Count * visibleWidth;
 
             sld.Left = x;
+            sld.Height = grpCamera.Height - 20;
 
             grpCamera.Left = x + visibleWidth;
             Controls.Add(sld);
@@ -93,6 +97,32 @@ namespace AVDeviceControl
             cameraInfo.Text = "Camera Info";
             cameraInfo.Text += (("\r\n\t" + camera?.PtzInfo.ToString()).Replace(",", "\r\n\t") + "\r\n"
               + "\r\n" + camera?.ToString()).Replace("\t", "    ");
+        }
+        static private int bestDivision(int n, int max, int deflt)
+        {
+            int highest = 0;
+            int k = 2;
+            while (k * k <= n)
+            {
+                if (n % k == 0)
+                {
+                    n /= k;
+                    if (n <= max)
+                    {
+                        return highest;
+                    }
+                    highest = n;
+                }
+                else
+                {
+                    ++k;
+                }
+            }
+            if (n > deflt)
+            {
+                return deflt;
+            }
+            return n;
         }
     }
 }

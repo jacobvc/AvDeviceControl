@@ -30,9 +30,22 @@ namespace AVDeviceControl
         /// </summary>
         private void InitializeComponent()
         {
-            this.slider = new ColorSlider.ColorSlider();
             this.label = new System.Windows.Forms.Label();
+            this.slider = new ColorSlider.ColorSlider();
             this.SuspendLayout();
+            // 
+            // label
+            // 
+            this.label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label.Location = new System.Drawing.Point(0, 0);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(49, 23);
+            this.label.TabIndex = 4;
+            this.label.Text = "label1";
+            this.label.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // slider
             // 
@@ -41,6 +54,7 @@ namespace AVDeviceControl
             this.slider.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(77)))), ((int)(((byte)(95)))));
             this.slider.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
             this.slider.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
+            this.slider.BorderColor = System.Drawing.Color.DarkGray;
             this.slider.BorderRoundRectSize = new System.Drawing.Size(8, 8);
             this.slider.ElapsedInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(56)))), ((int)(((byte)(152)))));
             this.slider.ElapsedPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(130)))), ((int)(((byte)(208)))));
@@ -77,13 +91,13 @@ namespace AVDeviceControl
             0,
             0});
             this.slider.ScaleSubDivisions = new decimal(new int[] {
-            5,
+            4,
             0,
             0,
             0});
-            this.slider.ShowDivisionsText = false;
-            this.slider.ShowSmallScale = false;
-            this.slider.Size = new System.Drawing.Size(63, 157);
+            this.slider.ShowDivisionsText = true;
+            this.slider.ShowSmallScale = true;
+            this.slider.Size = new System.Drawing.Size(66, 157);
             this.slider.SmallChange = new decimal(new int[] {
             1,
             0,
@@ -98,21 +112,12 @@ namespace AVDeviceControl
             this.slider.ThumbSize = new System.Drawing.Size(16, 16);
             this.slider.TickAdd = 0F;
             this.slider.TickColor = System.Drawing.Color.White;
-            this.slider.TickDivide = 0F;
+            this.slider.TickDivide = 1F;
             this.slider.Value = new decimal(new int[] {
             30,
             0,
             0,
             0});
-            // 
-            // label
-            // 
-            this.label.Location = new System.Drawing.Point(0, 0);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(63, 23);
-            this.label.TabIndex = 4;
-            this.label.Text = "label1";
-            this.label.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // ucSettingSlider
             // 
@@ -121,7 +126,7 @@ namespace AVDeviceControl
             this.Controls.Add(this.slider);
             this.Controls.Add(this.label);
             this.Name = "ucSettingSlider";
-            this.Size = new System.Drawing.Size(63, 174);
+            this.Size = new System.Drawing.Size(49, 174);
             this.ResumeLayout(false);
 
         }

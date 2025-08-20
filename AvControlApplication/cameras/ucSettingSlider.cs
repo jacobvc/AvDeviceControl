@@ -91,5 +91,20 @@ namespace AVDeviceControl
             get => slider.ShowDivisionsText;
             set => slider.ShowDivisionsText = value;
         }
+        [Browsable(true)]
+        [Category("Appearance")]
+        public int ScaleSubDivisions
+        {
+            get => (int)slider.ScaleSubDivisions;
+            set => slider.ScaleSubDivisions = value;
+        }
+
+        [Browsable(true)]
+        [Category("Appearance")]
+        public Color BorderColor
+        {
+            get => slider.BorderColor;
+            set => slider.BorderColor = value;
+        }
     }
 }

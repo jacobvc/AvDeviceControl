@@ -113,10 +113,10 @@
     <Compile Include="cameras\UcWpfPtControl.xaml.cs">
       <DependentUpon>UcWpfPtControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DebugForm.cs">
+    <Compile Include="misc\DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DebugForm.Designer.cs">
+    <Compile Include="misc\DebugForm.Designer.cs">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="mixers\frmMidiTest.cs">
@@ -188,7 +188,7 @@
     <EmbeddedResource Include="cameras\ucSettingSlider.resx">
       <DependentUpon>ucSettingSlider.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DebugForm.resx">
+    <EmbeddedResource Include="misc\DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="misc\ColorSlider.resx">

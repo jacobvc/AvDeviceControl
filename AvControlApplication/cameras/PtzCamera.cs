@@ -29,7 +29,6 @@ namespace AVDeviceControl
         #endregion
 
         #region Properties
-        public ViscaCameraParameters Limits { get; }
 
         public ViscaInfo PtzInfo { get { return ptz.info;  } }
         #endregion
@@ -200,8 +199,8 @@ namespace AVDeviceControl
             {
                 ptSpeed = Preset.PtSpeed.Normal;
             }
-            byte speed = (byte)(this.Limits.TiltSpeedLimits.Low + (int)ptSpeed
-               * (this.Limits.TiltSpeedLimits.High - this.Limits.TiltSpeedLimits.Low)
+            byte speed = (byte)(this.limitsByPropertyName["TiltSpeed"].Low + (int)ptSpeed
+               * (this.limitsByPropertyName["TiltSpeed"].High - this.limitsByPropertyName["TiltSpeed"].Low)
                / (int)Preset.PtSpeed.NOT_SET); // NOT_SET is tne number speed enums
 
             this.PanSpeed = speed;

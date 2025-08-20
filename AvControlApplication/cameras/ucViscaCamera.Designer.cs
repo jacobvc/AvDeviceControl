@@ -68,7 +68,7 @@ namespace AVDeviceControl
             this.btnNewPreset = new System.Windows.Forms.Button();
             this.lstPresets = new System.Windows.Forms.ListBox();
             this.tabSettings = new System.Windows.Forms.TabPage();
-            this.ucCamSettings1 = new AVDeviceControl.ucCamSettings();
+            this.ucCamSettings = new AVDeviceControl.ucCamSettings();
             this.chkIp = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -719,7 +719,7 @@ namespace AVDeviceControl
             // 
             // tabSettings
             // 
-            this.tabSettings.Controls.Add(this.ucCamSettings1);
+            this.tabSettings.Controls.Add(this.ucCamSettings);
             this.tabSettings.Location = new System.Drawing.Point(4, 25);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.Size = new System.Drawing.Size(273, 150);
@@ -727,14 +727,14 @@ namespace AVDeviceControl
             this.tabSettings.Text = "Settings";
             this.tabSettings.UseVisualStyleBackColor = true;
             // 
-            // ucCamSettings1
+            // ucCamSettings
             // 
-            this.ucCamSettings1.AutoScroll = true;
-            this.ucCamSettings1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucCamSettings1.Location = new System.Drawing.Point(0, 0);
-            this.ucCamSettings1.Name = "ucCamSettings1";
-            this.ucCamSettings1.Size = new System.Drawing.Size(273, 150);
-            this.ucCamSettings1.TabIndex = 0;
+            this.ucCamSettings.AutoScroll = true;
+            this.ucCamSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCamSettings.Location = new System.Drawing.Point(0, 0);
+            this.ucCamSettings.Name = "ucCamSettings";
+            this.ucCamSettings.Size = new System.Drawing.Size(273, 150);
+            this.ucCamSettings.TabIndex = 0;
             // 
             // chkIp
             // 
@@ -882,7 +882,7 @@ namespace AVDeviceControl
         private System.Windows.Forms.Button btnRefreshPorts;
         private System.Windows.Forms.BindingSource cameraBindingSource;
         private System.Windows.Forms.TabPage tabSettings;
-        private ucCamSettings ucCamSettings1;
+        private ucCamSettings ucCamSettings;
         private System.Windows.Forms.Button btnCtlDisconnect;
         private System.Windows.Forms.Button btnUpdate;
         private ucPtControl ptControl;

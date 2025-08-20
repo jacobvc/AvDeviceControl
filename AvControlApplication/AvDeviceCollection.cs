@@ -223,16 +223,16 @@ namespace AVDeviceControl
                 switch (direction)
                 {
                     case "up":
-                        tiltSpeed = Math.Max(1, (int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High / 100));
+                        tiltSpeed = Math.Max(1, (int)(iSpeed * cam.Camera.limitsByPropertyName["TiltSpeed"].High / 100));
                         break;
                     case "down":
-                        tiltSpeed = Math.Min(-1, -(int)(iSpeed * cam.Camera.Limits.TiltSpeedLimits.High / 100));
+                        tiltSpeed = Math.Min(-1, -(int)(iSpeed * cam.Camera.limitsByPropertyName["TiltSpeed"].High / 100));
                         break;
                     case "left":
-                        panSpeed = Math.Min(-1, -(int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High / 100));
+                        panSpeed = Math.Min(-1, -(int)(iSpeed * cam.Camera.limitsByPropertyName["PanSpeed"].High / 100));
                         break;
                     case "right":
-                        panSpeed = Math.Max(1, (int)(iSpeed * cam.Camera.Limits.PanSpeedLimits.High / 100));
+                        panSpeed = Math.Max(1, (int)(iSpeed * cam.Camera.limitsByPropertyName["PanSpeed"].High / 100));
                         break;
                     case "stop":
                         break;
@@ -262,7 +262,7 @@ namespace AVDeviceControl
                     iSpeed = Math.Min(iSpeed, 100);
 
                     int zoomSpeed = Math.Max(1, 
-                        (int)(iSpeed * cam.Camera.Limits.ZoomSpeedLimits.High / 100));
+                        (int)(iSpeed * cam.Camera.limitsByPropertyName["ZoomSpeed"].High / 100));
 
                     switch (direction)
                     {

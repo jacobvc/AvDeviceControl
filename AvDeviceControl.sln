@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViscaLibrary", "ViscaLibrar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvControApplication", "AvControlApplication\AvControApplication.csproj", "{D233F8CB-D67B-400B-A451-8E75980EAE05}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AvDeviceControlSetup", "AvDeviceControlSetup\AvDeviceControlSetup.vdproj", "{97D79ACF-4370-A538-2FD7-D28FECF2B74F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Ubuntu|Any CPU = Debug_Ubuntu|Any CPU
@@ -71,6 +73,18 @@ Global
 		{D233F8CB-D67B-400B-A451-8E75980EAE05}.Release|x64.Build.0 = Release|Any CPU
 		{D233F8CB-D67B-400B-A451-8E75980EAE05}.Release|x86.ActiveCfg = Release|Any CPU
 		{D233F8CB-D67B-400B-A451-8E75980EAE05}.Release|x86.Build.0 = Release|Any CPU
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Debug_Ubuntu|Any CPU.ActiveCfg = Debug
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Debug_Ubuntu|x64.ActiveCfg = Debug
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Debug_Ubuntu|x86.ActiveCfg = Debug
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Debug|Any CPU.ActiveCfg = Debug
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Debug|x64.ActiveCfg = Debug
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Debug|x86.ActiveCfg = Debug
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Release_Ubuntu|Any CPU.ActiveCfg = Release
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Release_Ubuntu|x64.ActiveCfg = Release
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Release_Ubuntu|x86.ActiveCfg = Release
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Release|Any CPU.ActiveCfg = Release
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Release|x64.ActiveCfg = Release
+		{97D79ACF-4370-A538-2FD7-D28FECF2B74F}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
