@@ -147,6 +147,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F5F8B96CBF5845E7950CBA65EDEB51E9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_87C50D5DC6E74AAE88B543EE696A9F7D"
         "MsmSig" = "8:_UNDEFINED"
@@ -365,7 +371,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ViscaLibrary, Version=1.1.9363.38535, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ViscaLibrary, Version=1.1.9364.19542, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_38B6DD7749C14440704B6CB010E832D0"
@@ -815,6 +821,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F5F8B96CBF5845E7950CBA65EDEB51E9"
+            {
+            "SourcePath" = "8:..\\AvControlApplication\\Resources\\PtzCamera.ico"
+            "TargetName" = "8:PtzCamera.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_D1AB0B3EA1EC47DD9F3814CCFFA8D216"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -872,7 +898,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:AvDeviceControlSetup"
         "ProductCode" = "8:{0DAF83D9-B3D1-4BA2-B410-12024B6BA47D}"
-        "PackageCode" = "8:{782144B9-52FC-4325-9A8D-044EDB8F56BF}"
+        "PackageCode" = "8:{9611D5B6-0920-4A9F-87F7-D20FCDE135D8}"
         "UpgradeCode" = "8:{A530550C-0B52-47C0-9B96-398BC1F15E8B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

@@ -270,7 +270,7 @@ namespace AVDeviceControl
         /// <summary>
         /// Report number of devices in collection
         /// </summary>
-        //public int MixerCount { get { return mixers.Count; } }
+        //public int MixerCount { Get { return mixers.Count; } }
 
 
         #region Serialization

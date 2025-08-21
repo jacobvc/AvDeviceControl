@@ -53,7 +53,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\PtzCamera.ico</ApplicationIcon>
+    <ApplicationIcon>PtzCamera.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
@@ -289,6 +289,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PtzCamera.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\RtMidi.Core.1.0.53\build\RtMidi.Core.targets" Condition="Exists('..\packages\RtMidi.Core.1.0.53\build\RtMidi.Core.targets')" />

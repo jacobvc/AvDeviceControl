@@ -85,7 +85,7 @@ namespace AVDeviceControl
                 // The server is disposed
                 _logger.Information("Server: Connection opened. Reading Http header from stream");
 
-                // get a secure or insecure stream
+                // Get a secure or insecure stream
                 Stream stream = tcpClient.GetStream();
                 WebSocketHttpContext context = await _webSocketServerFactory.ReadHttpHeaderFromStreamAsync(stream);
                 if (context.IsWebSocketRequest)

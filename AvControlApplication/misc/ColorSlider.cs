@@ -1380,7 +1380,7 @@ namespace ColorSlider
                 }
 
 
-                //get thumb shape path 
+                //Get thumb shape path 
                 GraphicsPath thumbPath;
                 if (_thumbCustomShape == null)
                     thumbPath = CreateRoundRectPath(thumbRect, _thumbRoundRectSize);

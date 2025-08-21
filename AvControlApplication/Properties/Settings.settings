@@ -17,8 +17,8 @@
     <Setting Name="saveJsonConfigCopy" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="logLevel" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Warning</Value>
+    <Setting Name="logLevel" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="webSocketPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">4443</Value>

@@ -56,7 +56,7 @@ namespace AVDeviceControl
             this.cameraInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.cameraInfo.Size = new System.Drawing.Size(178, 131);
             this.cameraInfo.TabIndex = 0;
-            this.cameraInfo.VisibleChanged += new System.EventHandler(this.cameraInfo_VisibleChanged);
+            this.cameraInfo.VisibleChanged += new System.EventHandler(this.CameraInfo_VisibleChanged);
             // 
             // ucCamSettings
             // 

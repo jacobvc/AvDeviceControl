@@ -547,7 +547,6 @@ namespace AVDeviceControl
         #endregion
 
         #region Datagrid Support
-        // Rename method to start with upper case to fix IDE1006
         private void DgChannels_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             e.Control.KeyPress -= new KeyPressEventHandler(Numeric_KeyPress);
@@ -569,7 +568,6 @@ namespace AVDeviceControl
             }
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void DgChannels_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             var view = (DataGridView)sender;
@@ -619,19 +617,16 @@ namespace AVDeviceControl
 
         #region Control Events 
 
-        // Rename method to start with upper case to fix IDE1006
         private void BtnRefreshDevices_Click(object sender, EventArgs e)
         {
             RefreshMidis();
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void TpControl_Resize(object sender, EventArgs e)
         {
             PositionSliders(tpControl);
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show(
@@ -646,7 +641,6 @@ namespace AVDeviceControl
             }
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void BtnConnect_Click(object sender, EventArgs e)
         {
             String error = Connect();
@@ -656,7 +650,6 @@ namespace AVDeviceControl
             }
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void BtnDisconnect_Click(object sender, EventArgs e)
         {
             Disconnect();
@@ -667,13 +660,11 @@ namespace AVDeviceControl
             ConfigurationChangedEvent?.Invoke(this);
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void BtnLeft_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, true);
         }
 
-        // Rename method to start with upper case to fix IDE1006
         private void BtnRight_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, false);

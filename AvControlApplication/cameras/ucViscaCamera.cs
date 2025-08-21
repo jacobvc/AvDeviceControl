@@ -38,6 +38,8 @@ namespace AVDeviceControl
 
         public event ConfigurationChanged ConfigurationChangedEvent = null;
         public event ValueChanged ValueChangedEvent = null;
+
+        private readonly Action<byte, string, object[]> logAction = null;
         #endregion
 
         #region Properties
@@ -68,11 +70,12 @@ namespace AVDeviceControl
         }
 
 
-        public ucViscaCamera(CameraConfig config) : this()
+        public ucViscaCamera(CameraConfig config, Action<byte, string, object[]> logAction = null) : this()
         {
             this.config = config;
             // WARNING Checkbox data binding seems to be broken
             // Init here, and modify from check changed event
+            this.logAction = logAction;
             chkIp.Checked = config.IsIp;
             cameraConfigBindingSource.DataSource = config;
             lstPresets.Items.AddRange(config.presets.ToArray());
@@ -158,7 +161,7 @@ namespace AVDeviceControl
         {
             Disconnect();
             // Connect to PtzController and camera
-            String error = ctl.Connect(!config.IsIp, config);
+            String error = ctl.Connect(!config.IsIp, config, logAction);
             if (error == null)
             {
                 // Connect the camera to this user control
@@ -261,7 +264,6 @@ namespace AVDeviceControl
             }
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnCtlDisconnect_Click(object sender, EventArgs e)
         {
             Disconnect();
@@ -291,7 +293,6 @@ namespace AVDeviceControl
             txtPresetName.Focus();
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnPresetUpdate_Click(object sender, EventArgs e)
         {
             if (lstPresets.SelectedItem != null)
@@ -324,13 +325,11 @@ namespace AVDeviceControl
             RefreshPorts();
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnLeft_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, true);
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnRight_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, false);
@@ -416,7 +415,6 @@ namespace AVDeviceControl
         #endregion
 
         #region Tab control vents
-        // Rename method to start with an uppercase character to fix IDE1006
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (camera != null)
@@ -446,7 +444,6 @@ namespace AVDeviceControl
             Console.WriteLine("Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void CameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             ConfigurationChangedEvent?.Invoke(this);
@@ -454,19 +451,16 @@ namespace AVDeviceControl
         #endregion
 
         #region OSD Button Events
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnMenuOn_Click(object sender, EventArgs e)
         {
             camera?.OsdMenu(true);
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnMenuOff_Click(object sender, EventArgs e)
         {
             camera?.OsdMenu(false);
         }
 
-        // Rename method to start with an uppercase character to fix IDE1006
         private void BtnMenuOk_Click(object sender, EventArgs e)
         {
             camera?.OsdOk();

@@ -106,7 +106,7 @@ namespace AVDeviceControl
 
         public GenericPositionCommand Command(int position)
         {
-            return new GenericPositionCommand(address, position, camera.limitsByPropertyName.getInt(p.name), p);
+            return new GenericPositionCommand(address, position, camera.limitsByPropertyName.GetInt(p.name), p);
         }
 
         public GenericPositionInquiry Inquiry(Action<short> action)

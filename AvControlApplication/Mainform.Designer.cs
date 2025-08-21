@@ -40,7 +40,9 @@ namespace AVDeviceControl
             this.mnuAddCamera = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAddMixer = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuCmbLog = new System.Windows.Forms.ToolStripComboBox();
+            this.mnuDebug = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuDebugWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuDebugLevel = new System.Windows.Forms.ToolStripComboBox();
             this.mnuWebsocket = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuWebsocketPort = new System.Windows.Forms.ToolStripTextBox();
             this.lblWebSocket = new System.Windows.Forms.Label();
@@ -147,30 +149,46 @@ namespace AVDeviceControl
             // miscToolStripMenuItem
             // 
             this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuCmbLog,
+            this.mnuDebug,
             this.mnuWebsocket});
             this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
             this.miscToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.miscToolStripMenuItem.Text = "Misc";
             // 
-            // mnuCmbLog
+            // mnuDebug
             // 
-            this.mnuCmbLog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mnuCmbLog.Name = "mnuCmbLog";
-            this.mnuCmbLog.Size = new System.Drawing.Size(121, 23);
-            this.mnuCmbLog.SelectedIndexChanged += new System.EventHandler(this.MnuCmbLog_SelectedIndexChanged);
+            this.mnuDebug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDebugWindow,
+            this.mnuDebugLevel});
+            this.mnuDebug.Name = "mnuDebug";
+            this.mnuDebug.Size = new System.Drawing.Size(180, 22);
+            this.mnuDebug.Text = "Debug";
+            // 
+            // mnuDebugWindow
+            // 
+            this.mnuDebugWindow.Checked = true;
+            this.mnuDebugWindow.CheckOnClick = true;
+            this.mnuDebugWindow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnuDebugWindow.Name = "mnuDebugWindow";
+            this.mnuDebugWindow.Size = new System.Drawing.Size(188, 22);
+            this.mnuDebugWindow.Text = "Open Debug Window";
+            // 
+            // mnuDebugLevel
+            // 
+            this.mnuDebugLevel.Name = "mnuDebugLevel";
+            this.mnuDebugLevel.Size = new System.Drawing.Size(121, 23);
+            this.mnuDebugLevel.SelectedIndexChanged += new System.EventHandler(this.MnuCmbLog_SelectedIndexChanged);
             // 
             // mnuWebsocket
             // 
             this.mnuWebsocket.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuWebsocketPort});
             this.mnuWebsocket.Name = "mnuWebsocket";
-            this.mnuWebsocket.Size = new System.Drawing.Size(181, 22);
+            this.mnuWebsocket.Size = new System.Drawing.Size(180, 22);
             this.mnuWebsocket.Text = "Websocket Port";
             // 
             // mnuWebsocketPort
             // 
-            this.mnuWebsocketPort.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.mnuWebsocketPort.Name = "mnuWebsocketPort";
             this.mnuWebsocketPort.Size = new System.Drawing.Size(100, 23);
             this.mnuWebsocketPort.TextChanged += new System.EventHandler(this.MnuWebsocketPort_TextChanged);
@@ -300,7 +318,6 @@ namespace AVDeviceControl
         private System.Windows.Forms.ToolStripMenuItem mnuAddCamera;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveJSONCopy;
         private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox mnuCmbLog;
         private System.Windows.Forms.ToolStripMenuItem mnuAddMixer;
         private System.Windows.Forms.ToolStripMenuItem mnuWebsocket;
         private System.Windows.Forms.ToolStripTextBox mnuWebsocketPort;
@@ -313,6 +330,9 @@ namespace AVDeviceControl
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel staLblConfigFile;
+        private System.Windows.Forms.ToolStripMenuItem mnuDebug;
+        private System.Windows.Forms.ToolStripMenuItem mnuDebugWindow;
+        private System.Windows.Forms.ToolStripComboBox mnuDebugLevel;
     }
 }
 

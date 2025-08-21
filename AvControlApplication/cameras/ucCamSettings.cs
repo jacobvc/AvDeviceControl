@@ -33,12 +33,12 @@ namespace AVDeviceControl
                 {
                     ctl.DataBindings.RemoveAt(0);
                 }
-                ViscaRangeDictionary.Limits limits = camera.limitsByPropertyName.get(member);
+                ViscaRangeDictionary.Limits limits = camera.limitsByPropertyName.Get(member);
                 ctl.DataBindings.Add(new Binding("Value", _binding, member, true, DataSourceUpdateMode.OnPropertyChanged));
                 ctl.Minimum = limits.Low;
                 ctl.Maximum = limits.High;
                 int range = limits.High - limits.Low;
-                int bestDiv = bestDivision(range, 5, 2);
+                int bestDiv = BestDivision(range, 5, 2);
                 ctl.ScaleDivisions = bestDiv;
                 ctl.ScaleSubDivisions = (range / bestDiv) - 1;
                 ctl.ShowBorder = true;
@@ -91,14 +91,14 @@ namespace AVDeviceControl
             return sld;
         }
 
-        private void cameraInfo_VisibleChanged(object sender, EventArgs e)
+        private void CameraInfo_VisibleChanged(object sender, EventArgs e)
         {
             PtzCamera camera = _binding.DataSource as PtzCamera;
             cameraInfo.Text = "Camera Info";
             cameraInfo.Text += (("\r\n\t" + camera?.PtzInfo.ToString()).Replace(",", "\r\n\t") + "\r\n"
               + "\r\n" + camera?.ToString()).Replace("\t", "    ");
         }
-        static private int bestDivision(int n, int max, int deflt)
+        static private int BestDivision(int n, int max, int deflt)
         {
             int highest = 0;
             int k = 2;

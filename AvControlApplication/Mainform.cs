@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -22,7 +23,7 @@ namespace AVDeviceControl
         public MainForm()
         {
             InitializeComponent();
-            mnuCmbLog.Items.AddRange(Enum.GetNames(typeof(LogLevel)));
+            mnuDebugLevel.Items.AddRange(Enum.GetNames(typeof(LogLevel)));
 
             midi = new Midi();
 
@@ -63,14 +64,13 @@ namespace AVDeviceControl
         }
         #endregion
 
-        string MnuLogLevel
+        int MnuLogLevel
         {
-            get { return PtzController.logLevel.ToString(); }
+            get { return (int)PtzController.logLevel; }
             set
             {
-                PtzController.logLevel = LogLevel.Warning;
-                Enum.TryParse(value, out PtzController.logLevel);
-                mnuCmbLog.Text = PtzController.logLevel.ToString();
+                PtzController.logLevel = (LogLevel)value;
+                mnuDebugLevel.Text = PtzController.logLevel.ToString();
             }
         }
 
@@ -95,6 +95,14 @@ namespace AVDeviceControl
                 lblWebSocket.ForeColor = Color.Red;
                 lblWebSocket.Text = "Websocket NOT RUNNING: Invalid Port";
                 MessageBox.Show("Can't start websocket server. Port must be an integer.", "Websocket Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LogAction(byte level, string format, object[] args)
+        {
+            if (level >= MnuLogLevel)
+            {
+                Console.WriteLine("PT LOG:[{0}]", String.Format(format, args));
             }
         }
 
@@ -139,7 +147,7 @@ namespace AVDeviceControl
             {
                 collection.AddCamera(new CameraConfig());
             }
-            if (Properties.Settings.Default.logLevel == "Verbose") 
+            if (Properties.Settings.Default.logLevel == (int)LogLevel.Verbose) 
             {
                 debugForm.Show();
                 debugForm.FormClosing += (s, e) => {
@@ -195,7 +203,7 @@ namespace AVDeviceControl
         #region Camera Devices
         private void AddCamera(CameraConfig cfg, SplitterPanel panel)
         {
-            ucViscaCamera cam = new ucViscaCamera(cfg);
+            ucViscaCamera cam = new ucViscaCamera(cfg, LogAction);
             cam.Click += Device_click;
             cam.RqDelete += Camera_RqDelete;
             cam.RqMove += Cam_RqMove;
@@ -361,7 +369,6 @@ namespace AVDeviceControl
         #endregion
 
         #region Control Events
-        // Rename method to follow PascalCase naming convention
         private void SpltMain_Panel1_Resize(object sender, EventArgs e)
         {
             if (!positioning)
@@ -375,7 +382,6 @@ namespace AVDeviceControl
             //MessageBox.Show("Device clicked");
         }
 
-        // Rename method to follow PascalCase naming convention
         private void MnuAddCamera_Click(object sender, EventArgs e)
         {
             CameraConfig cfg = new CameraConfig();
@@ -383,7 +389,6 @@ namespace AVDeviceControl
             AddCamera(cfg, spltMain.Panel1);
         }
 
-        // Rename method to follow PascalCase naming convention
         private void MnuAddMixer_Click(object sender, EventArgs e)
         {
             MixerConfig cfg = new MixerConfig();
@@ -391,19 +396,16 @@ namespace AVDeviceControl
             AddMixer(cfg, spltMain.Panel1);
         }
 
-        // Rename method to follow PascalCase naming convention
         private void MnuLoadConfig_Click(object sender, EventArgs e)
         {
             LoadSettings(true);
         }
 
-        // Rename method to follow PascalCase naming convention
         private void MnuSaveConfig_Click(object sender, EventArgs e)
         {
             SaveSettings(true);
         }
 
-        // Rename method to follow PascalCase naming convention
         private void MnuSaveJSONCopy_Click(object sender, EventArgs e)
         {
             mnuSaveJSONCopy.Checked = !mnuSaveJSONCopy.Checked;
@@ -412,10 +414,11 @@ namespace AVDeviceControl
 
         private void MnuCmbLog_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MnuLogLevel = mnuCmbLog.Text;
+            PtzController.logLevel = LogLevel.Warning;
+            Enum.TryParse(mnuDebugLevel.Text, out PtzController.logLevel);
+            MnuLogLevel = (int)PtzController.logLevel;
         }
 
-        // Rename method to follow PascalCase naming convention
         private void MnuWebsocketPort_TextChanged(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.webSocketPort

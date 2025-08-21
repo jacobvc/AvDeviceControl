@@ -16,6 +16,7 @@ namespace AVDeviceControl
         Info = 2,
         Warning = 3,
         Error = 4,
+        None = 5
     }
     public class PtzController
     {
@@ -100,14 +101,6 @@ namespace AVDeviceControl
             controller.EnqueueCommand(inq);
         }
 
-        private static void LogAction(byte level, string format, object[] args)
-        {
-            if (level >= (int)logLevel)
-            {
-                Console.WriteLine("PT LOG:[{0}]", String.Format(format, args));
-            }
-        }
-
         private void InfoArrived(ViscaInfo e)
         {
             this.info = e;
@@ -127,6 +120,14 @@ namespace AVDeviceControl
             }
         }
         #endregion
+
+        private static void LogAction(byte level, string format, object[] args)
+        {
+            if (level >= (int)logLevel)
+            {
+                Console.WriteLine("PT LOG:[{0}]", String.Format(format, args));
+            }
+        }
 
     }
 }
