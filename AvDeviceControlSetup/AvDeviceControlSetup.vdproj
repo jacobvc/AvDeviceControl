@@ -57,12 +57,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_576979C7AB7B4F8595252B6377942EF3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_62AEFB74624E25F79085D8D730415366"
         "OwnerKey" = "8:_87C50D5DC6E74AAE88B543EE696A9F7D"
         "MsmSig" = "8:_UNDEFINED"
@@ -371,7 +365,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ViscaLibrary, Version=1.1.9363.38491, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ViscaLibrary, Version=1.1.9363.38535, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_38B6DD7749C14440704B6CB010E832D0"
@@ -489,26 +483,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_576979C7AB7B4F8595252B6377942EF3"
-            {
-            "SourcePath" = "8:..\\AvControlApplication\\Resources\\PtzCamera.ico"
-            "TargetName" = "8:PtzCamera.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_D1AB0B3EA1EC47DD9F3814CCFFA8D216"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_62AEFB74624E25F79085D8D730415366"
@@ -1024,12 +998,12 @@
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_87C50D5DC6E74AAE88B543EE696A9F7D"
             "Folder" = "8:_33ABBE07D06B49F29F817007EF78CE34"
             "WorkingFolder" = "8:_D1AB0B3EA1EC47DD9F3814CCFFA8D216"
-            "Icon" = "8:_576979C7AB7B4F8595252B6377942EF3"
+            "Icon" = "8:_87C50D5DC6E74AAE88B543EE696A9F7D"
             "Feature" = "8:"
             }
         }

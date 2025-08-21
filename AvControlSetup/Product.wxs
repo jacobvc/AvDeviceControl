@@ -1,5 +1,0 @@
-<Component Id="AppFiles" Guid="PUT-GUID-HERE">
-  <File Id="AvControlApplicationExe" Name="AvControlApplication.exe" Source="$(var.ProjectDir)\AvControlApplication.exe" />
-  <File Id="VideoCamStl" Name="videoCam.stl" Source="$(var.SolutionDr)\videoCam.stl" />
-  <!-- other required files -->
-   </Component>
