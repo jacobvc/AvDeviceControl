@@ -51,7 +51,7 @@ namespace AVDeviceControl
 
             _webSocketServerFactory = new WebSocketServerFactory();
 
-            devices.configurationChangedEvent += InternalConfigurationChangedEvent;
+            devices.ConfigurationChangedEvent += InternalConfigurationChangedEvent;
             devices.valueChangedEvent += InternalValueChangedEvent;
 
             List<String> protocols = new List<string> { "obswebsocket.json" };

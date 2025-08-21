@@ -36,8 +36,8 @@ namespace AVDeviceControl
         public delegate void MoveRequest(object sender, bool left);
         public event MoveRequest RqMove = null;
 
-        public event ConfigurationChanged configurationChangedEvent = null;
-        public event ValueChanged valueChangedEvent = null;
+        public event ConfigurationChanged ConfigurationChangedEvent = null;
+        public event ValueChanged ValueChangedEvent = null;
         #endregion
 
         #region Properties
@@ -163,7 +163,7 @@ namespace AVDeviceControl
             {
                 // Connect the camera to this user control
                 camera = ctl.Camera;
-                ctl.abort += Ctl_abort;
+                ctl.Abort += Ctl_abort;
                 camera.ZoomPositionChanged += Camera_ZoomPositionChanged;
                 camera.PTZPositionChanged += Camera_PTZPositionChanged;
                 Connected = true;
@@ -207,7 +207,7 @@ namespace AVDeviceControl
                         ucCamSettings.Binding = null;
                         ucCamSettings.Binding = cameraBindingSource;
                         ucCamSettings.Sliders = camera.propertyList;
-                        configurationChangedEvent?.Invoke(this);
+                        ConfigurationChangedEvent?.Invoke(this);
                     }
                 }
                 else
@@ -228,7 +228,7 @@ namespace AVDeviceControl
                     }
                     if (wasConnected)
                     {
-                        configurationChangedEvent?.Invoke(this);
+                        ConfigurationChangedEvent?.Invoke(this);
                     }
                 }
                 btnLeft.Visible = !value;
@@ -246,31 +246,36 @@ namespace AVDeviceControl
         private void BtnConnectIp_Click(object sender, EventArgs e)
         {
             String error = Connect();
-            if (error != null)
+            if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(error, "Failed to control camera");
+                MessageBox.Show(error, "Failed to control camera", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void BtnConnectSerial_Click(object sender, EventArgs e)
         {
             String error = Connect();
-            if (error != null)
+            if (!string.IsNullOrEmpty(error))
             { 
-                MessageBox.Show(error, "Failed to control camera");
+                MessageBox.Show(error, "Failed to control camera", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnCtlDisconnect_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnCtlDisconnect_Click(object sender, EventArgs e)
         {
             Disconnect();
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to remove this camera?",
-                "Deleting Device", MessageBoxButtons.YesNo)
-                == DialogResult.Yes)
+            var result = MessageBox.Show(
+                "Are you sure you want to remove this camera?",
+                "Deleting Device",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+            if (result == DialogResult.Yes)
             {
                 RqDelete?.Invoke(this, new EventArgs());
             }
@@ -286,7 +291,8 @@ namespace AVDeviceControl
             txtPresetName.Focus();
         }
 
-        private void btnPresetUpdate_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnPresetUpdate_Click(object sender, EventArgs e)
         {
             if (lstPresets.SelectedItem != null)
             {
@@ -309,7 +315,7 @@ namespace AVDeviceControl
                 lstPresets.Items.Remove(lstPresets.SelectedItem);
                 presetsBindingSource.DataSource = new Preset();
                 grpPresets.Enabled = false;
-                configurationChangedEvent?.Invoke(this);
+                ConfigurationChangedEvent?.Invoke(this);
             }
         }
 
@@ -318,12 +324,14 @@ namespace AVDeviceControl
             RefreshPorts();
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnLeft_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, true);
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnRight_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, false);
         }
@@ -381,7 +389,7 @@ namespace AVDeviceControl
 
                 lstLivePresets.Items.Clear();
                 lstLivePresets.Items.AddRange(config.presets.ToArray());
-                configurationChangedEvent?.Invoke(this);
+                ConfigurationChangedEvent?.Invoke(this);
             }
         }
 
@@ -408,7 +416,8 @@ namespace AVDeviceControl
         #endregion
 
         #region Tab control vents
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (camera != null)
             {
@@ -437,24 +446,28 @@ namespace AVDeviceControl
             Console.WriteLine("Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
         }
 
-        private void cameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void CameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            configurationChangedEvent?.Invoke(this);
+            ConfigurationChangedEvent?.Invoke(this);
         }
         #endregion
 
         #region OSD Button Events
-        private void btnMenuOn_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnMenuOn_Click(object sender, EventArgs e)
         {
             camera?.OsdMenu(true);
         }
 
-        private void btnMenuOff_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnMenuOff_Click(object sender, EventArgs e)
         {
             camera?.OsdMenu(false);
         }
 
-        private void btnMenuOk_Click(object sender, EventArgs e)
+        // Rename method to start with an uppercase character to fix IDE1006
+        private void BtnMenuOk_Click(object sender, EventArgs e)
         {
             camera?.OsdOk();
         }

@@ -43,7 +43,7 @@ namespace AVDeviceControl
         List<ucAvDevice> devices = new List<ucAvDevice>();
         Dictionary<String, ucAvDevice> deviceDict = new Dictionary<string, ucAvDevice>();
 
-        public event ConfigurationChanged configurationChangedEvent = null;
+        public event ConfigurationChanged ConfigurationChangedEvent = null;
         public event ValueChanged valueChangedEvent = null;
 
         public AvDeviceCollection()
@@ -54,7 +54,7 @@ namespace AVDeviceControl
         {
             this.devices = devices;
             Update();
-            configurationChangedEvent?.Invoke(this);
+            ConfigurationChangedEvent?.Invoke(this);
         }
 
         void Update()
@@ -69,9 +69,9 @@ namespace AVDeviceControl
         public void AddCamera(ucViscaCamera item)
         {
             devices.Add(item);
-            item.configurationChangedEvent += Device_configurationChangedEvent;
-            item.valueChangedEvent += Device_valueChangedEvent;
-            configurationChangedEvent?.Invoke(this);
+            item.ConfigurationChangedEvent += Device_ConfigurationChangedEvent;
+            item.ValueChangedEvent += Device_valueChangedEvent;
+            ConfigurationChangedEvent?.Invoke(this);
         }
 
         private void Device_valueChangedEvent(object sender, ValueChangedEventArgs e)
@@ -79,32 +79,32 @@ namespace AVDeviceControl
             valueChangedEvent?.Invoke(sender, e);
         }
 
-        private void Device_configurationChangedEvent(object sender)
+        private void Device_ConfigurationChangedEvent(object sender)
         {
-            configurationChangedEvent?.Invoke(sender);
+            ConfigurationChangedEvent?.Invoke(sender);
         }
 
         public void RemoveCamera(ucViscaCamera item)
         {
-            item.configurationChangedEvent -= Device_configurationChangedEvent;
-            item.valueChangedEvent -= Device_valueChangedEvent;
+            item.ConfigurationChangedEvent -= Device_ConfigurationChangedEvent;
+            item.ValueChangedEvent -= Device_valueChangedEvent;
             devices.Remove(item);
-            configurationChangedEvent?.Invoke(this);
+            ConfigurationChangedEvent?.Invoke(this);
         }
 
         public void AddMixer(ucMixer item)
         {
             devices.Add(item);
-            item.configurationChangedEvent += Device_configurationChangedEvent;
-            item.valueChangedEvent += Device_valueChangedEvent;
-            configurationChangedEvent?.Invoke(this);
+            item.ConfigurationChangedEvent += Device_ConfigurationChangedEvent;
+            item.ValueChangedEvent += Device_valueChangedEvent;
+            ConfigurationChangedEvent?.Invoke(this);
         }
         public void RemoveMixer(ucMixer item)
         {
-            item.configurationChangedEvent -= Device_configurationChangedEvent;
-            item.valueChangedEvent -= Device_valueChangedEvent;
+            item.ConfigurationChangedEvent -= Device_ConfigurationChangedEvent;
+            item.ValueChangedEvent -= Device_valueChangedEvent;
             devices.Remove(item);
-            configurationChangedEvent?.Invoke(this);
+            ConfigurationChangedEvent?.Invoke(this);
         }
 
         public ucAvDevice Device(int index)
@@ -130,7 +130,7 @@ namespace AVDeviceControl
         public void Clear()
         {
             devices.Clear();
-            configurationChangedEvent?.Invoke(this);
+            ConfigurationChangedEvent?.Invoke(this);
         }
         public int DeviceCount
         {

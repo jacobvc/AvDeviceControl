@@ -30,8 +30,8 @@ namespace AVDeviceControl
         public delegate void MoveRequest(object sender, bool left);
         public event MoveRequest RqMove = null;
 
-        public event ConfigurationChanged configurationChangedEvent = null;
-        public event ValueChanged valueChangedEvent = null;
+        public event ConfigurationChanged ConfigurationChangedEvent = null;
+        public event ValueChanged ValueChangedEvent = null;
         #endregion
 
         #region Constructors
@@ -220,7 +220,7 @@ namespace AVDeviceControl
                         {
                             new Thread(new ThreadStart(Poll01v96)).Start();
                         }
-                        configurationChangedEvent?.Invoke(this);
+                        ConfigurationChangedEvent?.Invoke(this);
                     }
                 }
                 else
@@ -237,7 +237,7 @@ namespace AVDeviceControl
 
                     if (wasConnected)
                     {
-                        configurationChangedEvent?.Invoke(this);
+                        ConfigurationChangedEvent?.Invoke(this);
                     }
                 }
                 btnDisconnect.Visible = isConnected;
@@ -325,7 +325,7 @@ namespace AVDeviceControl
             {
                 slider.InputValue = 0;
                 // Send event from slider, NOT midi
-                valueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.VolumeLevel, 0));
+                ValueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.VolumeLevel, 0));
             }
             else
             {
@@ -340,7 +340,7 @@ namespace AVDeviceControl
             {
                 slider.InputValue = msg.Velocity;
                 // Send event from slider, NOT midi
-                valueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.VolumeLevel, msg.Velocity));
+                ValueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.VolumeLevel, msg.Velocity));
             }
             else
             {
@@ -357,13 +357,13 @@ namespace AVDeviceControl
                 {
                     slider.ControlValue = msg.Value;
                     // Send event from slider, NOT midi
-                    valueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.VolumeSetting, msg.Value));
+                    ValueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.VolumeSetting, msg.Value));
                 }
                 else if (msg.Control == slider.Config.Mute)
                 {
                     slider.Mute = msg.Value != 127;
                     // Send event from slider, NOT midi
-                    valueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.Mute, msg.Value != 127));
+                    ValueChangedEvent?.Invoke(slider, new ValueChangedEventArgs(DeviceValueType.Mute, msg.Value != 127));
                 }
                 else
                 {
@@ -380,7 +380,7 @@ namespace AVDeviceControl
         #region 01V96 Support
 
         // https://github.com/kryops/01v96-remote/blob/master/server/controllers/mixer.js
-        enum sysExElements
+        enum SysExElement
         {
             channelFader = 28,
             sumFader = 79,
@@ -413,7 +413,7 @@ namespace AVDeviceControl
                             // Apply to slider
                             slider.InputValue = value;
                             // Send event from slider, NOT midi
-                            valueChangedEvent?.Invoke(slider,
+                            ValueChangedEvent?.Invoke(slider,
                                 new ValueChangedEventArgs(DeviceValueType.VolumeLevel, value));
                         }
                     }
@@ -431,7 +431,7 @@ namespace AVDeviceControl
                 byte channel = msg.Data[7];
                 switch (element)
                 {
-                    case (byte)sysExElements.channelFader:
+                    case (byte)SysExElement.channelFader:
                         // ASSUME ALL 01v96 (sliders and meter) are configured to Channel1 and 1 based "channel" control values
                         slider = GetByCtlPoint(RtMidi.Core.Enums.Channel.Channel1, channel + 1);
                         if (slider != null)
@@ -441,11 +441,11 @@ namespace AVDeviceControl
                             // Apply to slider
                             slider.MoveSlider = fader;
                             // Send event from slider, NOT midi
-                            valueChangedEvent?.Invoke(slider,
+                            ValueChangedEvent?.Invoke(slider,
                                 new ValueChangedEventArgs(DeviceValueType.VolumeSetting, fader));
                         }
                         break;
-                    case (byte)sysExElements.channelOn:
+                    case (byte)SysExElement.channelOn:
                         // ASSUME ALL 01v96 (sliders and meter) are configured to Channel1 and 1 based "channel" control values
                         slider = GetByCtlPoint(RtMidi.Core.Enums.Channel.Channel1, channel + 1);
                         if (slider != null)
@@ -454,7 +454,7 @@ namespace AVDeviceControl
                             Console.WriteLine("Channel " + channel + " on=" + on + " (" + msg.ToString() + ")");
                             slider.Mute = on != 127;
                             // Send event from slider, NOT midi
-                            valueChangedEvent?.Invoke(slider,
+                            ValueChangedEvent?.Invoke(slider,
                                 new ValueChangedEventArgs(DeviceValueType.Mute, on != 127));
                         }
                         break;
@@ -469,19 +469,19 @@ namespace AVDeviceControl
         private void Poll01v96()
         {
             
-            byte element = 0;
+            byte element;
             byte parameter = 1;
 
             byte[] parameterMsgStart = new byte[] { 0xF0, 0x43, 0x30, 0x3E, 0x0D, 0x01};
             for (byte channel = 0; channel < 32; ++channel)
             {
                 // Parameter request (section 2.8.3.4)
-                element = (byte)sysExElements.channelFader;
+                element = (byte)SysExElement.channelFader;
                 byte[] msg = parameterMsgStart.Concat(new byte[] { element, parameter, channel, 0xf7 }).ToArray();
                 midiConnection.outp?.Send(new SysExMessage(msg));
                 SendShow("SysExMessage", msg);
 
-                element = (byte)sysExElements.channelOn;
+                element = (byte)SysExElement.channelOn;
                 msg = parameterMsgStart.Concat(new byte[] { element, parameter, channel, 0xf7 }).ToArray();
                 midiConnection.outp?.Send(new SysExMessage(msg));
                 SendShow("SysExMessage", msg);
@@ -529,7 +529,7 @@ namespace AVDeviceControl
             SendShow("ControlChangeMessage: " + (RtMidi.Core.Enums.Channel)(config.Channel - 1) 
               + ", " + config.Control + ", " + value, new byte[0]);
 
-            valueChangedEvent?.Invoke(sender, new ValueChangedEventArgs(DeviceValueType.VolumeSetting, value));
+            ValueChangedEvent?.Invoke(sender, new ValueChangedEventArgs(DeviceValueType.VolumeSetting, value));
         }
 
         private void UI_MuteChangedEvent(object sender, bool value)
@@ -540,21 +540,22 @@ namespace AVDeviceControl
                 config.Mute, value ? 0 : 127));
             SendShow("ControlChangeMessage: " + (RtMidi.Core.Enums.Channel)(config.Channel - 1)
               + ", " + config.Mute + ", " + (value ? 0 : 127), new byte[0]);
-            valueChangedEvent?.Invoke(sender, new ValueChangedEventArgs(DeviceValueType.Mute, value));
+            ValueChangedEvent?.Invoke(sender, new ValueChangedEventArgs(DeviceValueType.Mute, value));
 
         }
 
         #endregion
 
         #region Datagrid Support
-        private void dgChannels_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void DgChannels_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             e.Control.KeyPress -= new KeyPressEventHandler(Numeric_KeyPress);
             if (dgChannels.CurrentCell.OwningColumn.HeaderText != "Name") // Name is the only non-numeric column
             {
-                TextBox tb = e.Control as TextBox;
-                if (tb != null)
+                if (e.Control is TextBox)
                 {
+                    TextBox tb = e.Control as TextBox;
                     tb.KeyPress += new KeyPressEventHandler(Numeric_KeyPress);
                 }
             }
@@ -568,7 +569,8 @@ namespace AVDeviceControl
             }
         }
 
-        private void dgChannels_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void DgChannels_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             var view = (DataGridView)sender;
             view.Rows[e.RowIndex].ErrorText = "";
@@ -617,54 +619,66 @@ namespace AVDeviceControl
 
         #region Control Events 
 
-        private void btnRefreshDevices_Click(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void BtnRefreshDevices_Click(object sender, EventArgs e)
         {
             RefreshMidis();
         }
 
-        private void tpControl_Resize(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void TpControl_Resize(object sender, EventArgs e)
         {
             PositionSliders(tpControl);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to remove this mixer?",
-                 "Deleting Mixer", MessageBoxButtons.YesNo)
-                 == DialogResult.Yes)
+            var result = MessageBox.Show(
+                "Are you sure you want to remove this mixer?",
+                "Delete Mixer",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+            if (result == DialogResult.Yes)
             {
                 RqDelete?.Invoke(this, new EventArgs());
             }
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void BtnConnect_Click(object sender, EventArgs e)
         {
             String error = Connect();
-            if (error != null)
+            if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(error, "Failed to connect MIDI");
+                MessageBox.Show(error, "MIDI Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnDisconnect_Click(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void BtnDisconnect_Click(object sender, EventArgs e)
         {
             Disconnect();
         }
 
-        private void mixerConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        private void MixerConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            configurationChangedEvent?.Invoke(this);
+            ConfigurationChangedEvent?.Invoke(this);
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void BtnLeft_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, true);
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        // Rename method to start with upper case to fix IDE1006
+        private void BtnRight_Click(object sender, EventArgs e)
         {
             RqMove?.Invoke(this, false);
         }
-        #endregion
+
+         #endregion
     }
 }

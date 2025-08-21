@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace AVDeviceControl
 {
@@ -95,7 +94,7 @@ namespace AVDeviceControl
             {
                 lblWebSocket.ForeColor = Color.Red;
                 lblWebSocket.Text = "Websocket NOT RUNNING: Invalid Port";
-                //MessageBox.Show("Can't start webserver. Port must be integer.");
+                MessageBox.Show("Can't start websocket server. Port must be an integer.", "Websocket Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -158,18 +157,13 @@ namespace AVDeviceControl
 
             foreach (AvDeviceConfig dev in collection.devices)
             {
-                CameraConfig cam = dev as CameraConfig;
-                if (cam != null)
+                if (dev is CameraConfig)
                 {
-                    AddCamera(cam, spltMain.Panel1);
+                    AddCamera(dev as CameraConfig, spltMain.Panel1);
                 }
-                else
+                else if (dev is MixerConfig)
                 {
-                    MixerConfig mixer = dev as MixerConfig;
-                    if (mixer != null)
-                    {
-                        AddMixer(mixer, spltMain.Panel1);
-                    }
+                    AddMixer(dev as MixerConfig, spltMain.Panel1);
                 }
             }
             PositionDevices(spltMain.Panel1);
@@ -367,7 +361,8 @@ namespace AVDeviceControl
         #endregion
 
         #region Control Events
-        private void spltMain_Panel1_Resize(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void SpltMain_Panel1_Resize(object sender, EventArgs e)
         {
             if (!positioning)
             {
@@ -380,42 +375,48 @@ namespace AVDeviceControl
             //MessageBox.Show("Device clicked");
         }
 
-        private void mnuAddCamera_Click(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void MnuAddCamera_Click(object sender, EventArgs e)
         {
             CameraConfig cfg = new CameraConfig();
             collection.AddCamera(cfg);
             AddCamera(cfg, spltMain.Panel1);
         }
 
-        private void mnuAddMixer_Click(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void MnuAddMixer_Click(object sender, EventArgs e)
         {
             MixerConfig cfg = new MixerConfig();
             collection.AddMixer(cfg);
             AddMixer(cfg, spltMain.Panel1);
         }
 
-        private void mnuLoadConfig_Click(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void MnuLoadConfig_Click(object sender, EventArgs e)
         {
             LoadSettings(true);
         }
 
-        private void mnuSaveConfig_Click(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void MnuSaveConfig_Click(object sender, EventArgs e)
         {
             SaveSettings(true);
         }
 
-        private void mnuSaveJSONCopy_Click(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void MnuSaveJSONCopy_Click(object sender, EventArgs e)
         {
             mnuSaveJSONCopy.Checked = !mnuSaveJSONCopy.Checked;
             Properties.Settings.Default.saveJsonConfigCopy = mnuSaveJSONCopy.Checked;
         }
 
-        private void mnuCmbLog_SelectedIndexChanged(object sender, EventArgs e)
+        private void MnuCmbLog_SelectedIndexChanged(object sender, EventArgs e)
         {
             MnuLogLevel = mnuCmbLog.Text;
         }
 
-        private void mnuWebsocketPort_TextChanged(object sender, EventArgs e)
+        // Rename method to follow PascalCase naming convention
+        private void MnuWebsocketPort_TextChanged(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.webSocketPort
                 != mnuWebsocketPort.Text.Trim())
@@ -430,7 +431,7 @@ namespace AVDeviceControl
             }
         }
 
-        private void btnCommit_Click(object sender, EventArgs e)
+        private void BtnCommit_Click(object sender, EventArgs e)
         {
             int port;
             if (Int32.TryParse(lblPending.Text, out port))
@@ -442,11 +443,11 @@ namespace AVDeviceControl
             else
             {
                 lblPending.ForeColor = Color.Red;
-                MessageBox.Show("Invalid port:" + lblPending.Text);
+                MessageBox.Show("Invalid port: " + lblPending.Text, "Port Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             pnlPending.Visible = false;
             mnuWebsocketPort.Text = Properties.Settings.Default.webSocketPort;

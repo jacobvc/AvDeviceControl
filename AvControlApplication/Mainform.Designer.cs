@@ -71,7 +71,7 @@ namespace AVDeviceControl
             // spltMain.Panel1
             // 
             this.spltMain.Panel1.AutoScroll = true;
-            this.spltMain.Panel1.Resize += new System.EventHandler(this.spltMain_Panel1_Resize);
+            this.spltMain.Panel1.Resize += new System.EventHandler(this.SpltMain_Panel1_Resize);
             this.spltMain.Panel2Collapsed = true;
             this.spltMain.Size = new System.Drawing.Size(554, 189);
             this.spltMain.SplitterDistance = 164;
@@ -105,21 +105,21 @@ namespace AVDeviceControl
             this.mnuSaveConfig.Name = "mnuSaveConfig";
             this.mnuSaveConfig.Size = new System.Drawing.Size(160, 22);
             this.mnuSaveConfig.Text = "Save Config";
-            this.mnuSaveConfig.Click += new System.EventHandler(this.mnuSaveConfig_Click);
+            this.mnuSaveConfig.Click += new System.EventHandler(this.MnuSaveConfig_Click);
             // 
             // mnuLoadConfig
             // 
             this.mnuLoadConfig.Name = "mnuLoadConfig";
             this.mnuLoadConfig.Size = new System.Drawing.Size(160, 22);
             this.mnuLoadConfig.Text = "Load Config";
-            this.mnuLoadConfig.Click += new System.EventHandler(this.mnuLoadConfig_Click);
+            this.mnuLoadConfig.Click += new System.EventHandler(this.MnuLoadConfig_Click);
             // 
             // mnuSaveJSONCopy
             // 
             this.mnuSaveJSONCopy.Name = "mnuSaveJSONCopy";
             this.mnuSaveJSONCopy.Size = new System.Drawing.Size(160, 22);
             this.mnuSaveJSONCopy.Text = "Save JSON Copy";
-            this.mnuSaveJSONCopy.Click += new System.EventHandler(this.mnuSaveJSONCopy_Click);
+            this.mnuSaveJSONCopy.Click += new System.EventHandler(this.MnuSaveJSONCopy_Click);
             // 
             // camerasToolStripMenuItem
             // 
@@ -135,14 +135,14 @@ namespace AVDeviceControl
             this.mnuAddCamera.Name = "mnuAddCamera";
             this.mnuAddCamera.Size = new System.Drawing.Size(140, 22);
             this.mnuAddCamera.Text = "Add Camera";
-            this.mnuAddCamera.Click += new System.EventHandler(this.mnuAddCamera_Click);
+            this.mnuAddCamera.Click += new System.EventHandler(this.MnuAddCamera_Click);
             // 
             // mnuAddMixer
             // 
             this.mnuAddMixer.Name = "mnuAddMixer";
             this.mnuAddMixer.Size = new System.Drawing.Size(140, 22);
             this.mnuAddMixer.Text = "Add Mixer";
-            this.mnuAddMixer.Click += new System.EventHandler(this.mnuAddMixer_Click);
+            this.mnuAddMixer.Click += new System.EventHandler(this.MnuAddMixer_Click);
             // 
             // miscToolStripMenuItem
             // 
@@ -158,7 +158,7 @@ namespace AVDeviceControl
             this.mnuCmbLog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.mnuCmbLog.Name = "mnuCmbLog";
             this.mnuCmbLog.Size = new System.Drawing.Size(121, 23);
-            this.mnuCmbLog.SelectedIndexChanged += new System.EventHandler(this.mnuCmbLog_SelectedIndexChanged);
+            this.mnuCmbLog.SelectedIndexChanged += new System.EventHandler(this.MnuCmbLog_SelectedIndexChanged);
             // 
             // mnuWebsocket
             // 
@@ -173,7 +173,7 @@ namespace AVDeviceControl
             this.mnuWebsocketPort.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.mnuWebsocketPort.Name = "mnuWebsocketPort";
             this.mnuWebsocketPort.Size = new System.Drawing.Size(100, 23);
-            this.mnuWebsocketPort.TextChanged += new System.EventHandler(this.mnuWebsocketPort_TextChanged);
+            this.mnuWebsocketPort.TextChanged += new System.EventHandler(this.MnuWebsocketPort_TextChanged);
             // 
             // lblWebSocket
             // 
@@ -207,7 +207,7 @@ namespace AVDeviceControl
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // lblPending
             // 
@@ -235,7 +235,7 @@ namespace AVDeviceControl
             this.btnCommit.TabIndex = 0;
             this.btnCommit.Text = "Commit";
             this.btnCommit.UseVisualStyleBackColor = true;
-            this.btnCommit.Click += new System.EventHandler(this.btnCommit_Click);
+            this.btnCommit.Click += new System.EventHandler(this.BtnCommit_Click);
             // 
             // statusStrip1
             // 

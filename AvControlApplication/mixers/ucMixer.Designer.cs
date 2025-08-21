@@ -101,7 +101,7 @@ namespace AVDeviceControl
             // mixerConfigBindingSource
             // 
             this.mixerConfigBindingSource.DataSource = typeof(AVDeviceControl.MixerConfig);
-            this.mixerConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.mixerConfigBindingSource_CurrentItemChanged);
+            this.mixerConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.MixerConfigBindingSource_CurrentItemChanged);
             // 
             // btnDelete
             // 
@@ -112,7 +112,7 @@ namespace AVDeviceControl
             this.btnDelete.TabIndex = 18;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // btnConnect
             // 
@@ -122,7 +122,7 @@ namespace AVDeviceControl
             this.btnConnect.TabIndex = 17;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
             // 
             // dgChannels
             // 
@@ -143,8 +143,8 @@ namespace AVDeviceControl
             this.dgChannels.ShowCellErrors = false;
             this.dgChannels.Size = new System.Drawing.Size(266, 96);
             this.dgChannels.TabIndex = 16;
-            this.dgChannels.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgChannels_CellValidating);
-            this.dgChannels.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgChannels_EditingControlShowing);
+            this.dgChannels.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DgChannels_CellValidating);
+            this.dgChannels.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DgChannels_EditingControlShowing);
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -187,7 +187,7 @@ namespace AVDeviceControl
             this.btnRefreshDevices.TabIndex = 15;
             this.btnRefreshDevices.Text = "...";
             this.btnRefreshDevices.UseVisualStyleBackColor = true;
-            this.btnRefreshDevices.Click += new System.EventHandler(this.btnRefreshDevices_Click);
+            this.btnRefreshDevices.Click += new System.EventHandler(this.BtnRefreshDevices_Click);
             // 
             // label1
             // 
@@ -223,7 +223,7 @@ namespace AVDeviceControl
             this.tpControl.TabIndex = 1;
             this.tpControl.Text = "Control";
             this.tpControl.UseVisualStyleBackColor = true;
-            this.tpControl.Resize += new System.EventHandler(this.tpControl_Resize);
+            this.tpControl.Resize += new System.EventHandler(this.TpControl_Resize);
             // 
             // txtName
             // 
@@ -254,7 +254,7 @@ namespace AVDeviceControl
             this.btnDisconnect.TabIndex = 19;
             this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            this.btnDisconnect.Click += new System.EventHandler(this.BtnDisconnect_Click);
             // 
             // btnRight
             // 
@@ -265,7 +265,7 @@ namespace AVDeviceControl
             this.btnRight.TabIndex = 21;
             this.btnRight.Text = ">";
             this.btnRight.UseVisualStyleBackColor = true;
-            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
+            this.btnRight.Click += new System.EventHandler(this.BtnRight_Click);
             // 
             // btnLeft
             // 
@@ -275,7 +275,7 @@ namespace AVDeviceControl
             this.btnLeft.TabIndex = 20;
             this.btnLeft.Text = "<";
             this.btnLeft.UseVisualStyleBackColor = true;
-            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            this.btnLeft.Click += new System.EventHandler(this.BtnLeft_Click);
             // 
             // ucMixer
             // 

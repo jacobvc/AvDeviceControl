@@ -104,7 +104,7 @@ namespace AVDeviceControl
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(281, 179);
             this.tabControl1.TabIndex = 1;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
             // 
             // tabUsbCam
             // 
@@ -151,7 +151,7 @@ namespace AVDeviceControl
             // cameraConfigBindingSource
             // 
             this.cameraConfigBindingSource.DataSource = typeof(AVDeviceControl.CameraConfig);
-            this.cameraConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.cameraConfigBindingSource_CurrentItemChanged);
+            this.cameraConfigBindingSource.CurrentItemChanged += new System.EventHandler(this.CameraConfigBindingSource_CurrentItemChanged);
             // 
             // chkComReverse
             // 
@@ -519,7 +519,7 @@ namespace AVDeviceControl
             this.btnMenuOk.TabIndex = 6;
             this.btnMenuOk.Text = "Ok";
             this.btnMenuOk.UseVisualStyleBackColor = true;
-            this.btnMenuOk.Click += new System.EventHandler(this.btnMenuOk_Click);
+            this.btnMenuOk.Click += new System.EventHandler(this.BtnMenuOk_Click);
             // 
             // btnMenuOff
             // 
@@ -530,7 +530,7 @@ namespace AVDeviceControl
             this.btnMenuOff.TabIndex = 5;
             this.btnMenuOff.Text = "M-";
             this.btnMenuOff.UseVisualStyleBackColor = true;
-            this.btnMenuOff.Click += new System.EventHandler(this.btnMenuOff_Click);
+            this.btnMenuOff.Click += new System.EventHandler(this.BtnMenuOff_Click);
             // 
             // btnMenuOn
             // 
@@ -541,7 +541,7 @@ namespace AVDeviceControl
             this.btnMenuOn.TabIndex = 4;
             this.btnMenuOn.Text = "M+";
             this.btnMenuOn.UseVisualStyleBackColor = true;
-            this.btnMenuOn.Click += new System.EventHandler(this.btnMenuOn_Click);
+            this.btnMenuOn.Click += new System.EventHandler(this.BtnMenuOn_Click);
             // 
             // btnDelPreset
             // 
@@ -584,7 +584,7 @@ namespace AVDeviceControl
             this.btnUpdate.Text = "Update";
             this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnPresetUpdate_Click);
+            this.btnUpdate.Click += new System.EventHandler(this.BtnPresetUpdate_Click);
             // 
             // cmbPresetSpeed
             // 
@@ -775,7 +775,7 @@ namespace AVDeviceControl
             this.btnCtlDisconnect.Text = "Disconnect";
             this.btnCtlDisconnect.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCtlDisconnect.UseVisualStyleBackColor = true;
-            this.btnCtlDisconnect.Click += new System.EventHandler(this.btnCtlDisconnect_Click);
+            this.btnCtlDisconnect.Click += new System.EventHandler(this.BtnCtlDisconnect_Click);
             // 
             // btnLeft
             // 
@@ -785,7 +785,7 @@ namespace AVDeviceControl
             this.btnLeft.TabIndex = 15;
             this.btnLeft.Text = "<";
             this.btnLeft.UseVisualStyleBackColor = true;
-            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            this.btnLeft.Click += new System.EventHandler(this.BtnLeft_Click);
             // 
             // btnRight
             // 
@@ -796,7 +796,7 @@ namespace AVDeviceControl
             this.btnRight.TabIndex = 16;
             this.btnRight.Text = ">";
             this.btnRight.UseVisualStyleBackColor = true;
-            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
+            this.btnRight.Click += new System.EventHandler(this.BtnRight_Click);
             // 
             // cameraBindingSource
             // 

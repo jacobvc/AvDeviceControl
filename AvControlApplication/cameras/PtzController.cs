@@ -15,13 +15,14 @@ namespace AVDeviceControl
         Verbose = 1,
         Info = 2,
         Warning = 3,
+        Error = 4,
     }
     public class PtzController
     {
         public static LogLevel logLevel = LogLevel.Warning;
 
         ViscaTransport transport = null;
-        public event Aborted abort;
+        public event Aborted Abort;
         public ViscaProtocolProcessor controller;
         private ViscaCameraParameters cameraParams = new ViscaCameraDefaultParameters();
 
@@ -35,8 +36,12 @@ namespace AVDeviceControl
         }
 
         #region Connect / Disconnect
-        public string Connect(bool serial, CameraConfig config)
+        public string Connect(bool serial, CameraConfig config, Action<byte, string, object[]> logAction = null)
         {
+            if (logAction == null)
+            {
+                logAction = LogAction;
+            }
             string error;
             if (serial)
             {
@@ -48,16 +53,14 @@ namespace AVDeviceControl
             }
             else
             {
-                
                 transport = new TcpViscaTransport(config.CamIp, config.CamIpPort);
-                //tabControl1.SelectedTab = tabControl;
             }
             error = transport.Start();
             if (error == null)
             {
                 controller = new ViscaProtocolProcessor(
                   new Action<byte[]>(b => { transport?.sendBytes(b); }),
-                  LogAction);
+                  logAction);
             }
             else
             {
@@ -88,7 +91,7 @@ namespace AVDeviceControl
 
         private void Transport_abort(string reason)
         {
-            abort?.Invoke(reason);
+            Abort?.Invoke(reason);
         }
 
         public void PollViscaInfo()
