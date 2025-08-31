@@ -31,7 +31,7 @@ namespace AVDeviceControl
                 Color.Black,        // Info
                 Color.Orange,       // Warning
                 Color.Red,          // Error
-                Color.Purple };     // None == never should happen
+                Color.Purple };     // None == Special use
             if (InvokeRequired)
             {
                 Invoke(new Action<byte, string>(LogAction), level, text);
