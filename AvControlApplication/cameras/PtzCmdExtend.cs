@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Visca;
 using static AVDeviceControl.PtzCamera;
 using static Visca.Visca;
+using Ctl = AVDeviceControl.PtzController;
 
 namespace AVDeviceControl
 {
@@ -69,8 +70,10 @@ namespace AVDeviceControl
                     _completionAction(info);
                 }
                 else
-                    Debug.WriteLine($"Recieved packet length {viscaRxPacket.PayLoad.Length} is not ViscaInfo Inquiry (>= 5)");
-                    //throw new ArgumentOutOfRangeException("ViscaInfo", "Recieved packet length {viscaRxPacket.PayLoad.Length} is not ViscaInfo Inquiry");
+                {
+                    Ctl.LogMessage(LogLevel.Error,
+                      $"Received packet length {viscaRxPacket.PayLoad.Length} is not ViscaInfo Inquiry (>= 5)");
+                }
             }
         }
     }
@@ -123,7 +126,8 @@ namespace AVDeviceControl
                 p = parameters;
                 Append(new byte[] { parameters.category, p.valueCmd });
                 AppendPosition();
-                Debug.WriteLine($"GenericInterface({p.name}): Position({position}) sending {BitConverter.ToString(_bytes, 0, Length)}");
+                Ctl.LogMessage(LogLevel.Error,
+                  ($"GenericInterface({p.name}): Position({position}) sending {BitConverter.ToString(_bytes, 0, Length)}"));
             }
         }
 
@@ -137,7 +141,8 @@ namespace AVDeviceControl
                 this.p = parameters;
                 Append(new byte[] { p.category, p.inqCmd });
                 _completionAction = action;
-                //Debug.WriteLine($"GenericInterface({p.name}): Inquiry sending {BitConverter.ToString(_bytes, 0, Length)}");
+                Ctl.LogMessage(LogLevel.Trace,
+                  ($"GenericInterface({p.name}): Inquiry sending {BitConverter.ToString(_bytes, 0, Length)}"));
             }
 
             public override void Process(ViscaRxPacket viscaRxPacket)
@@ -154,16 +159,21 @@ namespace AVDeviceControl
                                       viscaRxPacket.PayLoad[3])
                              );
                             _completionAction(value);
-                            Debug.WriteLine($"GenericInterface({p.name}): Received value ({value})");
+                            Ctl.LogMessage(LogLevel.Info,
+                              ($"GenericInterface({p.name}): Received value ({value})"));
                         }
                         else
                         {
+                            Ctl.LogMessage(LogLevel.Error,
+                              $"GenericInterface({p.name}): Recieved packet (payload length {viscaRxPacket.PayLoad.Length}) is too long");
                             throw new ArgumentOutOfRangeException("viscaRxPacket",
                               $"GenericInterface({p.name}): Recieved packet (payload length {viscaRxPacket.PayLoad.Length}) is too long");
 
                         }
                     }
                     else
+                        Ctl.LogMessage(LogLevel.Error,
+                          $"GenericInterface({p.name}): Recieved packet (payload length {viscaRxPacket.PayLoad.Length}) is too short");
                         throw new ArgumentOutOfRangeException("viscaRxPacket",
                           $"GenericInterface({p.name}): Recieved packet (payload length {viscaRxPacket.PayLoad.Length}) is too short");
                 }

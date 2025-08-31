@@ -62,10 +62,12 @@ namespace AVDeviceControl
                 _binding = value;
                 if (value != null)
                 {
+                    SuspendLayout();
                     foreach (string propertyName in _sliderList)
                     {
                         BindToPosition(propertyName);
                     }
+                    ResumeLayout();
                 }
             }
         }
@@ -82,7 +84,7 @@ namespace AVDeviceControl
             int x = _sliders.Count * visibleWidth;
 
             sld.Left = x;
-            sld.Height = grpCamera.Height - 20;
+            sld.Height = grpCamera.Height;
 
             grpCamera.Left = x + visibleWidth;
             Controls.Add(sld);

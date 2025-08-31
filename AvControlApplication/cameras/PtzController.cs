@@ -12,7 +12,8 @@ namespace AVDeviceControl
 {
     public enum LogLevel
     {
-        Verbose = 1,
+        Trace = 0,
+        Debug = 1,
         Info = 2,
         Warning = 3,
         Error = 4,
@@ -21,7 +22,7 @@ namespace AVDeviceControl
     public class PtzController
     {
         public static LogLevel logLevel = LogLevel.Warning;
-
+        private static Action<byte, string, object[]> _logAction;
         ViscaTransport transport = null;
         public event Aborted Abort;
         public ViscaProtocolProcessor controller;
@@ -36,6 +37,11 @@ namespace AVDeviceControl
         {
         }
 
+        public static void LogMessage(LogLevel level, string format, params object[] args)
+        {
+            PtzController._logAction((byte)level, format, args);
+        }
+
         #region Connect / Disconnect
         public string Connect(bool serial, CameraConfig config, Action<byte, string, object[]> logAction = null)
         {
@@ -43,6 +49,7 @@ namespace AVDeviceControl
             {
                 logAction = LogAction;
             }
+            _logAction = logAction;
             string error;
             if (serial)
             {

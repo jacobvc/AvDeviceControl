@@ -130,7 +130,7 @@ namespace AVDeviceControl
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 80);
+            this.label3.Location = new System.Drawing.Point(3, 32);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 18;
@@ -143,7 +143,7 @@ namespace AVDeviceControl
             this.usbCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
             this.usbCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.usbCamName.FormattingEnabled = true;
-            this.usbCamName.Location = new System.Drawing.Point(73, 78);
+            this.usbCamName.Location = new System.Drawing.Point(73, 30);
             this.usbCamName.Name = "usbCamName";
             this.usbCamName.Size = new System.Drawing.Size(161, 21);
             this.usbCamName.TabIndex = 17;
@@ -167,7 +167,7 @@ namespace AVDeviceControl
             // btnRefreshPorts
             // 
             this.btnRefreshPorts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshPorts.Location = new System.Drawing.Point(240, 25);
+            this.btnRefreshPorts.Location = new System.Drawing.Point(240, 58);
             this.btnRefreshPorts.Name = "btnRefreshPorts";
             this.btnRefreshPorts.Size = new System.Drawing.Size(25, 23);
             this.btnRefreshPorts.TabIndex = 12;
@@ -190,7 +190,7 @@ namespace AVDeviceControl
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 55);
+            this.label2.Location = new System.Drawing.Point(3, 88);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 9;
@@ -200,7 +200,7 @@ namespace AVDeviceControl
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 30);
+            this.label1.Location = new System.Drawing.Point(4, 63);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 8;
@@ -213,7 +213,7 @@ namespace AVDeviceControl
             this.cmbBaud.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "Baud", true));
             this.cmbBaud.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBaud.FormattingEnabled = true;
-            this.cmbBaud.Location = new System.Drawing.Point(73, 51);
+            this.cmbBaud.Location = new System.Drawing.Point(73, 84);
             this.cmbBaud.Name = "cmbBaud";
             this.cmbBaud.Size = new System.Drawing.Size(161, 21);
             this.cmbBaud.TabIndex = 6;
@@ -225,7 +225,7 @@ namespace AVDeviceControl
             this.cmbComPort.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.cameraConfigBindingSource, "Port", true));
             this.cmbComPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbComPort.FormattingEnabled = true;
-            this.cmbComPort.Location = new System.Drawing.Point(73, 26);
+            this.cmbComPort.Location = new System.Drawing.Point(73, 59);
             this.cmbComPort.Name = "cmbComPort";
             this.cmbComPort.Size = new System.Drawing.Size(161, 21);
             this.cmbComPort.TabIndex = 5;
@@ -265,7 +265,7 @@ namespace AVDeviceControl
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(8, 102);
+            this.label13.Location = new System.Drawing.Point(9, 29);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(49, 13);
             this.label13.TabIndex = 20;
@@ -278,7 +278,7 @@ namespace AVDeviceControl
             this.ipCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
             this.ipCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ipCamName.FormattingEnabled = true;
-            this.ipCamName.Location = new System.Drawing.Point(78, 100);
+            this.ipCamName.Location = new System.Drawing.Point(79, 27);
             this.ipCamName.Name = "ipCamName";
             this.ipCamName.Size = new System.Drawing.Size(121, 21);
             this.ipCamName.TabIndex = 19;
@@ -298,7 +298,7 @@ namespace AVDeviceControl
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(4, 52);
+            this.label7.Location = new System.Drawing.Point(4, 78);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(46, 13);
             this.label7.TabIndex = 14;
@@ -307,7 +307,7 @@ namespace AVDeviceControl
             // textBox1
             // 
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CamIpPort", true));
-            this.textBox1.Location = new System.Drawing.Point(79, 50);
+            this.textBox1.Location = new System.Drawing.Point(79, 76);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(119, 20);
             this.textBox1.TabIndex = 13;
@@ -327,7 +327,7 @@ namespace AVDeviceControl
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(5, 77);
+            this.label5.Location = new System.Drawing.Point(5, 103);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 10;
@@ -337,7 +337,7 @@ namespace AVDeviceControl
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(5, 30);
+            this.label4.Location = new System.Drawing.Point(5, 56);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(68, 13);
             this.label4.TabIndex = 9;
@@ -356,7 +356,7 @@ namespace AVDeviceControl
             // rtspUrl
             // 
             this.rtspUrl.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CamRtsp", true));
-            this.rtspUrl.Location = new System.Drawing.Point(80, 74);
+            this.rtspUrl.Location = new System.Drawing.Point(80, 100);
             this.rtspUrl.Name = "rtspUrl";
             this.rtspUrl.Size = new System.Drawing.Size(119, 20);
             this.rtspUrl.TabIndex = 1;
@@ -364,7 +364,7 @@ namespace AVDeviceControl
             // ipAddress
             // 
             this.ipAddress.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CamIp", true));
-            this.ipAddress.Location = new System.Drawing.Point(80, 28);
+            this.ipAddress.Location = new System.Drawing.Point(80, 54);
             this.ipAddress.Name = "ipAddress";
             this.ipAddress.Size = new System.Drawing.Size(119, 20);
             this.ipAddress.TabIndex = 0;

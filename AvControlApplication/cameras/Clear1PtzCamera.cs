@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Visca;
 using static Visca.Visca;
+using Ctl = AVDeviceControl.PtzController;
 
 namespace AVDeviceControl
 {
@@ -33,14 +34,16 @@ namespace AVDeviceControl
         {
             get
             {
-                Debug.WriteLine($"Get Brightness ({_brightness})");
+                Ctl.LogMessage(LogLevel.Trace,
+                  ($"Get Brightness ({_brightness})"));
                 return _brightness;
             }
             set
             {
                 if (_brightness != value)
                 {
-                    Debug.WriteLine($"Brightness set to ({value})");
+                    Ctl.LogMessage(LogLevel.Trace,
+                      $"Brightness set to ({value})");
                     _brightness = value;
                     ptz.controller.EnqueueCommand(brightInterface.Command(value));
                 }
@@ -50,7 +53,8 @@ namespace AVDeviceControl
         {
             if (_brightness != brightness)
             {
-                Debug.WriteLine($"Brightness updated to ({brightness})");
+                Ctl.LogMessage(LogLevel.Trace,
+                    $"Brightness updated to ({brightness})");
                 _brightness = brightness;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Brightness)));
             }
@@ -60,14 +64,14 @@ namespace AVDeviceControl
         {
             get 
             {
-                Debug.WriteLine($"Get Satutation ({_saturation})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Get Satutation ({_saturation})"));
                 return _saturation; 
             }
             set
             {
                 if (_saturation != value)
                 {
-                    Debug.WriteLine($"Saturation set to ({value})");
+                    Ctl.LogMessage(LogLevel.Trace, ($"Saturation set to ({value})"));
                     _saturation = value;
                     ptz.controller.EnqueueCommand(saturationInterface.Command(value));
                 }
@@ -78,7 +82,7 @@ namespace AVDeviceControl
         {
             if (_saturation != saturation)
             {
-                Debug.WriteLine($"Saturation updated to ({saturation})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Saturation updated to ({saturation})"));
                 _saturation = saturation;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Saturation)));
             }
@@ -88,14 +92,14 @@ namespace AVDeviceControl
         {
             get 
             {
-                Debug.WriteLine($"Get Contrast ({_contrast})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Get Contrast ({_contrast})"));
                 return _contrast; 
             }
             set
             {
                 if (_contrast != value)
                 {
-                    Debug.WriteLine($"Contrast set to ({value})");
+                    Ctl.LogMessage(LogLevel.Trace, ($"Contrast set to ({value})"));
                     _contrast = value;
                     ptz.controller.EnqueueCommand(contrastInterface.Command(value));
                 }
@@ -107,7 +111,7 @@ namespace AVDeviceControl
             if (_contrast != contrast)
             {
                 _contrast = contrast;
-                Debug.WriteLine($"Contrast updated to ({contrast})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Contrast updated to ({contrast})"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Contrast)));
             }
         }
@@ -116,14 +120,14 @@ namespace AVDeviceControl
         {
             get 
             {
-                Debug.WriteLine($"Get Sharpness ({_sharpness})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Get Sharpness ({_sharpness})"));
                 return _sharpness; 
             }
             set
             {
                 if (_sharpness != value)
                 {
-                    Debug.WriteLine($"Sharpness set to ({value})");
+                    Ctl.LogMessage(LogLevel.Trace, ($"Sharpness set to ({value})"));
                     ptz.controller.EnqueueCommand(sharpnessInterface.Command(value));
                 }
             }
@@ -133,7 +137,7 @@ namespace AVDeviceControl
             if (_sharpness != sharpness)
             {
                 _sharpness = sharpness;
-                Debug.WriteLine($"Sharpness updated to ({sharpness})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Sharpness updated to ({sharpness})"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Sharpness)));
             }
         }
@@ -141,14 +145,14 @@ namespace AVDeviceControl
         {
             get 
             {
-                Debug.WriteLine($"Get Hue ({_hue})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Get Hue ({_hue})"));
                 return _hue; 
             }
             set
             {
                 if (_hue != value)
                 {
-                    Debug.WriteLine($"Hue set to ({value})");
+                    Ctl.LogMessage(LogLevel.Trace, ($"Hue set to ({value})"));
                     ptz.controller.EnqueueCommand(hueInterface.Command(value));
                 }
             }
@@ -159,7 +163,7 @@ namespace AVDeviceControl
             if (_hue != hue)
             {
                 _hue = hue;
-                Debug.WriteLine($"Hue updated to ({hue})");
+                Ctl.LogMessage(LogLevel.Trace, ($"Hue updated to ({hue})"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Hue)));
             }
         }

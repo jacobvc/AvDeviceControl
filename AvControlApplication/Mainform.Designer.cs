@@ -166,12 +166,11 @@ namespace AVDeviceControl
             // 
             // mnuDebugWindow
             // 
-            this.mnuDebugWindow.Checked = true;
             this.mnuDebugWindow.CheckOnClick = true;
-            this.mnuDebugWindow.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnuDebugWindow.Name = "mnuDebugWindow";
             this.mnuDebugWindow.Size = new System.Drawing.Size(188, 22);
             this.mnuDebugWindow.Text = "Open Debug Window";
+            this.mnuDebugWindow.CheckedChanged += new System.EventHandler(this.mnuDebugWindow_CheckedChanged);
             // 
             // mnuDebugLevel
             // 
@@ -189,6 +188,7 @@ namespace AVDeviceControl
             // 
             // mnuWebsocketPort
             // 
+            this.mnuWebsocketPort.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.mnuWebsocketPort.Name = "mnuWebsocketPort";
             this.mnuWebsocketPort.Size = new System.Drawing.Size(100, 23);
             this.mnuWebsocketPort.TextChanged += new System.EventHandler(this.MnuWebsocketPort_TextChanged);

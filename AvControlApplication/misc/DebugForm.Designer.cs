@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtDebug = new System.Windows.Forms.TextBox();
+            this.txtDebug = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // txtDebug
             // 
             this.txtDebug.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDebug.HideSelection = false;
             this.txtDebug.Location = new System.Drawing.Point(0, 0);
-            this.txtDebug.Multiline = true;
             this.txtDebug.Name = "txtDebug";
-            this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDebug.Size = new System.Drawing.Size(597, 299);
             this.txtDebug.TabIndex = 0;
+            this.txtDebug.Text = "";
             // 
             // DebugForm
             // 
@@ -49,14 +49,13 @@
             this.Controls.Add(this.txtDebug);
             this.Name = "DebugForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Debug Form";
+            this.Text = "Debug Log";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtDebug;
+        private System.Windows.Forms.RichTextBox txtDebug;
     }
 }

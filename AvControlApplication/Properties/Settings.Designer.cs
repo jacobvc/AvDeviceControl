@@ -106,5 +106,17 @@ namespace AVDeviceControl.Properties {
                 this["webSocketPort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool debugPopup {
+            get {
+                return ((bool)(this["debugPopup"]));
+            }
+            set {
+                this["debugPopup"] = value;
+            }
+        }
     }
 }

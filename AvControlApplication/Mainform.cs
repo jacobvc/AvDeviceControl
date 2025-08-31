@@ -44,6 +44,7 @@ namespace AVDeviceControl
             StartWebSockServer(mnuWebsocketPort.Text);
 
             mnuSaveJSONCopy.Checked = Properties.Settings.Default.saveJsonConfigCopy;
+            mnuDebugWindow.Checked = Properties.Settings.Default.debugPopup;
             LoadSettings(false);
         }
 
@@ -64,16 +65,7 @@ namespace AVDeviceControl
         }
         #endregion
 
-        int MnuLogLevel
-        {
-            get { return (int)PtzController.logLevel; }
-            set
-            {
-                PtzController.logLevel = (LogLevel)value;
-                mnuDebugLevel.Text = PtzController.logLevel.ToString();
-            }
-        }
-
+        #region Websocket server
         void StopWebSockServer()
         {
             ws?.Stop();
@@ -97,14 +89,65 @@ namespace AVDeviceControl
                 MessageBox.Show("Can't start websocket server. Port must be an integer.", "Websocket Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        #endregion
 
-        private void LogAction(byte level, string format, object[] args)
+        #region Debug window and logging
+        void OpenDebugWindow()
+        {
+            if (debugForm.IsDisposed)
+            {
+                debugForm = new DebugForm();
+            }
+            if (!debugForm.Visible)
+            {
+                debugForm.Show(this);
+                debugForm.TextBox.AppendText("Log started " + DateTime.Now.ToString() + Environment.NewLine);
+
+                debugForm.FormClosing += (s, e) => {
+                    if (_textBoxListener != null)
+                    {
+                        Debug.Listeners.Remove(_textBoxListener); // Or Trace.Listeners.Remove(_textBoxListener);
+                        _textBoxListener.Dispose();
+                        _textBoxListener = null;
+                    }
+                };
+                if (_textBoxListener == null)
+                {
+                    _textBoxListener = new TextBoxTraceListener(debugForm.TextBox);
+                    Debug.Listeners.Add(_textBoxListener);
+                }
+            }
+            else
+            {
+                debugForm.BringToFront();
+            }
+        }
+
+        int MnuLogLevel
+        {
+            get { return (int)PtzController.logLevel; }
+            set
+            {
+                PtzController.logLevel = (LogLevel)value;
+                mnuDebugLevel.Text = PtzController.logLevel.ToString();
+            }
+        }
+
+        public void LogAction(byte level, string format, object[] args)
         {
             if (level >= MnuLogLevel)
             {
-                Console.WriteLine("PT LOG:[{0}]", String.Format(format, args));
+                if (debugForm != null && !debugForm.IsDisposed && debugForm.Visible)
+                {
+                    debugForm.LogAction(level, String.Format(format, args));
+                }
+                else
+                {
+                    Console.WriteLine("PT LOG:[{0}]", String.Format(format, args));
+                }
             }
         }
+        #endregion
 
         #region Device configuration settings and methods
 
@@ -147,20 +190,9 @@ namespace AVDeviceControl
             {
                 collection.AddCamera(new CameraConfig());
             }
-            if (Properties.Settings.Default.logLevel == (int)LogLevel.Verbose) 
+            if (Properties.Settings.Default.debugPopup) 
             {
-                debugForm.Show();
-                debugForm.FormClosing += (s, e) => {
-                    if (_textBoxListener != null)
-                    {
-                        Debug.Listeners.Remove(_textBoxListener); // Or Trace.Listeners.Remove(_textBoxListener);
-                        _textBoxListener.Dispose();
-                        _textBoxListener = null;
-                        //Debug.Listeners.Add(Console);
-                    }
-                };
-                _textBoxListener = new TextBoxTraceListener(debugForm.TextBox);
-                Debug.Listeners.Add(_textBoxListener); // Or Trace.Listeners.Add(_textBoxListener);
+                OpenDebugWindow();
             }
 
             foreach (AvDeviceConfig dev in collection.devices)
@@ -456,33 +488,21 @@ namespace AVDeviceControl
             mnuWebsocketPort.Text = Properties.Settings.Default.webSocketPort;
         }
         #endregion
-    }
 
-    public class TextBoxTraceListener : TraceListener
-    {
-        private TextBox _outputTextBox;
-
-        public TextBoxTraceListener(TextBox outputTextBox)
+        private void mnuDebugWindow_CheckedChanged(object sender, EventArgs e)
         {
-            _outputTextBox = outputTextBox ?? throw new ArgumentNullException(nameof(outputTextBox));
-        }
-
-        public override void Write(string message)
-        {
-            // Ensure thread safety when updating UI controls
-            if (_outputTextBox.InvokeRequired)
+            Properties.Settings.Default.debugPopup = mnuDebugWindow.Checked;
+            if (mnuDebugWindow.Checked)
             {
-                _outputTextBox.Invoke(new Action(() => _outputTextBox.AppendText(message)));
+                OpenDebugWindow();
             }
             else
             {
-                _outputTextBox.AppendText(message);
+                if (debugForm != null && !debugForm.IsDisposed)
+                {
+                    debugForm.Close();
+                }
             }
-        }
-
-        public override void WriteLine(string message)
-        {
-            Write(message + Environment.NewLine);
         }
     }
 }
