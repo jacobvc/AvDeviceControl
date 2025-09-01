@@ -39,7 +39,7 @@ namespace AVDeviceControl
             this.grpCamera.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.grpCamera.Controls.Add(this.cameraInfo);
-            this.grpCamera.Location = new System.Drawing.Point(175, 0);
+            this.grpCamera.Location = new System.Drawing.Point(3, 3);
             this.grpCamera.Name = "grpCamera";
             this.grpCamera.Size = new System.Drawing.Size(184, 150);
             this.grpCamera.TabIndex = 9;
@@ -65,7 +65,7 @@ namespace AVDeviceControl
             this.AutoScroll = true;
             this.Controls.Add(this.grpCamera);
             this.Name = "ucCamSettings";
-            this.Size = new System.Drawing.Size(409, 150);
+            this.Size = new System.Drawing.Size(189, 150);
             this.grpCamera.ResumeLayout(false);
             this.grpCamera.PerformLayout();
             this.ResumeLayout(false);

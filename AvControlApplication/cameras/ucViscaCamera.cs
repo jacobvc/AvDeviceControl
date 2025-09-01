@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Visca;
 using static AVDeviceControl.Preset;
+using Ctl = AVDeviceControl.PtzController;
 
 namespace AVDeviceControl
 {
@@ -39,7 +40,7 @@ namespace AVDeviceControl
         public event ConfigurationChanged ConfigurationChangedEvent = null;
         public event ValueChanged ValueChangedEvent = null;
 
-        private readonly Action<byte, string, object[]> logAction = null;
+        private readonly Action<LogLevel, string, object[]> logAction = null;
         #endregion
 
         #region Properties
@@ -70,7 +71,7 @@ namespace AVDeviceControl
         }
 
 
-        public ucViscaCamera(CameraConfig config, Action<byte, string, object[]> logAction = null) : this()
+        public ucViscaCamera(CameraConfig config, Action<LogLevel, string, object[]> logAction = null) : this()
         {
             this.config = config;
             // WARNING Checkbox data binding seems to be broken
@@ -432,7 +433,7 @@ namespace AVDeviceControl
             camera?.EndTrack();
             ptControl.AnglePan = ((short)e.PanPosition) / config.CountsPerDegree;
             ptControl.AngleTilt = ((short)e.TiltPosition) / config.CountsPerDegree;
-            Console.WriteLine("Position: Pan = " + (int)ptControl.AnglePan 
+            Ctl.LogMessage(LogLevel.Debug, "Position: Pan = " + (int)ptControl.AnglePan 
                 + ", Tilt = " + (int)ptControl.AngleTilt); 
         }
 
@@ -441,7 +442,7 @@ namespace AVDeviceControl
             camera?.EndTrack();
             Zoom = e.Position / config.FullScaleZoom;
             ptControl.ZoomFraction = (float)Zoom;
-            Console.WriteLine("Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
+            Ctl.LogMessage(LogLevel.Debug, "Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
         }
 
         private void CameraConfigBindingSource_CurrentItemChanged(object sender, EventArgs e)

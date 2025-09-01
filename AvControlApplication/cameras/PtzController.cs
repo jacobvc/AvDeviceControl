@@ -10,19 +10,10 @@ using static AVDeviceControl.Preset;
 
 namespace AVDeviceControl
 {
-    public enum LogLevel
-    {
-        Trace = 0,
-        Debug = 1,
-        Info = 2,
-        Warning = 3,
-        Error = 4,
-        None = 5
-    }
     public class PtzController
     {
         public static LogLevel logLevel = LogLevel.Warning;
-        private static Action<byte, string, object[]> _logAction;
+        private static Action<LogLevel, string, object[]> _logAction;
         ViscaTransport transport = null;
         public event Aborted Abort;
         public ViscaProtocolProcessor controller;
@@ -39,11 +30,11 @@ namespace AVDeviceControl
 
         public static void LogMessage(LogLevel level, string format, params object[] args)
         {
-            PtzController._logAction((byte)level, format, args);
+            _logAction(level, format, args);
         }
 
         #region Connect / Disconnect
-        public string Connect(bool serial, CameraConfig config, Action<byte, string, object[]> logAction = null)
+        public string Connect(bool serial, CameraConfig config, Action<LogLevel, string, object[]> logAction = null)
         {
             if (logAction == null)
             {
@@ -128,9 +119,9 @@ namespace AVDeviceControl
         }
         #endregion
 
-        private static void LogAction(byte level, string format, object[] args)
+        private static void LogAction(LogLevel level, string format, object[] args)
         {
-            if (level >= (int)logLevel)
+            if (level >= logLevel)
             {
                 Console.WriteLine("PT LOG:[{0}]", String.Format(format, args));
             }

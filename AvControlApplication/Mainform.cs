@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Visca;
 
 namespace AVDeviceControl
 {
@@ -101,9 +102,19 @@ namespace AVDeviceControl
             if (!debugForm.Visible)
             {
                 debugForm.Show(this);
+                if (Properties.Settings.Default.debugSize.Width != 0)
+                {
+                    debugForm.Location = Properties.Settings.Default.debugLoc;
+                    debugForm.Size = Properties.Settings.Default.debugSize;
+                }
                 debugForm.TextBox.AppendText("Log started " + DateTime.Now.ToString() + Environment.NewLine);
 
                 debugForm.FormClosing += (s, e) => {
+                    if (debugForm.WindowState != FormWindowState.Minimized)
+                    {
+                        Properties.Settings.Default.debugLoc = debugForm.Location;
+                        Properties.Settings.Default.debugSize = debugForm.Size;
+                    }
                     if (_textBoxListener != null)
                     {
                         Debug.Listeners.Remove(_textBoxListener); // Or Trace.Listeners.Remove(_textBoxListener);
@@ -133,9 +144,9 @@ namespace AVDeviceControl
             }
         }
 
-        public void LogAction(byte level, string format, object[] args)
+        public void LogAction(LogLevel level, string format, object[] args)
         {
-            if (level >= MnuLogLevel)
+            if ((byte)level >= MnuLogLevel)
             {
                 if (debugForm != null && !debugForm.IsDisposed && debugForm.Visible)
                 {

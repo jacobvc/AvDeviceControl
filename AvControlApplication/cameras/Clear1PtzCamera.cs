@@ -16,11 +16,11 @@ namespace AVDeviceControl
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Interfaces for generic position inquiries
-        protected GenericPositionInterface brightInterface;
-        protected GenericPositionInterface saturationInterface;
-        protected GenericPositionInterface contrastInterface;
-        protected GenericPositionInterface sharpnessInterface;
-        protected GenericPositionInterface hueInterface;
+        protected GenericViscaInterface brightInterface;
+        protected GenericViscaInterface saturationInterface;
+        protected GenericViscaInterface contrastInterface;
+        protected GenericViscaInterface sharpnessInterface;
+        protected GenericViscaInterface hueInterface;
 
         // backing variables for properties
         // Add these properties to the PtzCamera class
@@ -174,7 +174,7 @@ namespace AVDeviceControl
     /// </summary>
     public class Clear1PtzCamera : PtzCamera
     {
-        // Interface parameters for GenericPositionInterface
+        // Interface parameters for GenericViscaInterface
         GenericParameters brightnessParameters = new GenericParameters(
              name: "Brightness",
              inqCmd: 0xa1,
@@ -233,19 +233,19 @@ namespace AVDeviceControl
         {
             limitsByPropertyName.Add(typeof(PtzParametersExtend));
 
-            brightInterface = new GenericPositionInterface(brightnessParameters, (byte)id, this);
+            brightInterface = new GenericViscaInterface(brightnessParameters, (byte)id, 4, this);
             InquiriesByPropertyName.Add("Brightness", brightInterface.Inquiry(updateBrightness));
 
-            saturationInterface = new GenericPositionInterface(saturationParameters, (byte)id, this);
+            saturationInterface = new GenericViscaInterface(saturationParameters, (byte)id, 4, this);
             InquiriesByPropertyName.Add("Saturation", saturationInterface.Inquiry(updateSaturation));
 
-            contrastInterface = new GenericPositionInterface(contrastParameters, (byte)id, this);
+            contrastInterface = new GenericViscaInterface(contrastParameters, (byte)id, 4, this);
             InquiriesByPropertyName.Add("Contrast", contrastInterface.Inquiry(updateContrast));
 
-            sharpnessInterface = new GenericPositionInterface(sharpnessParameters, (byte)id, this);
+            sharpnessInterface = new GenericViscaInterface(sharpnessParameters, (byte)id, 4, this);
             InquiriesByPropertyName.Add("Sharpness", sharpnessInterface.Inquiry(updateSharpness));
 
-            hueInterface = new GenericPositionInterface(hueParameters, (byte)id, this);
+            hueInterface = new GenericViscaInterface(hueParameters, (byte)id, 4, this);
             InquiriesByPropertyName.Add("Hue", hueInterface.Inquiry(updateHue));
 
             propertyList = new string[]

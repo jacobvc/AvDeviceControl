@@ -371,7 +371,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ViscaLibrary, Version=1.1.9364.19542, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ViscaLibrary, Version=1.1.9375.22190, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_38B6DD7749C14440704B6CB010E832D0"

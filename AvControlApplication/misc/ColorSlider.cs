@@ -1398,7 +1398,7 @@ namespace ColorSlider
                 #region draw inner bar
 
                 // inner bar is a single line 
-                // draw the line on the whole length of the control
+                // draw the line on the whole responseLength of the control
                 if (_barOrientation == Orientation.Horizontal)
                 {
                     if (Radius > 0)
@@ -1645,8 +1645,8 @@ namespace ColorSlider
                     Pen penTickL = new Pen(_tickColor, 1f);
                     Pen penTickS = new Pen(_tickColor, 1f);
                     int idx = 0;
-                    int scaleL = 5;     // division length
-                    int scaleS = 3;     // subdivision length    
+                    int scaleL = 5;     // division responseLength
+                    int scaleS = 3;     // subdivision responseLength    
 
 
                     // strings graduations

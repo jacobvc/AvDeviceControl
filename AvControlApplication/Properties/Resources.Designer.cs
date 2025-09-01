@@ -61,12 +61,12 @@ namespace AVDeviceControl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Icon PtzCamera {
+        internal static byte[] PtzCamera {
             get {
                 object obj = ResourceManager.GetObject("PtzCamera", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                return ((byte[])(obj));
             }
         }
         

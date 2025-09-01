@@ -1,13 +1,14 @@
-﻿using System;
+﻿using RtMidi.Core.Devices;
+using RtMidi.Core.Devices.Infos;
+using RtMidi.Core.Messages;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-
-using RtMidi.Core.Messages;
-using RtMidi.Core.Devices.Infos;
-using RtMidi.Core.Devices;
+using Visca;
+using Ctl = AVDeviceControl.PtzController;
 
 namespace AVDeviceControl
 {
@@ -329,7 +330,7 @@ namespace AVDeviceControl
             }
             else
             {
-                Console.WriteLine($"[{sender.Name}] NoteOff: Channel:{msg.Channel} Key:{msg.Key} Velocity:{msg.Velocity}");
+                Ctl.LogMessage(LogLevel.Debug, $"[{sender.Name}] NoteOff: Channel:{msg.Channel} Key:{msg.Key} Velocity:{msg.Velocity}");
             }
         }
 
@@ -344,7 +345,7 @@ namespace AVDeviceControl
             }
             else
             {
-                Console.WriteLine($"[{sender.Name}] NoteOn: Channel:{msg.Channel} Key:{msg.Key} Velocity:{msg.Velocity}");
+                Ctl.LogMessage(LogLevel.Debug, $"[{sender.Name}] NoteOn: Channel:{msg.Channel} Key:{msg.Key} Velocity:{msg.Velocity}");
             }
         }
 
@@ -367,12 +368,12 @@ namespace AVDeviceControl
                 }
                 else
                 {
-                    Console.WriteLine($"[{sender.Name}] Unused ControlChange: Channel:{msg.Channel} Control:{msg.Control} Value:{msg.Value}");
+                    Ctl.LogMessage(LogLevel.Debug, $"[{sender.Name}] Unused ControlChange: Channel:{msg.Channel} Control:{msg.Control} Value:{msg.Value}");
                 }
             }
             else
             {
-                Console.WriteLine($"[{sender.Name}] No control point: Channel:{msg.Channel} Control:{msg.Control} Value:{msg.Value}");
+                Ctl.LogMessage(LogLevel.Debug, $"[{sender.Name}] No control point: Channel:{msg.Channel} Control:{msg.Control} Value:{msg.Value}");
             }
         }
         #endregion
@@ -420,7 +421,7 @@ namespace AVDeviceControl
                 }
                 else
                 {
-                    Console.WriteLine("SysEx (0x21) too short: " + BitConverter.ToString(msg.Data));
+                    Ctl.LogMessage(LogLevel.Error, "SysEx (0x21) too short: " + BitConverter.ToString(msg.Data));
                 }
             }
             else
@@ -437,7 +438,7 @@ namespace AVDeviceControl
                         if (slider != null)
                         {
                             int fader = (msg.Data[8] << 7) + msg.Data[9];
-                            Console.WriteLine("Fader: " + fader + " on channel " + channel + " (" + msg.ToString() + ")");
+                            Ctl.LogMessage(LogLevel.Debug, "Fader: " + fader + " on channel " + channel + " (" + msg.ToString() + ")");
                             // Apply to slider
                             slider.MoveSlider = fader;
                             // Send event from slider, NOT midi
@@ -451,7 +452,7 @@ namespace AVDeviceControl
                         if (slider != null)
                         {
                             byte on = msg.Data[8];
-                            Console.WriteLine("Channel " + channel + " on=" + on + " (" + msg.ToString() + ")");
+                            Ctl.LogMessage(LogLevel.Debug, "Channel " + channel + " on=" + on + " (" + msg.ToString() + ")");
                             slider.Mute = on != 127;
                             // Send event from slider, NOT midi
                             ValueChangedEvent?.Invoke(slider,
@@ -459,7 +460,7 @@ namespace AVDeviceControl
                         }
                         break;
                     default:
-                        Console.WriteLine("Unknown SysEx" + BitConverter.ToString(msg.Data));
+                        Ctl.LogMessage(LogLevel.Debug, "Unknown SysEx" + BitConverter.ToString(msg.Data));
                         break;
                 }
             }
@@ -572,7 +573,7 @@ namespace AVDeviceControl
         {
             var view = (DataGridView)sender;
             view.Rows[e.RowIndex].ErrorText = "";
-            if (dgChannels.CurrentCell.OwningColumn.HeaderText == "Name") // Name must be min length
+            if (dgChannels.CurrentCell.OwningColumn.HeaderText == "Name") // Name must be min responseLength
             {
                 if (e.FormattedValue.ToString().Length < 2)
                 {
@@ -586,7 +587,7 @@ namespace AVDeviceControl
                 try
                 {
                     int value = int.Parse(e.FormattedValue.ToString());
-                    if (dgChannels.CurrentCell.OwningColumn.HeaderText == "Channel") // Name must be min length
+                    if (dgChannels.CurrentCell.OwningColumn.HeaderText == "Channel") // Name must be min responseLength
                     {
                         if (value < 1 || value > 128)
                         {

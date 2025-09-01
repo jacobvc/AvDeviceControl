@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Visca;
 
 namespace AVDeviceControl
 {
@@ -23,10 +24,10 @@ namespace AVDeviceControl
             get { return txtDebug; }
         }
 
-        public void LogAction(byte level, string text)
+        public void LogAction(LogLevel level, string text)
         {
             Color[] colors = new Color[] { 
-                Color.Purple,       // Trace
+                Color.Green,        // Trace
                 Color.Blue,         // Debug
                 Color.Black,        // Info
                 Color.Orange,       // Warning
@@ -34,16 +35,32 @@ namespace AVDeviceControl
                 Color.Purple };     // None == Special use
             if (InvokeRequired)
             {
-                Invoke(new Action<byte, string>(LogAction), level, text);
+                Invoke(new Action<LogLevel, string>(LogAction), level, text);
             }
             else
             {
-                txtDebug.SelectionColor = colors[level];
+                if (txtDebug.Lines.Length > numMaxLines.Value)
+                {
+                    // For now, just clear when it gets too big
+                    txtDebug.Clear();
+                    /*
+                    List<string> lines = new List<string>(txtDebug.Lines);
+                    while (lines.Count >= numMaxLines.Value)
+                    {
+                        lines.RemoveAt(0); // Remove the top elements
+                    }
+                    txtDebug.Lines = lines.ToArray();
+                    */
+                }
+                txtDebug.SelectionColor = colors[(byte)level];
                 txtDebug.AppendText(text + Environment.NewLine);
                 txtDebug.SelectionColor = Color.Black;
-                //txtDebug.SelectionStart = txtDebug.Text.Length;
-                //txtDebug.ScrollToCaret();
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtDebug.Clear();
         }
     }
     public class TextBoxTraceListener : TraceListener

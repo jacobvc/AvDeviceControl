@@ -118,5 +118,41 @@ namespace AVDeviceControl.Properties {
                 this["debugPopup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point debugLoc {
+            get {
+                return ((global::System.Drawing.Point)(this["debugLoc"]));
+            }
+            set {
+                this["debugLoc"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size debugSize {
+            get {
+                return ((global::System.Drawing.Size)(this["debugSize"]));
+            }
+            set {
+                this["debugSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public decimal debugMaxLines {
+            get {
+                return ((decimal)(this["debugMaxLines"]));
+            }
+            set {
+                this["debugMaxLines"] = value;
+            }
+        }
     }
 }
