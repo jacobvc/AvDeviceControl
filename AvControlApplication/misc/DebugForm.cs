@@ -17,6 +17,7 @@ namespace AVDeviceControl
         public DebugForm()
         {
             InitializeComponent();
+            pnlKey.Visible = false;
         }
 
         public RichTextBox TextBox
@@ -61,6 +62,16 @@ namespace AVDeviceControl
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtDebug.Clear();
+        }
+
+        private void btnKey_MouseDown(object sender, MouseEventArgs e)
+        {
+            pnlKey.Visible = true;
+        }
+
+        private void btnKey_MouseUp(object sender, MouseEventArgs e)
+        {
+            pnlKey.Visible = false;
         }
     }
     public class TextBoxTraceListener : TraceListener

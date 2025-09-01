@@ -96,9 +96,14 @@ namespace AVDeviceControl
         private void CameraInfo_VisibleChanged(object sender, EventArgs e)
         {
             PtzCamera camera = _binding.DataSource as PtzCamera;
-            cameraInfo.Text = "Camera Info";
-            cameraInfo.Text += (("\r\n\t" + camera?.PtzInfo.ToString()).Replace(",", "\r\n\t") + "\r\n"
-              + "\r\n" + camera?.ToString()).Replace("\t", "    ");
+            string info = camera?.PtzInfo.ToString();
+            cameraInfo.Text = "";
+            if (info.Length > 0)
+            {
+                cameraInfo.Text = "Camera Info";
+                cameraInfo.Text += ("\r\n\t" + info).Replace(",", "\r\n\t") + "\r\n";
+            }
+            cameraInfo.Text = (cameraInfo.Text + "\r\n" + camera?.ToString()).Replace("\t", "    ");
         }
         static private int BestDivision(int n, int max, int deflt)
         {

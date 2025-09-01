@@ -314,6 +314,15 @@ namespace AVDeviceControl
         #endregion
 
         #region All Devices
+        private void StopAllDevices(Control panel)
+        {
+            for (int i = 0; i < deviceControls.DeviceCount; ++i)
+            {
+                ucAvDevice dev = deviceControls.Device(i);
+                dev.Disconnect();
+            }
+        }
+
         private void RemoveAllDevices(Control panel)
         {
             for (int i = 0; i < deviceControls.DeviceCount; ++i)

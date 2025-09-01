@@ -10,6 +10,7 @@ namespace AVDeviceControl
         public const byte Info = 0x02;
     }
 
+    #region Visca Info
     /// <summary>
     /// ViscaInfo class 
     /// </summary>
@@ -19,10 +20,12 @@ namespace AVDeviceControl
         public UInt16 model = 0;
         public UInt16 rom_version = 0;
         public Byte socket_num = 0;
+        private bool received = false;
 
         public ViscaInfo() { }
         public ViscaInfo(UInt16 vendor, UInt16 model, UInt16 rom_version, Byte socket_num)
         {
+            received = true;
             this.vendor = vendor;
             this.model = model;
             this.rom_version = rom_version;
@@ -30,6 +33,10 @@ namespace AVDeviceControl
         }
         public override string ToString()
         {
+            if (!received) 
+            {
+                return "";
+            }
             return String.Format("Vendor 0x{0:X4}, Model 0x{1:X4}, Rom version 0x{2:X4}, Socket {3}",
                 vendor, model, rom_version, socket_num);
         }
@@ -63,13 +70,14 @@ namespace AVDeviceControl
                 }
                 else
                 {
-                    Ctl.LogMessage(LogLevel.Error,
-                      $"Received packet responseLength {viscaRxPacket.PayLoad.Length} is not ViscaInfo Inquiry (>= 5)");
+                    Ctl.LogMessage(LogLevel.Info, "ViscaInfo Inquiry not supported");
                 }
             }
         }
     }
+    #endregion
 
+    #region Generic Visca Interface
     public class GenericParameters
     {
         public readonly string name;
@@ -165,19 +173,14 @@ namespace AVDeviceControl
                     {
                         if (viscaRxPacket.PayLoad.Length == responseLength)
                         {
-                            short tmp = 0;
+                            short value = 0;
                             for (int i = 0; i < responseLength; i++)
                             {
-                                tmp += (short)(viscaRxPacket.PayLoad[i] << (4 * (responseLength - 1 - i)));
+                                value += (short)(viscaRxPacket.PayLoad[i] << (4 * (responseLength - 1 - i)));
                             }
-                            short value = ((short)((viscaRxPacket.PayLoad[0] << 12) +
-                                 (viscaRxPacket.PayLoad[1] << 8) +
-                                 (viscaRxPacket.PayLoad[2] << 4) +
-                                  viscaRxPacket.PayLoad[3])
-                         );
                             _completionAction(value);
-                            Ctl.LogMessage(LogLevel.Info,
-                              ($"GenericInterface({p.name}): Received value ({value}) {tmp}"));
+                            Ctl.LogMessage(LogLevel.Trace,
+                              ($"GenericInterface({p.name}): Received value ({value})"));
                         }
                         else
                         {
@@ -203,4 +206,5 @@ namespace AVDeviceControl
             return $"Device{this.address} {this.p.name}";
         }
     }
+    #endregion
 }
