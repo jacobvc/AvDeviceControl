@@ -48,12 +48,16 @@ namespace AVDeviceControl
             this.ptControl = new AVDeviceControl.ucPtControl();
             this.tbZoom = new ColorSlider.ColorSlider();
             this.tabPresets = new System.Windows.Forms.TabPage();
+            this.btnOsdUp = new System.Windows.Forms.Button();
+            this.btnOsdLeft = new System.Windows.Forms.Button();
+            this.btnOsdRight = new System.Windows.Forms.Button();
+            this.btnOsdDn = new System.Windows.Forms.Button();
             this.btnMenuOk = new System.Windows.Forms.Button();
             this.btnMenuOff = new System.Windows.Forms.Button();
             this.btnMenuOn = new System.Windows.Forms.Button();
             this.btnDelPreset = new System.Windows.Forms.Button();
             this.grpPresets = new System.Windows.Forms.GroupBox();
-            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnOsdDown = new System.Windows.Forms.Button();
             this.cmbPresetSpeed = new System.Windows.Forms.ComboBox();
             this.presetsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label12 = new System.Windows.Forms.Label();
@@ -67,6 +71,7 @@ namespace AVDeviceControl
             this.txtPresetName = new System.Windows.Forms.TextBox();
             this.btnNewPreset = new System.Windows.Forms.Button();
             this.lstPresets = new System.Windows.Forms.ListBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.ucCamSettings = new AVDeviceControl.ucCamSettings();
             this.chkIp = new System.Windows.Forms.CheckBox();
@@ -130,7 +135,7 @@ namespace AVDeviceControl
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 32);
+            this.label3.Location = new System.Drawing.Point(7, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 18;
@@ -143,9 +148,9 @@ namespace AVDeviceControl
             this.usbCamName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CameraModel", true));
             this.usbCamName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.usbCamName.FormattingEnabled = true;
-            this.usbCamName.Location = new System.Drawing.Point(73, 30);
+            this.usbCamName.Location = new System.Drawing.Point(73, 28);
             this.usbCamName.Name = "usbCamName";
-            this.usbCamName.Size = new System.Drawing.Size(161, 21);
+            this.usbCamName.Size = new System.Drawing.Size(137, 21);
             this.usbCamName.TabIndex = 17;
             // 
             // cameraConfigBindingSource
@@ -167,7 +172,7 @@ namespace AVDeviceControl
             // btnRefreshPorts
             // 
             this.btnRefreshPorts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshPorts.Location = new System.Drawing.Point(240, 58);
+            this.btnRefreshPorts.Location = new System.Drawing.Point(219, 58);
             this.btnRefreshPorts.Name = "btnRefreshPorts";
             this.btnRefreshPorts.Size = new System.Drawing.Size(25, 23);
             this.btnRefreshPorts.TabIndex = 12;
@@ -215,7 +220,7 @@ namespace AVDeviceControl
             this.cmbBaud.FormattingEnabled = true;
             this.cmbBaud.Location = new System.Drawing.Point(73, 84);
             this.cmbBaud.Name = "cmbBaud";
-            this.cmbBaud.Size = new System.Drawing.Size(161, 21);
+            this.cmbBaud.Size = new System.Drawing.Size(137, 21);
             this.cmbBaud.TabIndex = 6;
             // 
             // cmbComPort
@@ -227,7 +232,7 @@ namespace AVDeviceControl
             this.cmbComPort.FormattingEnabled = true;
             this.cmbComPort.Location = new System.Drawing.Point(73, 59);
             this.cmbComPort.Name = "cmbComPort";
-            this.cmbComPort.Size = new System.Drawing.Size(161, 21);
+            this.cmbComPort.Size = new System.Drawing.Size(137, 21);
             this.cmbComPort.TabIndex = 5;
             // 
             // btnConnectSerial
@@ -265,7 +270,7 @@ namespace AVDeviceControl
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(9, 29);
+            this.label13.Location = new System.Drawing.Point(7, 29);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(49, 13);
             this.label13.TabIndex = 20;
@@ -280,7 +285,7 @@ namespace AVDeviceControl
             this.ipCamName.FormattingEnabled = true;
             this.ipCamName.Location = new System.Drawing.Point(79, 27);
             this.ipCamName.Name = "ipCamName";
-            this.ipCamName.Size = new System.Drawing.Size(121, 21);
+            this.ipCamName.Size = new System.Drawing.Size(129, 21);
             this.ipCamName.TabIndex = 19;
             // 
             // chkIpReverse
@@ -309,7 +314,7 @@ namespace AVDeviceControl
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CamIpPort", true));
             this.textBox1.Location = new System.Drawing.Point(79, 76);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(119, 20);
+            this.textBox1.Size = new System.Drawing.Size(127, 20);
             this.textBox1.TabIndex = 13;
             // 
             // btnDelete2
@@ -358,7 +363,7 @@ namespace AVDeviceControl
             this.rtspUrl.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CamRtsp", true));
             this.rtspUrl.Location = new System.Drawing.Point(80, 100);
             this.rtspUrl.Name = "rtspUrl";
-            this.rtspUrl.Size = new System.Drawing.Size(119, 20);
+            this.rtspUrl.Size = new System.Drawing.Size(127, 20);
             this.rtspUrl.TabIndex = 1;
             // 
             // ipAddress
@@ -366,7 +371,7 @@ namespace AVDeviceControl
             this.ipAddress.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cameraConfigBindingSource, "CamIp", true));
             this.ipAddress.Location = new System.Drawing.Point(80, 54);
             this.ipAddress.Name = "ipAddress";
-            this.ipAddress.Size = new System.Drawing.Size(119, 20);
+            this.ipAddress.Size = new System.Drawing.Size(127, 20);
             this.ipAddress.TabIndex = 0;
             // 
             // tabCamControl
@@ -496,6 +501,10 @@ namespace AVDeviceControl
             // 
             // tabPresets
             // 
+            this.tabPresets.Controls.Add(this.btnOsdUp);
+            this.tabPresets.Controls.Add(this.btnOsdLeft);
+            this.tabPresets.Controls.Add(this.btnOsdRight);
+            this.tabPresets.Controls.Add(this.btnOsdDn);
             this.tabPresets.Controls.Add(this.btnMenuOk);
             this.tabPresets.Controls.Add(this.btnMenuOff);
             this.tabPresets.Controls.Add(this.btnMenuOn);
@@ -503,6 +512,7 @@ namespace AVDeviceControl
             this.tabPresets.Controls.Add(this.grpPresets);
             this.tabPresets.Controls.Add(this.btnNewPreset);
             this.tabPresets.Controls.Add(this.lstPresets);
+            this.tabPresets.Controls.Add(this.label14);
             this.tabPresets.Location = new System.Drawing.Point(4, 25);
             this.tabPresets.Name = "tabPresets";
             this.tabPresets.Size = new System.Drawing.Size(273, 150);
@@ -510,21 +520,65 @@ namespace AVDeviceControl
             this.tabPresets.Text = "Presets";
             this.tabPresets.UseVisualStyleBackColor = true;
             // 
+            // btnOsdUp
+            // 
+            this.btnOsdUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOsdUp.Location = new System.Drawing.Point(68, 85);
+            this.btnOsdUp.Name = "btnOsdUp";
+            this.btnOsdUp.Size = new System.Drawing.Size(33, 23);
+            this.btnOsdUp.TabIndex = 11;
+            this.btnOsdUp.Text = "^";
+            this.btnOsdUp.UseVisualStyleBackColor = true;
+            this.btnOsdUp.Click += new System.EventHandler(this.btnOsdUp_Click);
+            // 
+            // btnOsdLeft
+            // 
+            this.btnOsdLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOsdLeft.Location = new System.Drawing.Point(37, 106);
+            this.btnOsdLeft.Name = "btnOsdLeft";
+            this.btnOsdLeft.Size = new System.Drawing.Size(33, 23);
+            this.btnOsdLeft.TabIndex = 10;
+            this.btnOsdLeft.Text = "<";
+            this.btnOsdLeft.UseVisualStyleBackColor = true;
+            this.btnOsdLeft.Click += new System.EventHandler(this.btnOsdLeft_Click);
+            // 
+            // btnOsdRight
+            // 
+            this.btnOsdRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOsdRight.Location = new System.Drawing.Point(100, 106);
+            this.btnOsdRight.Name = "btnOsdRight";
+            this.btnOsdRight.Size = new System.Drawing.Size(33, 23);
+            this.btnOsdRight.TabIndex = 9;
+            this.btnOsdRight.Text = ">";
+            this.btnOsdRight.UseVisualStyleBackColor = true;
+            this.btnOsdRight.Click += new System.EventHandler(this.btnOsdRight_Click);
+            // 
+            // btnOsdDn
+            // 
+            this.btnOsdDn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOsdDn.Location = new System.Drawing.Point(68, 127);
+            this.btnOsdDn.Name = "btnOsdDn";
+            this.btnOsdDn.Size = new System.Drawing.Size(33, 23);
+            this.btnOsdDn.TabIndex = 8;
+            this.btnOsdDn.Text = "V";
+            this.btnOsdDn.UseVisualStyleBackColor = true;
+            this.btnOsdDn.Click += new System.EventHandler(this.button2_Click);
+            // 
             // btnMenuOk
             // 
             this.btnMenuOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMenuOk.Location = new System.Drawing.Point(73, 116);
+            this.btnMenuOk.Location = new System.Drawing.Point(68, 106);
             this.btnMenuOk.Name = "btnMenuOk";
             this.btnMenuOk.Size = new System.Drawing.Size(33, 23);
             this.btnMenuOk.TabIndex = 6;
-            this.btnMenuOk.Text = "Ok";
+            this.btnMenuOk.Text = "OK";
             this.btnMenuOk.UseVisualStyleBackColor = true;
             this.btnMenuOk.Click += new System.EventHandler(this.BtnMenuOk_Click);
             // 
             // btnMenuOff
             // 
             this.btnMenuOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMenuOff.Location = new System.Drawing.Point(37, 116);
+            this.btnMenuOff.Location = new System.Drawing.Point(1, 127);
             this.btnMenuOff.Name = "btnMenuOff";
             this.btnMenuOff.Size = new System.Drawing.Size(33, 23);
             this.btnMenuOff.TabIndex = 5;
@@ -535,7 +589,7 @@ namespace AVDeviceControl
             // btnMenuOn
             // 
             this.btnMenuOn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMenuOn.Location = new System.Drawing.Point(2, 116);
+            this.btnMenuOn.Location = new System.Drawing.Point(2, 105);
             this.btnMenuOn.Name = "btnMenuOn";
             this.btnMenuOn.Size = new System.Drawing.Size(33, 23);
             this.btnMenuOn.TabIndex = 4;
@@ -557,7 +611,7 @@ namespace AVDeviceControl
             // 
             this.grpPresets.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpPresets.Controls.Add(this.btnUpdate);
+            this.grpPresets.Controls.Add(this.btnOsdDown);
             this.grpPresets.Controls.Add(this.cmbPresetSpeed);
             this.grpPresets.Controls.Add(this.label12);
             this.grpPresets.Controls.Add(this.label11);
@@ -568,23 +622,23 @@ namespace AVDeviceControl
             this.grpPresets.Controls.Add(this.txtPresetTilt);
             this.grpPresets.Controls.Add(this.txtPresetPan);
             this.grpPresets.Controls.Add(this.txtPresetName);
-            this.grpPresets.Location = new System.Drawing.Point(111, 3);
+            this.grpPresets.Location = new System.Drawing.Point(146, 3);
             this.grpPresets.Name = "grpPresets";
-            this.grpPresets.Size = new System.Drawing.Size(158, 144);
+            this.grpPresets.Size = new System.Drawing.Size(123, 144);
             this.grpPresets.TabIndex = 2;
             this.grpPresets.TabStop = false;
             this.grpPresets.Text = "Preset";
             // 
-            // btnUpdate
+            // btnOsdDown
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(61, -2);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(53, 20);
-            this.btnUpdate.TabIndex = 10;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.BtnPresetUpdate_Click);
+            this.btnOsdDown.Location = new System.Drawing.Point(61, -2);
+            this.btnOsdDown.Name = "btnOsdDown";
+            this.btnOsdDown.Size = new System.Drawing.Size(53, 20);
+            this.btnOsdDown.TabIndex = 10;
+            this.btnOsdDown.Text = "Update";
+            this.btnOsdDown.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnOsdDown.UseVisualStyleBackColor = true;
+            this.btnOsdDown.Click += new System.EventHandler(this.BtnPresetUpdate_Click);
             // 
             // cmbPresetSpeed
             // 
@@ -595,7 +649,7 @@ namespace AVDeviceControl
             this.cmbPresetSpeed.FormattingEnabled = true;
             this.cmbPresetSpeed.Location = new System.Drawing.Point(44, 113);
             this.cmbPresetSpeed.Name = "cmbPresetSpeed";
-            this.cmbPresetSpeed.Size = new System.Drawing.Size(114, 21);
+            this.cmbPresetSpeed.Size = new System.Drawing.Size(79, 21);
             this.cmbPresetSpeed.TabIndex = 4;
             // 
             // presetsBindingSource
@@ -659,7 +713,7 @@ namespace AVDeviceControl
             this.txtPresetZoom.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.presetsBindingSource, "Zoom", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N1"));
             this.txtPresetZoom.Location = new System.Drawing.Point(44, 90);
             this.txtPresetZoom.Name = "txtPresetZoom";
-            this.txtPresetZoom.Size = new System.Drawing.Size(114, 20);
+            this.txtPresetZoom.Size = new System.Drawing.Size(79, 20);
             this.txtPresetZoom.TabIndex = 3;
             // 
             // txtPresetTilt
@@ -669,7 +723,7 @@ namespace AVDeviceControl
             this.txtPresetTilt.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.presetsBindingSource, "Tilt", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N1"));
             this.txtPresetTilt.Location = new System.Drawing.Point(44, 67);
             this.txtPresetTilt.Name = "txtPresetTilt";
-            this.txtPresetTilt.Size = new System.Drawing.Size(114, 20);
+            this.txtPresetTilt.Size = new System.Drawing.Size(79, 20);
             this.txtPresetTilt.TabIndex = 2;
             // 
             // txtPresetPan
@@ -679,7 +733,7 @@ namespace AVDeviceControl
             this.txtPresetPan.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.presetsBindingSource, "Pan", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N1"));
             this.txtPresetPan.Location = new System.Drawing.Point(44, 44);
             this.txtPresetPan.Name = "txtPresetPan";
-            this.txtPresetPan.Size = new System.Drawing.Size(114, 20);
+            this.txtPresetPan.Size = new System.Drawing.Size(79, 20);
             this.txtPresetPan.TabIndex = 1;
             // 
             // txtPresetName
@@ -689,7 +743,7 @@ namespace AVDeviceControl
             this.txtPresetName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.presetsBindingSource, "Name", true));
             this.txtPresetName.Location = new System.Drawing.Point(44, 21);
             this.txtPresetName.Name = "txtPresetName";
-            this.txtPresetName.Size = new System.Drawing.Size(114, 20);
+            this.txtPresetName.Size = new System.Drawing.Size(79, 20);
             this.txtPresetName.TabIndex = 0;
             this.txtPresetName.Leave += new System.EventHandler(this.TextBox2_Leave);
             // 
@@ -711,11 +765,22 @@ namespace AVDeviceControl
             this.lstPresets.FormattingEnabled = true;
             this.lstPresets.Location = new System.Drawing.Point(3, 27);
             this.lstPresets.Name = "lstPresets";
-            this.lstPresets.Size = new System.Drawing.Size(102, 82);
+            this.lstPresets.Size = new System.Drawing.Size(137, 56);
             this.lstPresets.Sorted = true;
             this.lstPresets.TabIndex = 0;
             this.lstPresets.ValueMember = "Name";
             this.lstPresets.SelectedValueChanged += new System.EventHandler(this.LstPresets_SelectedValueChanged);
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(1, 89);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(68, 13);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "OSD Menu";
             // 
             // tabSettings
             // 
@@ -827,6 +892,7 @@ namespace AVDeviceControl
             this.tabIpCam.PerformLayout();
             this.tabCamControl.ResumeLayout(false);
             this.tabPresets.ResumeLayout(false);
+            this.tabPresets.PerformLayout();
             this.grpPresets.ResumeLayout(false);
             this.grpPresets.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.presetsBindingSource)).EndInit();
@@ -884,7 +950,7 @@ namespace AVDeviceControl
         private System.Windows.Forms.TabPage tabSettings;
         private ucCamSettings ucCamSettings;
         private System.Windows.Forms.Button btnCtlDisconnect;
-        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnOsdDown;
         private ucPtControl ptControl;
         private System.Windows.Forms.Button btnLeft;
         private System.Windows.Forms.Button btnRight;
@@ -897,5 +963,10 @@ namespace AVDeviceControl
         private System.Windows.Forms.ComboBox usbCamName;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox ipCamName;
+        private System.Windows.Forms.Button btnOsdRight;
+        private System.Windows.Forms.Button btnOsdDn;
+        private System.Windows.Forms.Button btnOsdUp;
+        private System.Windows.Forms.Button btnOsdLeft;
+        private System.Windows.Forms.Label label14;
     }
 }

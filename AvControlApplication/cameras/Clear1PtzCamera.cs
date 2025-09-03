@@ -42,8 +42,7 @@ namespace AVDeviceControl
             {
                 if (_brightness != value)
                 {
-                    Ctl.LogMessage(LogLevel.Trace,
-                      $"Brightness set to ({value})");
+                    Ctl.LogMessage(LogLevel.Trace, $"Brightness set to ({value})");
                     _brightness = value;
                     ptz.controller.EnqueueCommand(brightInterface.Command(value));
                 }
@@ -128,6 +127,7 @@ namespace AVDeviceControl
                 if (_sharpness != value)
                 {
                     Ctl.LogMessage(LogLevel.Trace, ($"Sharpness set to ({value})"));
+                    _sharpness = value;
                     ptz.controller.EnqueueCommand(sharpnessInterface.Command(value));
                 }
             }
@@ -153,6 +153,7 @@ namespace AVDeviceControl
                 if (_hue != value)
                 {
                     Ctl.LogMessage(LogLevel.Trace, ($"Hue set to ({value})"));
+                    _hue = value;
                     ptz.controller.EnqueueCommand(hueInterface.Command(value));
                 }
             }
@@ -184,7 +185,7 @@ namespace AVDeviceControl
         GenericParameters saturationParameters = new GenericParameters(
             name: "Saturation",
             inqCmd: 0x49,
-            valueCmd: 0x58,
+            valueCmd: 0x49,
             category: Category.Camera1
          );
         GenericParameters contrastParameters = new GenericParameters(

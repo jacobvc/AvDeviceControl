@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebugForm));
-            this.txtDebug = new System.Windows.Forms.RichTextBox();
+            this.rtfDebug = new System.Windows.Forms.RichTextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.numMaxLines = new System.Windows.Forms.NumericUpDown();
@@ -42,26 +42,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnKey = new System.Windows.Forms.Button();
+            this.btnFind = new System.Windows.Forms.Button();
+            this.txtFind = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxLines)).BeginInit();
             this.pnlKey.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtDebug
+            // rtfDebug
             // 
-            this.txtDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.rtfDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDebug.HideSelection = false;
-            this.txtDebug.Location = new System.Drawing.Point(12, 31);
-            this.txtDebug.Name = "txtDebug";
-            this.txtDebug.Size = new System.Drawing.Size(597, 271);
-            this.txtDebug.TabIndex = 0;
-            this.txtDebug.Text = "";
+            this.rtfDebug.HideSelection = false;
+            this.rtfDebug.Location = new System.Drawing.Point(12, 24);
+            this.rtfDebug.Name = "rtfDebug";
+            this.rtfDebug.Size = new System.Drawing.Size(576, 271);
+            this.rtfDebug.TabIndex = 0;
+            this.rtfDebug.Text = "";
             // 
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(508, 3);
+            this.btnClear.Location = new System.Drawing.Point(487, 1);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 1;
@@ -73,7 +75,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(290, 8);
+            this.label1.Location = new System.Drawing.Point(356, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
@@ -88,7 +90,7 @@
             0,
             0,
             0});
-            this.numMaxLines.Location = new System.Drawing.Point(351, 5);
+            this.numMaxLines.Location = new System.Drawing.Point(417, 3);
             this.numMaxLines.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -184,26 +186,47 @@
             // 
             // btnKey
             // 
-            this.btnKey.Location = new System.Drawing.Point(57, 8);
+            this.btnKey.Location = new System.Drawing.Point(74, 0);
             this.btnKey.Name = "btnKey";
-            this.btnKey.Size = new System.Drawing.Size(75, 23);
+            this.btnKey.Size = new System.Drawing.Size(58, 23);
             this.btnKey.TabIndex = 5;
             this.btnKey.Text = "Key";
             this.btnKey.UseVisualStyleBackColor = true;
             this.btnKey.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnKey_MouseDown);
             this.btnKey.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnKey_MouseUp);
             // 
+            // btnFind
+            // 
+            this.btnFind.Location = new System.Drawing.Point(152, 0);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(49, 23);
+            this.btnFind.TabIndex = 6;
+            this.btnFind.Text = "Find";
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
+            // txtFind
+            // 
+            this.txtFind.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFind.Location = new System.Drawing.Point(207, 3);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(131, 20);
+            this.txtFind.TabIndex = 7;
+            // 
             // DebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(597, 299);
+            this.ClientSize = new System.Drawing.Size(576, 299);
+            this.Controls.Add(this.txtFind);
+            this.Controls.Add(this.btnFind);
             this.Controls.Add(this.btnKey);
             this.Controls.Add(this.pnlKey);
             this.Controls.Add(this.numMaxLines);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.txtDebug);
+            this.Controls.Add(this.rtfDebug);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DebugForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -217,7 +240,7 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox txtDebug;
+        private System.Windows.Forms.RichTextBox rtfDebug;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numMaxLines;
@@ -230,5 +253,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnKey;
+        private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.TextBox txtFind;
     }
 }

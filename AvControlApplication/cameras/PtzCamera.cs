@@ -17,7 +17,8 @@ namespace AVDeviceControl
     {
         byte address;
         public PtzController ptz;
-        PtzMonitor monitor;
+        PtzMonitor ptMonitor;
+        PtzMonitor zoomMonitor;
         public string[] propertyList = new string[0];
 
 
@@ -44,32 +45,31 @@ namespace AVDeviceControl
 
         public new void Dispose()
         {
-            monitor?.Terminate();
+            ptMonitor?.Terminate();
+            zoomMonitor?.Terminate();
         }
         #endregion
 
         #region Connect / Disconnect / Monitor
         public override void Connect()
         {
-            monitor = new PtzMonitor(this);
+            ptMonitor = new PtzMonitor(this, false);
+            zoomMonitor = new PtzMonitor(this, true);
 
-            monitor.Update();
+            ptMonitor.Update();
+            zoomMonitor.Update();
 
             PollEnabled = true;
             Poll();
         }
 
-        public void UpdatePosition()
+        public void PtEndTrack()
         {
-            monitor.Update();
+            ptMonitor.Arrived();
         }
-        public void StartTrack()
+        public void ZoomEndTrack()
         {
-            monitor.Track();
-        }
-        public void EndTrack()
-        {
-            monitor.Arrived();
+            zoomMonitor.Arrived();
         }
         #endregion
 
@@ -90,10 +90,47 @@ namespace AVDeviceControl
                 return String.Format("Camera{0} OSD Menu " + action, this.Destination);
             }
         }
-        // Documented for Sony. Tested for Clear One
-        public class ViscaOsdOk : ViscaCommand
+        /*  Reference - Not in camera documents
+        Menu Right: 8x 01 04 0B 02 FF
+        Menu Left:  8x 01 04 0B 03 FF
+        Menu Up:    8x 01 06 01 01 01 03 01 FF
+        Menu Down:  8x 01 06 01 01 01 03 02 FF
+        Menu +:     8x 01 06 06 02 FF
+        Menu -:     8x 01 06 06 03 FF
+        Menu Set:   8x 01 06 06 05 FF
+         */
+        public enum OsdKey
         {
-            public ViscaOsdOk(byte address)
+            Up = 0x31,
+            Left = 0x13,
+            Right = 0x23,
+            Down = 0x32,
+            Set = 0x70,
+        }
+        public class ViscaOsdKey : ViscaCommand
+        {
+            public ViscaOsdKey(byte address, OsdKey key)
+            : base(address)
+            {
+                switch (key) {
+                    case OsdKey.Left:
+                        Append(new byte[] { 0x04, 0x0b, 0x03 });
+                        break;
+                    case OsdKey.Right:
+                        Append(new byte[] { 0x04, 0x0b, 0x02 });
+                        break;
+                    case OsdKey.Up:
+                        Append(new byte[] { 0x06, 0x01, 0x01, 0x01, 0x03, 0x01 });
+                        break;
+                    case OsdKey.Down:
+                        Append(new byte[] { 0x06, 0x01, 0x01, 0x01, 0x03, 0x02});
+                        break;
+                    case OsdKey.Set:
+                        Append(new byte[] { 0x06, 0x06, 0x05 });
+                        break;
+                }
+            }
+            public ViscaOsdKey(byte address)
             : base(address)
             {
                 Append(new byte[] { 0x06, 0x06, 0x05 });
@@ -105,7 +142,9 @@ namespace AVDeviceControl
             }
         }
         public void OsdMenu(bool on) { ptz.controller.EnqueueCommand(new ViscaOsdMenu(address, on)); }
-        public void OsdOk() { ptz.controller.EnqueueCommand(new ViscaOsdOk(address)); }
+        public void OsdKeypress(OsdKey key) { 
+            ptz.controller.EnqueueCommand(new ViscaOsdKey(address, key));
+        }
         #endregion
 
         #region PTZ / Preset
@@ -168,9 +207,10 @@ namespace AVDeviceControl
                 else
                 {
                     Stop();
+                    ptMonitor.Track();
                 }
             }
-            StartTrack();
+            //StartTrack();
         }
 
         public void ContinuousZoom(int zoomSpeed)
@@ -188,8 +228,9 @@ namespace AVDeviceControl
             else
             {
                 ZoomStop();
+                zoomMonitor.Track();
             }
-            StartTrack();
+            //StartTrack();
         }
 
         public void MoveToPreset(Preset p, CameraConfig config)
@@ -214,7 +255,7 @@ namespace AVDeviceControl
             this.PositionAbsolute(pan, tilt);
 
             this.ZoomSetPosition((int)(p.Zoom * config.FullScaleZoom));
-            StartTrack();
+            zoomMonitor.Track();
         }
         #endregion
 

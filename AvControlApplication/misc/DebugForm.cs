@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Windows.Controls;
 using System.Windows.Forms;
 using Visca;
 
@@ -22,7 +23,7 @@ namespace AVDeviceControl
 
         public RichTextBox TextBox
         {
-            get { return txtDebug; }
+            get { return rtfDebug; }
         }
 
         public void LogAction(LogLevel level, string text)
@@ -40,28 +41,28 @@ namespace AVDeviceControl
             }
             else
             {
-                if (txtDebug.Lines.Length > numMaxLines.Value)
+                if (rtfDebug.Lines.Length > numMaxLines.Value)
                 {
                     // For now, just clear when it gets too big
-                    txtDebug.Clear();
+                    rtfDebug.Clear();
                     /*
-                    List<string> lines = new List<string>(txtDebug.Lines);
+                    List<string> lines = new List<string>(rtfDebug.Lines);
                     while (lines.Count >= numMaxLines.Value)
                     {
                         lines.RemoveAt(0); // Remove the top elements
                     }
-                    txtDebug.Lines = lines.ToArray();
+                    rtfDebug.Lines = lines.ToArray();
                     */
                 }
-                txtDebug.SelectionColor = colors[(byte)level];
-                txtDebug.AppendText(text + Environment.NewLine);
-                txtDebug.SelectionColor = Color.Black;
+                rtfDebug.SelectionColor = colors[(byte)level];
+                rtfDebug.AppendText(text + Environment.NewLine);
+                rtfDebug.SelectionColor = Color.Black;
             }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            txtDebug.Clear();
+            rtfDebug.Clear();
         }
 
         private void btnKey_MouseDown(object sender, MouseEventArgs e)
@@ -72,6 +73,25 @@ namespace AVDeviceControl
         private void btnKey_MouseUp(object sender, MouseEventArgs e)
         {
             pnlKey.Visible = false;
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            rtfDebug.SelectAll();
+            rtfDebug.SelectionBackColor = Color.White;
+            var Options = RichTextBoxFinds.None;
+            int StartIndex = 0;
+            if (txtFind.Text.Length > 0 && rtfDebug.Text.Length > 0)
+            {
+                while ((StartIndex = rtfDebug.Find(txtFind.Text, 
+                  StartIndex, Options)) != -1)
+                {
+                    rtfDebug.Focus();
+                    rtfDebug.Select(StartIndex, txtFind.Text.Length);
+                    rtfDebug.SelectionBackColor = Color.Yellow;
+                    StartIndex += txtFind.Text.Length;
+                }
+            }
         }
     }
     public class TextBoxTraceListener : TraceListener

@@ -430,7 +430,7 @@ namespace AVDeviceControl
         #region Camera events
         private void Camera_PTZPositionChanged(object sender, ViscaCamera.PTZPositionEventArgs e)
         {
-            camera?.EndTrack();
+            camera?.PtEndTrack();
             ptControl.AnglePan = ((short)e.PanPosition) / config.CountsPerDegree;
             ptControl.AngleTilt = ((short)e.TiltPosition) / config.CountsPerDegree;
             Ctl.LogMessage(LogLevel.Debug, "Position: Pan = " + (int)ptControl.AnglePan 
@@ -439,7 +439,7 @@ namespace AVDeviceControl
 
         private void Camera_ZoomPositionChanged(object sender, ViscaCamera.PositionEventArgs e)
         {
-            camera?.EndTrack();
+            camera?.ZoomEndTrack();
             Zoom = e.Position / config.FullScaleZoom;
             ptControl.ZoomFraction = (float)Zoom;
             Ctl.LogMessage(LogLevel.Debug, "Position Zoom = " + (int)(ptControl.ZoomFraction * 100) + "%");
@@ -464,10 +464,30 @@ namespace AVDeviceControl
 
         private void BtnMenuOk_Click(object sender, EventArgs e)
         {
-            camera?.OsdOk();
+            camera?.OsdKeypress(PtzCamera.OsdKey.Set);
         }
         #endregion
 
         #endregion
+
+        private void btnOsdUp_Click(object sender, EventArgs e)
+        {
+            camera?.OsdKeypress(PtzCamera.OsdKey.Up);
+        }
+
+        private void btnOsdRight_Click(object sender, EventArgs e)
+        {
+            camera?.OsdKeypress(PtzCamera.OsdKey.Right);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            camera?.OsdKeypress(PtzCamera.OsdKey.Down);
+        }
+
+        private void btnOsdLeft_Click(object sender, EventArgs e)
+        {
+            camera?.OsdKeypress(PtzCamera.OsdKey.Left);
+        }
     }
 }

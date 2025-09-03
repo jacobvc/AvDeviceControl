@@ -16,12 +16,14 @@ namespace AVDeviceControl
 
         ViscaCamera camera;
         readonly AutoResetEvent msgActivity = new AutoResetEvent(false);
+        readonly bool zoom;
         System.Threading.Timer isRespondingTimer;
         int maxResponseMs = 2000;
 
-        public PtzMonitor(ViscaCamera camera)
+        public PtzMonitor(ViscaCamera camera, bool zoom)
         {
             this.camera = camera;
+            this.zoom = zoom;
 
             new Thread(new ThreadStart(StatusThread)).Start();
             isRespondingTimer = new System.Threading.Timer(
@@ -44,8 +46,13 @@ namespace AVDeviceControl
         public void Update()
         {
             Timer.Change(maxResponseMs, Timeout.Infinite);
-            camera.PanTiltPositionPoll();
-            camera.ZoomPositionPoll();
+            if (zoom) {
+                //camera.ZoomStop();
+                camera.ZoomPositionPoll();
+            } else {
+                //camera.Stop();
+                camera.PanTiltPositionPoll();
+            }
         }
 
         public void Arrived()
@@ -58,11 +65,11 @@ namespace AVDeviceControl
             while (!terminate)
             {
                 msgActivity.WaitOne();
-                int count = 10;
+                int count = 2;
 
                 while (!terminate && --count > 0)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                     Update();
                 }
             }

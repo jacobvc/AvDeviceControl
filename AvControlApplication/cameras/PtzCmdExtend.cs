@@ -133,12 +133,13 @@ namespace AVDeviceControl
                     //  $"GenericInterface({parameters.name}): Value({position}) out of range {limits.Message}");
                 }
 
+                int tmp = position;
                 ViscaVariable[] bytes = new ViscaVariable[responseLength];
                 for (int i = 0; i < responseLength; i++)
                 {
                     bytes[responseLength - 1 - i] = new ViscaVariable("Byte " + i, 
-                      (byte)(position & 0x0F));
-                    position >>= 4;
+                      (byte)(tmp & 0x0F));
+                    tmp >>= 4;
                 }
                 p = parameters;
                 Append(new byte[] { parameters.category, p.valueCmd });

@@ -235,11 +235,11 @@ namespace AVDeviceControl
                         panSpeed = Math.Max(1, (int)(iSpeed * cam.Camera.limitsByPropertyName["PanSpeed"].High / 100));
                         break;
                     case "stop":
+                        // Speeds == 0 reults in a stop
                         break;
                 }
                 
                 cam.Camera.ContinuousPanTilt(panSpeed, tiltSpeed, cam.Config.Reverse);
-                cam.Camera?.UpdatePosition();
                 return true;
             }
             else
