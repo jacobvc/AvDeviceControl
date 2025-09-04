@@ -12,6 +12,7 @@ namespace AVDeviceControl
 {
     public partial class MainForm : Form
     {
+        const string version = "1.4.0";
         DeviceConfigCollection collection = new DeviceConfigCollection();
         AvDeviceCollection deviceControls = new AvDeviceCollection();
 
@@ -25,6 +26,7 @@ namespace AVDeviceControl
         {
             InitializeComponent();
             mnuDebugLevel.Items.AddRange(Enum.GetNames(typeof(LogLevel)));
+            tsLblVersion.Text = "Version " + version;
 
             midi = new Midi();
 

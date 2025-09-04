@@ -54,6 +54,7 @@ namespace AVDeviceControl
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.staLblConfigFile = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsLblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.spltMain)).BeginInit();
             this.spltMain.SuspendLayout();
             this.mnuMain.SuspendLayout();
@@ -161,7 +162,7 @@ namespace AVDeviceControl
             this.mnuDebugWindow,
             this.mnuDebugLevel});
             this.mnuDebug.Name = "mnuDebug";
-            this.mnuDebug.Size = new System.Drawing.Size(180, 22);
+            this.mnuDebug.Size = new System.Drawing.Size(157, 22);
             this.mnuDebug.Text = "Debug";
             // 
             // mnuDebugWindow
@@ -183,7 +184,7 @@ namespace AVDeviceControl
             this.mnuWebsocket.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuWebsocketPort});
             this.mnuWebsocket.Name = "mnuWebsocket";
-            this.mnuWebsocket.Size = new System.Drawing.Size(180, 22);
+            this.mnuWebsocket.Size = new System.Drawing.Size(157, 22);
             this.mnuWebsocket.Text = "Websocket Port";
             // 
             // mnuWebsocketPort
@@ -259,7 +260,8 @@ namespace AVDeviceControl
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.staLblConfigFile});
+            this.staLblConfigFile,
+            this.tsLblVersion});
             this.statusStrip1.Location = new System.Drawing.Point(0, 219);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(554, 22);
@@ -275,8 +277,16 @@ namespace AVDeviceControl
             // staLblConfigFile
             // 
             this.staLblConfigFile.Name = "staLblConfigFile";
-            this.staLblConfigFile.Size = new System.Drawing.Size(118, 17);
+            this.staLblConfigFile.Size = new System.Drawing.Size(398, 17);
+            this.staLblConfigFile.Spring = true;
             this.staLblConfigFile.Text = "toolStripStatusLabel2";
+            this.staLblConfigFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tsLblVersion
+            // 
+            this.tsLblVersion.Name = "tsLblVersion";
+            this.tsLblVersion.Size = new System.Drawing.Size(45, 17);
+            this.tsLblVersion.Text = "Version";
             // 
             // MainForm
             // 
@@ -333,6 +343,7 @@ namespace AVDeviceControl
         private System.Windows.Forms.ToolStripMenuItem mnuDebug;
         private System.Windows.Forms.ToolStripMenuItem mnuDebugWindow;
         private System.Windows.Forms.ToolStripComboBox mnuDebugLevel;
+        private System.Windows.Forms.ToolStripStatusLabel tsLblVersion;
     }
 }
 
