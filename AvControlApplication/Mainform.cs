@@ -376,16 +376,16 @@ namespace AVDeviceControl
                 int scrLeft = -panel.HorizontalScroll.Value;
                 panel.VerticalScroll.Value = 0;
                 // Column count based on panel size and aspect ratio
-                double aCols = Math.Max(1,
-                   (double)clientWidth / clientHeight * deviceControls.Device(0).AspectRatio);
+                double aCols = 
+                   (double)clientWidth / clientHeight / deviceControls.Device(0).AspectRatio;
                 // Row / col count is based on best 2 dim fit of cells into panel
-                aCols *= Math.Sqrt(aCols);
+                aCols = Math.Max(1, aCols * Math.Sqrt(deviceControls.DeviceCount) + .7);
                 int aRows = Math.Max(deviceControls.DeviceCount / (int)aCols, 1);
                 int rows = aRows;
                 int cols = (deviceControls.DeviceCount + rows - 1) / rows;
                 // Cell height is smaller of "fill height", or "fill width"
                 int cellHeight = Math.Min(clientHeight / rows,
-                  (int)(clientWidth / cols / deviceControls.Device(0).AspectRatio));
+                  (int)(clientWidth / cols * deviceControls.Device(0).AspectRatio));
                 if (cellHeight < minDeviceHeight)
                 {
                     cellHeight = minDeviceHeight;

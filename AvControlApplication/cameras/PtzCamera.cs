@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
 using Visca;
+using static AVDeviceControl.Preset;
 using static Visca.Visca;
 
 namespace AVDeviceControl
@@ -91,13 +92,17 @@ namespace AVDeviceControl
             }
         }
         /*  Reference - Not in camera documents
-        Menu Right: 8x 01 04 0B 02 FF
-        Menu Left:  8x 01 04 0B 03 FF
+        Menu Right: 8x 01 04 0B 02 FF - Doesn't work
+        Menu Left:  8x 01 04 0B 03 FF - Doesn't work
         Menu Up:    8x 01 06 01 01 01 03 01 FF
         Menu Down:  8x 01 06 01 01 01 03 02 FF
         Menu +:     8x 01 06 06 02 FF
         Menu -:     8x 01 06 06 03 FF
         Menu Set:   8x 01 06 06 05 FF
+        Pan Left    8x 01 06 01 vv ww 01 03 FF Use these for left/right
+        Pan right   8x 01 06 01 vv ww 02 03 FF 
+
+        Need to use remote for Fomake (for now)
          */
         public enum OsdKey
         {
@@ -114,10 +119,12 @@ namespace AVDeviceControl
             {
                 switch (key) {
                     case OsdKey.Left:
-                        Append(new byte[] { 0x04, 0x0b, 0x03 });
+                        //Append(new byte[] { 0x04, 0x0b, 0x03 });
+                        Append(new byte[] { 0x06, 0x01, 0x01, 0x01, 0x01, 0x03 });
                         break;
                     case OsdKey.Right:
-                        Append(new byte[] { 0x04, 0x0b, 0x02 });
+                        //Append(new byte[] { 0x04, 0x0b, 0x02 });
+                        Append(new byte[] { 0x06, 0x01, 0x01, 0x01, 0x02, 0x03 });
                         break;
                     case OsdKey.Up:
                         Append(new byte[] { 0x06, 0x01, 0x01, 0x01, 0x03, 0x01 });
